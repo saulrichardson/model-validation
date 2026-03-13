@@ -20,24 +20,25 @@ type Mode = {
 
 const benefits: Benefit[] = [
   {
-    title: "Resolve the review path from the package",
+    title: "Resolve the right review path from the package",
     copy:
-      "The engine maps code, containers, documents, data, and vendor artifacts into a usable evidence view.",
+      "The platform assembles code, containers, documents, data, and vendor artifacts into a structured evidence view.",
     inverted: true,
   },
   {
-    title: "Execute real validation modules",
+    title: "Execute validation work in one environment",
     copy:
-      "Runtime checks, conceptual review, baseline comparison, and reason-code assessment run in one system.",
+      "Runtime checks, conceptual review, baseline comparison, and reason-code assessment operate within a single review system.",
   },
   {
-    title: "Set the coverage boundary explicitly",
+    title: "Make coverage and gaps explicit",
     copy:
-      "The platform states what the evidence supports, where the review remains partial, and what is still blocked.",
+      "The platform makes clear what the evidence supports, where the review remains partial, and what still requires additional artifacts.",
   },
   {
-    title: "Produce decision-grade work product",
-    copy: "Validation memos, findings, coverage summaries, and gap reports are generated as outputs.",
+    title: "Produce review-grade work product",
+    copy:
+      "Validation memos, findings, coverage summaries, and gap reports are produced as structured outputs for decision-making teams.",
   },
 ];
 
@@ -45,9 +46,9 @@ const modes: Mode[] = [
   {
     id: "full",
     label: "Full revalidation",
-    headline: "A comprehensive package resolves into full execution-backed review.",
+    headline: "A comprehensive package resolves into a full, execution-backed review.",
     summary:
-      "When the package includes code, runtime assets, documentation, and baselines, the engine activates a near-complete revalidation path.",
+      "When the package includes code, runtime assets, documentation, and baselines, the platform activates a near-complete revalidation path.",
     artifacts: ["Source code", "Runtime image", "Sample data", "Baseline metrics", "Methodology docs"],
     modules: [
       "Change review",
@@ -61,9 +62,9 @@ const modes: Mode[] = [
   {
     id: "behavioral",
     label: "Behavioral review",
-    headline: "An opaque package narrows into behavioral validation with explicit limits.",
+    headline: "An opaque package narrows into behavioral validation with clearly defined limits.",
     summary:
-      "When the bank has a scorer or container but not internals, the engine switches to replay, profiling, segmentation, and scoped findings.",
+      "When the institution has a scorer or container but not internals, the platform shifts to replay, profiling, segmentation, and scoped findings.",
     artifacts: ["Scoring harness", "Container image", "Sample inputs", "Output schema", "Method note"],
     modules: [
       "Runtime replay",
@@ -77,9 +78,9 @@ const modes: Mode[] = [
   {
     id: "conceptual",
     label: "Conceptual review",
-    headline: "A documentation-heavy package becomes a conceptual review plus gap report.",
+    headline: "A documentation-heavy package becomes a conceptual review with a clear path to deeper validation.",
     summary:
-      "When the package is primarily documentary, the engine performs methodology review, consistency checks, data profiling, and reason-code assessment.",
+      "When the package is primarily documentary, the platform performs methodology review, consistency checks, data profiling, and reason-code assessment.",
     artifacts: ["Methodology docs", "Model card", "Prior memo", "Feature dictionary", "Reason-code mapping"],
     modules: [
       "Methodology review",
@@ -95,36 +96,38 @@ const modes: Mode[] = [
 const operatingCards = [
   {
     label: "Package intake",
-    title: "Accept messy model packages as-is",
+    title: "Accept model packages as they arrive",
     copy:
-      "Mixed bank and vendor artifacts are ingested without forcing the team to normalize everything up front.",
+      "Mixed bank and vendor artifacts are ingested without requiring teams to fully normalize the package before review can begin.",
   },
   {
     label: "Evidence mapping",
-    title: "Build the evidence view",
+    title: "Construct the evidence view",
     copy:
-      "Assets are typed, linked to model scope, and checked for whether they support runtime, conceptual, or comparative review.",
+      "Assets are typed, linked to model scope, and assessed for whether they support runtime, conceptual, or comparative review.",
   },
   {
     label: "Review resolution",
-    title: "Select the applicable path",
+    title: "Select the applicable review path",
     copy:
-      "The control layer determines which modules can actually be defended from the package provided.",
+      "The control layer determines which review modules can be credibly supported by the package provided.",
   },
 ];
 
 const architectureMarkers = [
   {
     title: "Application layer",
-    copy: "Interfaces for bank teams, model risk, and engineers to submit packages and review outputs.",
+    copy:
+      "Interfaces for bank teams, model risk groups, and engineering teams to submit packages and work through outputs.",
   },
   {
     title: "Control plane",
-    copy: "Artifact intake, evidence graphing, workflow resolution, and coverage accounting.",
+    copy: "Artifact intake, evidence graphing, review resolution, and coverage accounting.",
   },
   {
     title: "Execution plane",
-    copy: "Isolated services that run runtime, data, document, benchmark, and reason-code review modules.",
+    copy:
+      "Isolated services that run runtime, data, document, benchmark, and reason-code review modules.",
   },
 ];
 
@@ -132,17 +135,17 @@ const securityCards = [
   {
     title: "Isolated execution",
     copy:
-      "Runtime review and model reproduction run in controlled environments instead of mixing bank artifacts into a generic orchestration stack.",
+      "Runtime review and model reproduction operate in controlled environments rather than pushing bank artifacts through a generic orchestration layer.",
   },
   {
     title: "Deployment flexibility",
     copy:
-      "The architecture can be deployed to fit enterprise control boundaries while preserving a single review model.",
+      "The architecture can be deployed to fit institutional control boundaries while preserving a consistent review model.",
   },
   {
     title: "Evidence traceability",
     copy:
-      "Findings, coverage, and output documents remain tied to artifacts and review modules rather than free-form operator notes.",
+      "Findings, coverage, and output documents remain tied to artifacts and review modules rather than informal operator notes.",
   },
 ];
 
@@ -256,8 +259,8 @@ export default function Home() {
     <main className="site-shell">
       <div className="announcement-bar">
         <p>
-          Read the operating thesis for turning messy model packages into decision-grade
-          validation work.
+          Read the latest platform thesis on turning fragmented model packages into review-grade
+          validation output.
         </p>
         <a href="#operating-model">Learn more</a>
       </div>
@@ -283,12 +286,12 @@ export default function Home() {
         <div className="hero__ornament hero__ornament--left" />
         <div className="hero__ornament hero__ornament--right" />
 
-        <div className="hero__eyebrow">Messy inputs. Defensible outputs.</div>
+        <div className="hero__eyebrow">Built for model risk and validation teams</div>
         <h1>
           <span>From model package</span>
           <span>to validation opinion</span>
         </h1>
-        <p className="hero__tagline">Elegant operating model. Mission-critical review output.</p>
+        <p className="hero__tagline">Thoughtful design. Review-grade impact.</p>
       </section>
 
       <section className="platform-intro" id="platform">
@@ -296,10 +299,10 @@ export default function Home() {
           <p className="platform-intro__eyebrow">With</p>
           <h2>The Review Engine</h2>
           <p>
-            A validation platform designed to bridge the gap between messy real-world model
-            packages and secure, review-grade output. It does not ask the bank to clean the
-            package first. It discovers what is there, resolves the applicable review path, and
-            executes the work.
+            A validation platform designed to bridge the gap between fragmented model packages and
+            secure, reliable review execution. Rather than requiring clean inputs or forcing one
+            workflow on every model, the platform discovers the evidence that is actually present,
+            resolves the applicable review path, and produces output teams can stand behind.
           </p>
         </div>
 
@@ -324,11 +327,11 @@ export default function Home() {
 
       <section className="editorial-section">
         <div className="editorial-section__copy">
-          <h4>Purpose-built interfaces for enterprise-grade review work</h4>
+          <h4>Purpose-built interfaces for enterprise-grade validation execution</h4>
           <p>
-            Whether the package comes from model risk, a bank engineering team, or a vendor,
-            the system abstracts away package chaos without flattening the review itself. The
-            workflow remains dynamic because the evidence remains dynamic.
+            Whether the package comes from model risk, a bank engineering team, or a vendor
+            handoff, the platform abstracts away package complexity without flattening the review
+            itself. The review stays dynamic because the evidence stays dynamic.
           </p>
         </div>
 
@@ -355,7 +358,7 @@ export default function Home() {
       </section>
 
       <section className="tabbed-section">
-        <h4>Explore different review paths resolved by the engine</h4>
+        <h4>Explore distinct review paths resolved by the platform</h4>
 
         <div className="tabbed-section__controls" role="tablist" aria-label="Review modes">
           {modes.map((mode) => (
@@ -378,23 +381,24 @@ export default function Home() {
           <div className="tabbed-section__panel-copy">
             <h5>{activeMode.headline}</h5>
             <p>
-              The same architecture produces a different review path because the evidence package
-              changes. That is the core operating model.
+              The same platform produces a different review path because the evidence package
+              changes. That is the core operating principle behind the system.
             </p>
           </div>
 
           <div className="tabbed-section__panel-visual">
             <ModeVisual mode={activeMode} />
-            <p>Switch review modes to see the path change with the evidence.</p>
+            <p>Switch review modes to see how the platform adapts the path to the evidence.</p>
           </div>
         </div>
       </section>
 
       <section className="section-heading" id="operating-model">
-        <h4>The operating model designed for banks with real package complexity</h4>
+        <h4>The operating model designed for institutions with real package complexity</h4>
         <p>
-          No matter where the artifacts originate, the system is built to preserve provenance,
-          resolve the review mode, and produce structured outputs that can be defended.
+          No matter where the artifacts originate, the platform is designed to preserve
+          provenance, resolve the review mode, and produce structured outputs that can be used in
+          real validation processes.
         </p>
       </section>
 
@@ -409,10 +413,10 @@ export default function Home() {
       </section>
 
       <section className="section-heading" id="architecture">
-        <h4>Architecture built for review infrastructure, not just orchestration</h4>
+        <h4>Architecture designed for durable review infrastructure, not generic orchestration</h4>
         <p>
-          The control plane decides what can be reviewed. The execution plane runs the modules.
-          The output layer turns the result into formal work product.
+          The control plane determines what can be reviewed. The execution plane runs the modules.
+          The output layer assembles the result into formal validation work product.
         </p>
       </section>
 
@@ -448,10 +452,11 @@ export default function Home() {
       </section>
 
       <section className="section-heading">
-        <h4>Bank-grade control boundaries and traceable execution</h4>
+        <h4>The platform prioritizes enterprise control boundaries and traceable execution</h4>
         <p>
-          The platform is designed so that adoption does not require giving up control over how
-          artifacts are handled, how execution occurs, or how outputs are traced back to evidence.
+          Adoption should not require sacrificing how artifacts are handled, how execution occurs,
+          or how outputs are traced back to evidence. The platform is designed with those control
+          requirements in mind from the start.
         </p>
       </section>
 
@@ -467,8 +472,8 @@ export default function Home() {
 
       <section className="cta-banner" id="contact">
         <div className="cta-banner__spark" />
-        <h2>Looking for a validation platform built to do the review itself?</h2>
-        <a href="#top">See the platform approach</a>
+        <h2>Looking for a validation platform built for secure, durable review execution?</h2>
+        <a href="#top">Explore the platform</a>
       </section>
 
       <footer className="site-footer">
@@ -489,7 +494,7 @@ export default function Home() {
         </div>
 
         <div className="site-footer__meta">
-          <p>Designed for model risk, validation teams, and bank engineering groups.</p>
+          <p>Designed for model risk, validation teams, and engineering groups operating in banks.</p>
           <p>© 2026 Agentic Model Validation</p>
         </div>
       </footer>

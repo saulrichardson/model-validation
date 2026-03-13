@@ -18,7 +18,7 @@ const body = Inter({
 export const metadata: Metadata = {
   title: "Agentic Model Validation",
   description:
-    "Validation infrastructure for banks that turns messy model packages into defensible review output.",
+    "A validation platform for banks designed to turn fragmented model packages into secure, reliable, review-grade output.",
 };
 
 export default function RootLayout({
