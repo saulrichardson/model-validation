@@ -35,31 +35,16 @@ Overlay cap language and segment overlay values that Codex challenged against th
 Qualitative overlay is described as modest and capped at 6.0 bps, pending additional governance evidence.
 ```
 
-## [BANK INPUT] `outputs/provided_overlay_bridge.csv + outputs/provided_segment_reserves.csv`
-Bank-supplied output snapshots used for the documentation-led reconciliation work.
+## [BANK INPUT] `docs/evidence_request_log.md`
+Bank-supplied evidence request log showing the package's own acknowledgement of missing runtime and lineage support.
 
 ```text
-[provided_overlay_bridge.csv]
-segment_id,documented_cap_bps,provided_overlay_bps
-residential_mortgage,6.0,12.0
-heloc,6.0,16.0
-cre_investor,6.0,18.0
-commercial_and_industrial,6.0,14.0
+# Evidence Request Log
 
-[provided_segment_reserves.csv]
-segment_id,scenario_name,reserve_amount
-residential_mortgage,baseline,8420000.0
-residential_mortgage,adverse,11300000.0
-residential_mortgage,severe,10980000.0
-heloc,baseline,5180000.0
-heloc,adverse,6450000.0
-heloc,severe,6430000.0
-cre_investor,baseline,11900000.0
-cre_investor,adverse,17120000.0
-cre_investor,severe,17880000.0
-commercial_and_industrial,baseline,12920000.0
-commercial_and_industrial,adverse,17310000.0
-commercial_and_industrial,severe,17720000.0
+- Provide the reserve engine or reproducibility notebook used to produce the supplied reserve outputs.
+- Provide execution lineage linking the reserve outputs to the reviewed scenario definitions.
+- Reconcile segment definitions across methodology, overview, and reserve outputs.
+- Quantify qualitative overlay by segment and scenario.
 ```
 
 ## [CODEX OUTPUT] `outputs/support/coverage_statement.md`
@@ -83,51 +68,31 @@ The package contains useful CECL documentation and output snapshots, but it does
 - Model-code review
 ```
 
-## [CODEX OUTPUT] `outputs/support/findings_register.json`
-Codex-generated findings register capturing the primary documentation and evidence gaps.
+## [CODEX OUTPUT] `outputs/support/documentation_crosscheck.md`
+Codex-generated documentation cross-check summarizing execution blockers, scenario inconsistency, and segment-overlay reconciliation issues.
 
 ```text
-{
-  "findings": [
-    {
-      "severity": "high",
-      "title": "Execution-based review is blocked by missing reserve engine and lineage evidence",
-      "summary": "The package includes prior outputs and narrative materials, but no reserve engine, reproducibility script, or lineaged runbook sufficient for execution-based review.",
-      "evidence": [
-        "docs/evidence_request_log.md",
-        "docs/gap_tracker.md",
-        "outputs/provided_reserve_summary.csv"
-      ]
-    },
-    {
-      "severity": "high",
-      "title": "Scenario narrative is not fully aligned to the supplied scenario tables",
-      "summary": "The severe scenario narrative describes a uniformly harsher path, but the supplied numeric scenarios show 4 quarter(s) where severe house-price growth is less severe than adverse.",
-      "evidence": [
-        "docs/scenario_assumptions.md",
-        "scenarios/adverse.csv",
-        "scenarios/severe.csv"
-      ]
-    },
-    {
-      "severity": "medium",
-      "title": "Documented segment structure does not reconcile to the provided reserve outputs",
-      "summary": "Documentation describes 5 segments, while the provided reserve outputs reconcile to 4 output segments.",
-      "evidence": [
-        "docs/methodology.md",
-        "docs/model_overview.md",
-        "outputs/provided_segment_reserves.csv"
-      ]
-    },
-    {
-      "severity": "medium",
-      "title": "Overlay documentation understates the magnitude implied by the provided reserve bridge",
-      "summary": "The overlay memo frames qualitative adjustment as capped at 6.0 bps, but the provided bridge shows up to 18.0 bps.",
-      "evidence": [
-        "docs/overlay_memo.md",
-        "outputs/provided_overlay_bridge.csv"
-      ]
-    }
-  ]
-}
+# Documentation Cross-Check
+
+## Execution readiness
+The package supports narrative and prior-output review only. It does not support baseline reproduction or scenario reruns.
+
+- Evidence: docs/evidence_request_log.md, docs/gap_tracker.md, outputs/provided_reserve_summary.csv
+- No reserve engine was supplied.
+- No reproducibility notebook or execution runbook was supplied.
+
+## Scenario definition review
+The scenario narrative and numeric scenario tables are not perfectly aligned.
+
+- Evidence: docs/scenario_assumptions.md, scenarios/adverse.csv, scenarios/severe.csv
+- Quarters with severe house-price growth less severe than adverse: 4
+
+## Segment and overlay reconciliation
+The documented segment structure and overlay posture do not reconcile cleanly to the supplied reserve outputs.
+
+- Evidence: docs/methodology.md, docs/model_overview.md, docs/overlay_memo.md, outputs/provided_segment_reserves.csv, outputs/provided_overlay_bridge.csv
+- Documented segments: 5
+- Output segments: 4
+- Documented overlay cap: 6.0 bps
+- Provided overlay cap: 18.0 bps
 ```

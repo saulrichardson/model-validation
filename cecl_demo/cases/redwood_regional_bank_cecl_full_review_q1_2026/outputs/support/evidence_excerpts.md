@@ -89,102 +89,56 @@ Documented overlay cap and severe overlay posture used in the overlay-governance
 Management overlays are described as targeted and modest, capped at 5.0 bps by segment-scenario combination. The documented intent is to preserve scenario ordering while capturing qualitative risks not fully represented in the core reserve engine.
 ```
 
-## [BANK INPUT] `scenarios/adverse.csv + scenarios/severe.csv`
-Numeric adverse and severe scenario paths that Codex compared for directional severity and segment reasonableness.
+## [BANK INPUT] `docs/scenario_assumptions.md`
+Documented scenario narrative that Codex challenged against quantitative reserve behavior and the packaged scenario definitions.
 
 ```text
-[adverse.csv]
-quarter,unemployment_rate,gdp_growth,house_price_growth,cre_price_growth,prime_rate
-2026Q1,5.4,0.8,-1.5,-2.2,5.6
-2026Q2,5.9,0.3,-3.2,-4.1,5.75
-2026Q3,6.3,-0.4,-4.8,-5.6,5.75
-2026Q4,6.1,-0.1,-4.4,-4.7,5.55
-2027Q1,5.8,0.2,-2.8,-3.1,5.4
-2027Q2,5.5,0.6,-1.3,-1.5,5.25
-2027Q3,5.1,1.0,0.1,-0.4,5.1
-2027Q4,4.9,1.2,0.8,0.2,5.0
+# Scenario Assumptions
 
-[severe.csv]
-quarter,unemployment_rate,gdp_growth,house_price_growth,cre_price_growth,prime_rate
-2026Q1,6.0,0.2,-2.0,-3.2,5.75
-2026Q2,6.9,-0.8,-4.4,-6.6,6.0
-2026Q3,7.6,-1.6,-5.8,-8.0,6.05
-2026Q4,7.2,-0.9,-2.9,-5.1,5.85
-2027Q1,6.6,-0.2,0.4,-2.6,5.55
-2027Q2,6.0,0.4,1.6,-1.0,5.3
-2027Q3,5.4,0.9,1.8,0.1,5.1
-2027Q4,5.0,1.2,2.0,0.6,5.0
+Baseline, adverse, and severe scenarios were prepared by Finance. Severe is described as a uniformly harsher path than adverse, with higher unemployment, lower GDP growth, and weaker real-estate prices across the modeled horizon.
+
+The review should therefore expect total reserve and segment reserve ordering to be baseline, then adverse, then severe, absent a clearly documented exception.
 ```
 
-## [CODEX OUTPUT] `outputs/support/baseline_reproduction.json`
-Codex-generated reproduction record showing the packaged baseline reserve and the rerun reserve matched exactly.
+## [CODEX OUTPUT] `outputs/support/documentation_crosscheck.md`
+Codex-generated documentation challenge summarizing the forecast, reversion, overlay, and segment-level inconsistencies identified during the review.
 
 ```text
-{
-  "packaged_total_reserve": 4876841.47,
-  "rerun_total_reserve": 4876841.47,
-  "absolute_delta": 0.0,
-  "pct_delta": 0.0,
-  "max_loan_level_abs_delta": 0.0,
-  "segment_deltas": [
-    {
-      "segment_id": "commercial_and_industrial",
-      "reserve_amount_packaged": 1977246.19,
-      "reserve_amount_rerun": 1977246.19,
-      "delta": 0.0,
-      "pct_delta": 0.0
-    },
-    {
-      "segment_id": "commercial_real_estate",
-      "reserve_amount_packaged": 2545519.51,
-      "reserve_amount_rerun": 2545519.51,
-      "delta": 0.0,
-      "pct_delta": 0.0
-    },
-    {
-      "segment_id": "consumer_unsecured",
-      "reserve_amount_packaged": 100355.66,
-      "reserve_amount_rerun": 100355.66,
-      "delta": 0.0,
-      "pct_delta": 0.0
-    },
-    {
-      "segment_id": "residential_mortgage",
-      "reserve_amount_packaged": 253720.11,
-      "reserve_amount_rerun": 253720.11,
-      "delta": 0.0,
-      "pct_delta": 0.0
-    }
-  ]
-}
+# Documentation Cross-Check
+
+## Methodology versus implementation
+The written methodology and model overview describe a different forecast and reversion treatment than the reserve engine actually uses.
+
+- Evidence: docs/methodology.md, docs/model_overview.md, model/cecl_engine.py
+- Documented forecast quarters: 4
+- Implemented forecast quarters: 6
+- Documented reversion quarters: 4
+- Implemented reversion quarters: 2
+
+## Overlay posture
+The overlay memo understates the magnitude of the overlay table used in the actual scenario runs.
+
+- Evidence: docs/overlay_memo.md, data/overlay_schedule.csv, outputs/support/sensitivity_results.csv
+- Documented overlay cap: 5.0 bps
+- Actual overlay cap in schedule: 9.0 bps
+
+## Scenario reasonableness
+Overall reserve monotonicity is intact, but one segment behaves oddly under the severe scenario.
+
+- Evidence: outputs/support/segment_reserve_comparison.csv, docs/scenario_assumptions.md, docs/overlay_memo.md
+- Overall reserve ordering: baseline 4876841.47, adverse 7132021.97, severe 8287703.47
+- Anomaly segment: residential_mortgage
+- Adverse versus severe segment delta: -109988.30
 ```
 
-## [CODEX OUTPUT] `outputs/support/segment_reserve_comparison.csv`
-Codex-generated segment comparison highlighting the Residential Mortgage severe-versus-adverse anomaly.
+## [CODEX OUTPUT] `outputs/support/review_strategy.md`
+Codex-generated planning record showing how the review questions and procedures were selected from the discovered evidence.
 
 ```text
-segment_id,adverse,baseline,severe,adverse_minus_baseline,severe_minus_adverse
-commercial_and_industrial,2712808.82,1977246.19,3148323.76,735562.63,435514.94
-commercial_real_estate,3972723.25,2545519.51,4787769.99,1427203.74,815046.74
-consumer_unsecured,118790.69,100355.66,133898.81,18435.03,15108.12
-residential_mortgage,327699.21,253720.11,217710.91,73979.1,-109988.3
-```
-
-## [CODEX OUTPUT] `outputs/support/sensitivity_results.csv`
-Codex-generated sensitivity results used to challenge forecast horizon, reversion, macro severity, and overlay magnitude assumptions.
-
-```text
-test_type,setting,scenario_name,reserve_amount
-forecast_horizon,4,baseline,4877986.54
-forecast_horizon,6,baseline,4876841.47
-forecast_horizon,8,baseline,4876841.47
-reversion_speed,2,severe,8287703.47
-reversion_speed,4,severe,8384330.79
-reversion_speed,6,severe,8472904.31
-macro_severity_scale,0.75,severe,7126890.49
-macro_severity_scale,1.0,severe,8287703.47
-macro_severity_scale,1.25,severe,9803105.55
-overlay_multiplier,0.0,severe,7850916.88
-overlay_multiplier,1.0,severe,8287703.47
-overlay_multiplier,1.5,severe,8506096.88
+## Review Questions
+1. Does the package contain enough evidence to support a full execution-based CECL review rather than a documentation-only assessment?
+2. Can the supplied baseline reserve be reproduced from the packaged reserve engine, portfolio data, and baseline scenario?
+3. Do reserve outputs move directionally and materially across Baseline, Adverse, and Severe scenarios both overall and by major segment?
+4. How sensitive are reserves to forecast horizon, reversion speed, macro severity, and overlay magnitude assumptions?
+5. Do the methodology, scenario, and overlay documents faithfully describe the behavior observed in the implemented CECL process, especially for Residential Mortgage?
 ```

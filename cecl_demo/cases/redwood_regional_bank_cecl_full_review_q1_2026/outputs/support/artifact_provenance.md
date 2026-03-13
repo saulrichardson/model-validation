@@ -121,7 +121,7 @@ Conventions:
   - Purpose: Machine-readable chronology of granular review actions.
 - E029 [CODEX OUTPUT] `outputs/support/evidence_excerpts.md`
   - Kind: document
-  - Detail: Text artifact with 190 line(s)
+  - Detail: Text artifact with 144 line(s)
   - Purpose: Collects raw excerpts from uploaded materials and review outputs used in the writeup.
 - E030 [CODEX OUTPUT] `outputs/support/baseline_reproduction.json`
   - Kind: json artifact
