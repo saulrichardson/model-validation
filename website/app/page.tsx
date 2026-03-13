@@ -273,6 +273,7 @@ export default function Home() {
 
         <nav className="site-header__nav" aria-label="Primary">
           <a href="#platform">Platform</a>
+          <a href="/demo">Demo</a>
           <a href="#operating-model">Operating Model</a>
           <a href="#architecture">Architecture</a>
         </nav>
