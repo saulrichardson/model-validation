@@ -43,7 +43,7 @@ const heroOutput: ReviewOutput = {
   coverage: "74% supported scope",
   findings: "05 findings",
   notes: [
-    "Applicable review path selected from the evidence supplied.",
+    "Review path selected from the evidence supplied.",
     "Coverage stays explicit where the package is incomplete.",
   ],
 };
@@ -203,16 +203,21 @@ function FlowVisual({
   artifacts,
   modules,
   output,
+  labels,
 }: {
   artifacts: string[];
   modules: WorkflowModule[];
   output: ReviewOutput;
+  labels: {
+    left: string;
+    center: string;
+    right: string;
+  };
 }) {
   return (
     <div className="flow-visual">
-      <article className="flow-panel">
-        <p className="flow-panel__label">What goes in</p>
-        <h3>Mixed model package</h3>
+      <article className="flow-column">
+        <p className="flow-column__label">{labels.left}</p>
         <ul className="flow-list">
           {artifacts.map((artifact) => (
             <li key={artifact} className="flow-row">
@@ -222,9 +227,8 @@ function FlowVisual({
         </ul>
       </article>
 
-      <article className="flow-panel">
-        <p className="flow-panel__label">What runs</p>
-        <h3>Applicable workflow</h3>
+      <article className="flow-column">
+        <p className="flow-column__label">{labels.center}</p>
         <div className="module-list">
           {modules.map((module) => (
             <div key={module.name} className="module-row">
@@ -235,8 +239,8 @@ function FlowVisual({
         </div>
       </article>
 
-      <article className="flow-panel flow-panel--output">
-        <p className="flow-panel__label">What comes out</p>
+      <article className="flow-column flow-column--output">
+        <p className="flow-column__label">{labels.right}</p>
         <h3>{output.title}</h3>
         <div className="output-stats">
           <div>
@@ -295,18 +299,30 @@ export default function Home() {
               View example outputs
             </a>
           </div>
-
-          <p className="hero__summary">One engine decides what review the package supports.</p>
         </div>
 
-        <FlowVisual artifacts={heroArtifacts} modules={heroModules} output={heroOutput} />
+        <div className="hero__band">
+          <p className="hero__band-note">
+            One engine decides what review the package supports.
+          </p>
+          <FlowVisual
+            artifacts={heroArtifacts}
+            modules={heroModules}
+            output={heroOutput}
+            labels={{
+              left: "Package signals",
+              center: "Review path",
+              right: "Opinion out",
+            }}
+          />
+        </div>
       </section>
 
       <div className="trust-line">
         Code. Containers. Docs. Data. Vendor packages. One review engine.
       </div>
 
-      <section className="section" id="workflow">
+      <section className="section section--workflow" id="workflow">
         <div className="section__intro">
           <p className="eyebrow">How it works</p>
           <h2>A review engine, not a workflow form</h2>
@@ -316,9 +332,10 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="stage-grid">
-          {stages.map((stage) => (
-            <article className="stage-card" key={stage.title}>
+        <div className="stage-rail">
+          {stages.map((stage, index) => (
+            <article className="stage-row" key={stage.title}>
+              <span className="stage-row__index">0{index + 1}</span>
               <h3>{stage.title}</h3>
               <p>{stage.sentence}</p>
             </article>
@@ -326,7 +343,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" id="proof">
+      <section className="section section--proof" id="proof">
         <div className="section__intro">
           <p className="eyebrow">Proof</p>
           <h2>Same platform. Different reviews.</h2>
@@ -335,11 +352,11 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="case-stack">
+        <div className="proof-stack">
           {reviewCases.map((reviewCase, index) => (
-            <section className="case-block" key={reviewCase.id}>
-              <div className="case-block__intro">
-                <span className="case-block__index">0{index + 1}</span>
+            <section className="proof-chapter" key={reviewCase.id}>
+              <div className="proof-chapter__header">
+                <span className="proof-chapter__index">0{index + 1}</span>
                 <div>
                   <h3>{reviewCase.label}</h3>
                   <p>{reviewCase.thesis}</p>
@@ -350,6 +367,11 @@ export default function Home() {
                 artifacts={reviewCase.artifacts}
                 modules={reviewCase.modules}
                 output={reviewCase.output}
+                labels={{
+                  left: "Package",
+                  center: "Workflow",
+                  right: "Output",
+                }}
               />
             </section>
           ))}
