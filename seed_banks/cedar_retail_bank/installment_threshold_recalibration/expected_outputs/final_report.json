@@ -1,0 +1,9 @@
+{
+  "report_type": "full_revalidation_memo",
+  "title": "Cedar Retail Bank Installment Threshold Recalibration Revalidation Memo",
+  "executive_summary": "Documentation does not fully align with the implemented cutoff and reason-code behavior.",
+  "recommended_actions": [
+    "Confirm post-implementation monitoring thresholds.",
+    "Review thin-file segment movement before final approval."
+  ]
+}

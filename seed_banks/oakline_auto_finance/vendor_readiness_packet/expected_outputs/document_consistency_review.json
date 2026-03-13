@@ -1,0 +1,10 @@
+{
+  "conflicts": [],
+  "missing_reason_code_features": [
+    "dealer_quality_band",
+    "loan_term_stretch_flag"
+  ],
+  "missing_rate_snapshot": {
+    "verified_income_stability": 0.3262
+  }
+}

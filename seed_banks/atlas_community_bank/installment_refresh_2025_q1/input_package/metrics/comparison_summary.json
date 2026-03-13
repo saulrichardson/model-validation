@@ -1,0 +1,23 @@
+{
+  "baseline": {
+    "auc": 0.7162,
+    "approval_rate": 0.5522,
+    "review_rate": 0.1222,
+    "decline_rate": 0.3256,
+    "avg_pd": 0.3726,
+    "avg_score": 645.09
+  },
+  "candidate": {
+    "auc": 0.7179,
+    "approval_rate": 0.3761,
+    "review_rate": 0.1456,
+    "decline_rate": 0.4783,
+    "avg_pd": 0.4345,
+    "avg_score": 611.04
+  },
+  "notes": [
+    "Thin-file approvals decline relative to the champion after the liquidity refresh.",
+    "Overall AUC improves modestly, supporting the refresh absent stronger segment deterioration.",
+    "Reason-code coverage for LOW_CASH_BUFFER should be maintained after deployment."
+  ]
+}

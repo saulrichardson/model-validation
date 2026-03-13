@@ -1,0 +1,2 @@
+- 2025-01-03: Noted drop in thin-file approval rate after candidate model deploy. Action: Enhanced post-launch monitoring approved by committee.
+- 2025-01-06: "LOW_CASH_BUFFER" reason code frequency elevated in downturn stress test. Action: Governance committee to track ongoing impact.

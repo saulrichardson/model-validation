@@ -1,4 +1,4 @@
-"""Runtime settings for the model-validation demo repo."""
+"""Runtime settings for the model-validation workbench repo."""
 
 from __future__ import annotations
 
@@ -36,9 +36,9 @@ class Settings(BaseSettings):
         default=PROJECT_ROOT / ".workbench",
         alias="WORKBENCH_STORAGE_DIR",
     )
-    workbench_demo_cases_dir: Path = Field(
-        default=PROJECT_ROOT / "demo_cases",
-        alias="WORKBENCH_DEMO_CASES_DIR",
+    workbench_seed_banks_dir: Path = Field(
+        default=PROJECT_ROOT / "seed_banks",
+        alias="WORKBENCH_SEED_BANKS_DIR",
     )
     workbench_skill_dir: Path = Field(
         default=PROJECT_ROOT / "skills",
@@ -50,6 +50,10 @@ class Settings(BaseSettings):
     )
     workbench_agent_model: str = Field(default="gpt-5.2", alias="WORKBENCH_AGENT_MODEL")
     workbench_judge_model: str = Field(default="gpt-4.1", alias="WORKBENCH_JUDGE_MODEL")
+    workbench_seed_authoring_model: str = Field(
+        default="gpt-4.1",
+        alias="WORKBENCH_SEED_AUTHORING_MODEL",
+    )
     workbench_reasoning_effort: Literal["low", "medium", "high"] = Field(
         default="medium",
         alias="WORKBENCH_REASONING_EFFORT",

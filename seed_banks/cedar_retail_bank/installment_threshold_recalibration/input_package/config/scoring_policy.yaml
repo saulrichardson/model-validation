@@ -1,0 +1,6 @@
+champion_version: 2024.4
+candidate_version: 2025.2
+baseline_threshold: 0.42
+candidate_threshold: 0.39
+review_band_width: 0.07
+workflow_intent: full_revalidation

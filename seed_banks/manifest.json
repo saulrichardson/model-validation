@@ -1,0 +1,92 @@
+{
+  "seeds": [
+    {
+      "seed_id": "atlas_installment_refresh_2025_q1",
+      "bank_name": "Atlas Community Bank",
+      "bank_slug": "atlas_community_bank",
+      "bundle_name": "Installment Refresh 2025 Q1",
+      "bundle_slug": "installment_refresh_2025_q1",
+      "workflow_intent": "full_revalidation",
+      "quality_profile": "high",
+      "description": "Comprehensive internal material-change package for an installment credit refresh with strong governance evidence and runnable implementation.",
+      "upload_story": "Atlas uploaded the full challenger-to-champion refresh package after internal development sign-off and committee approval, including source code, validation data, prior memo, monitoring plan, and threshold sensitivity evidence.",
+      "expected_case_type": "material_change_revalidation",
+      "package_dir": "atlas_community_bank/installment_refresh_2025_q1/input_package",
+      "expected_outputs_dir": "atlas_community_bank/installment_refresh_2025_q1/expected_outputs",
+      "highlights": [
+        "Champion and candidate scorecards are both runnable from source.",
+        "Threshold recalibration and liquidity-feature introduction are documented consistently.",
+        "Governance materials and implementation runbook are present."
+      ],
+      "expected_workflow": "full_revalidation",
+      "expected_report_type": "full_revalidation_memo",
+      "minimum_coverage_ratio": 0.85
+    },
+    {
+      "seed_id": "cedar_installment_threshold_recalibration",
+      "bank_name": "Cedar Retail Bank",
+      "bank_slug": "cedar_retail_bank",
+      "bundle_name": "Installment Threshold Recalibration",
+      "bundle_slug": "installment_threshold_recalibration",
+      "workflow_intent": "full_revalidation",
+      "quality_profile": "mixed",
+      "description": "Runnable material-change package with real implementation evidence but mixed-quality governance and stale threshold documentation.",
+      "upload_story": "Cedar uploaded a candidate score package and supporting materials after an expedited policy recalibration. The upload includes source, data, and comparison metrics, but several governance artifacts are incomplete or stale.",
+      "expected_case_type": "material_change_revalidation",
+      "package_dir": "cedar_retail_bank/installment_threshold_recalibration/input_package",
+      "expected_outputs_dir": "cedar_retail_bank/installment_threshold_recalibration/expected_outputs",
+      "highlights": [
+        "Champion and candidate packages are runnable and include packaged reference scores.",
+        "Threshold policy moved materially to preserve booking targets.",
+        "Governance artifacts intentionally include stale and incomplete references."
+      ],
+      "expected_workflow": "full_revalidation",
+      "expected_report_type": "full_revalidation_memo",
+      "minimum_coverage_ratio": 0.72
+    },
+    {
+      "seed_id": "meridian_heloc_readiness_pack_q1",
+      "bank_name": "Meridian Home Equity",
+      "bank_slug": "meridian_home_equity",
+      "bundle_name": "HELOC Readiness Pack Q1",
+      "bundle_slug": "heloc_readiness_pack_q1",
+      "workflow_intent": "conceptual_readiness_review",
+      "quality_profile": "rich_inconsistent",
+      "description": "Rich documentation-led upload with sample data and broad governance materials but no runnable implementation.",
+      "upload_story": "Meridian uploaded a readiness package for a home-equity line model refresh. The package is documentation-heavy and broad, but runtime artifacts are withheld pending vendor release and the pack contains several internal inconsistencies.",
+      "expected_case_type": "documentation_only_review",
+      "package_dir": "meridian_home_equity/heloc_readiness_pack_q1/input_package",
+      "expected_outputs_dir": "meridian_home_equity/heloc_readiness_pack_q1/expected_outputs",
+      "highlights": [
+        "Broad documentation pack includes governance minutes, monitoring proposal, and evidence request tracker.",
+        "Feature counts intentionally conflict between methodology and model card.",
+        "No runtime package or reproducibility script is included."
+      ],
+      "expected_workflow": "conceptual_readiness_review",
+      "expected_report_type": "conceptual_readiness_memo",
+      "minimum_coverage_ratio": 0.6
+    },
+    {
+      "seed_id": "oakline_vendor_readiness_packet",
+      "bank_name": "Oakline Auto Finance",
+      "bank_slug": "oakline_auto_finance",
+      "bundle_name": "Vendor Readiness Packet",
+      "bundle_slug": "vendor_readiness_packet",
+      "workflow_intent": "conceptual_readiness_review",
+      "quality_profile": "thin",
+      "description": "Thin documentation-led packet from a vendor-managed auto finance model with clear evidence gaps and only light supporting materials.",
+      "upload_story": "Oakline received a sparse vendor packet for an auto finance acquisition model. The upload contains a model inventory record, a short methodology note, a partial reason-code table, and a thin evidence request trail but no runnable assets.",
+      "expected_case_type": "documentation_only_review",
+      "package_dir": "oakline_auto_finance/vendor_readiness_packet/input_package",
+      "expected_outputs_dir": "oakline_auto_finance/vendor_readiness_packet/expected_outputs",
+      "highlights": [
+        "The packet includes a model inventory entry and policy exception memo.",
+        "Feature dictionary and monitoring support are intentionally thin.",
+        "No executable scoring assets, development evidence, or prior validation package are included."
+      ],
+      "expected_workflow": "conceptual_readiness_review",
+      "expected_report_type": "conceptual_readiness_memo",
+      "minimum_coverage_ratio": 0.4
+    }
+  ]
+}

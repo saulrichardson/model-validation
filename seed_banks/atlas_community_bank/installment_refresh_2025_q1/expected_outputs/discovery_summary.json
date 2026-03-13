@@ -1,0 +1,11 @@
+{
+  "case_type": "material_change_revalidation",
+  "runtime_mode": "runnable_source",
+  "likely_execution_path": "full_revalidation",
+  "artifact_highlights": [
+    "Champion and candidate scorecards are both runnable from source.",
+    "Threshold recalibration and liquidity-feature introduction are documented consistently.",
+    "Governance materials and implementation runbook are present."
+  ],
+  "gaps": []
+}

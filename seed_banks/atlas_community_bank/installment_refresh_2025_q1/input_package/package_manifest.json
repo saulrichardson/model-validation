@@ -1,0 +1,15 @@
+{
+  "bundle_name": "Installment Refresh 2025 Q1",
+  "bank_name": "Atlas Community Bank",
+  "workflow_intent": "full_revalidation",
+  "artifact_groups": [
+    "data",
+    "docs",
+    "models",
+    "metrics",
+    "runtime",
+    "governance",
+    "analysis",
+    "config"
+  ]
+}

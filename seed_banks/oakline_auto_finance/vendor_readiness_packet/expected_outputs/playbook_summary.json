@@ -1,0 +1,11 @@
+{
+  "dominant_workflow": "conceptual_readiness_review",
+  "coverage_ratio": 0.4,
+  "modules": {
+    "conceptual_soundness_review": "executable",
+    "documentation_consistency": "partial",
+    "reason_code_review": "partial",
+    "data_profile_review": "executable",
+    "runtime_reproduction": "blocked"
+  }
+}

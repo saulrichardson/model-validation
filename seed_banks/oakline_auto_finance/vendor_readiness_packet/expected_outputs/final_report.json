@@ -1,0 +1,10 @@
+{
+  "report_type": "conceptual_readiness_memo",
+  "title": "Oakline Auto Finance Vendor Readiness Packet Readiness Memo",
+  "executive_summary": "The packet is materially insufficient for anything beyond an early readiness review.",
+  "evidence_requests": [
+    "Provide runnable implementation or reproducibility scripts.",
+    "Refresh reason-code mapping for omitted features.",
+    "Provide monitoring evidence with explicit thresholds."
+  ]
+}

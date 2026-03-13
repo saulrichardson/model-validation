@@ -1,0 +1,12 @@
+{
+  "bank_name": "Cedar Retail Bank",
+  "product_context": "Point-of-sale installment lending",
+  "champion_version": "2024.4",
+  "candidate_version": "2025.2",
+  "quality_profile": "mixed",
+  "open_conditions": [
+    "Methodology and committee minutes reference the old 0.40 threshold instead of the implemented 0.39 cutoff.",
+    "Reason-code mapping omits LOW_CASH_BUFFER even though the candidate can emit it.",
+    "Monitoring thresholds for thin-file approvals are missing from the monitoring plan."
+  ]
+}

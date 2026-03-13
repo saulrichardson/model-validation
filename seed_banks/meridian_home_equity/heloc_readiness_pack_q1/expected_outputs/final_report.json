@@ -1,0 +1,10 @@
+{
+  "report_type": "conceptual_readiness_memo",
+  "title": "Meridian Home Equity HELOC Readiness Pack Q1 Readiness Memo",
+  "executive_summary": "The pack is useful for conceptual review but insufficient for execution-based validation.",
+  "evidence_requests": [
+    "Provide runnable implementation or reproducibility scripts.",
+    "Refresh reason-code mapping for omitted features.",
+    "Provide monitoring evidence with explicit thresholds."
+  ]
+}

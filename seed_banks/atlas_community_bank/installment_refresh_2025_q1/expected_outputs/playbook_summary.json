@@ -1,0 +1,11 @@
+{
+  "dominant_workflow": "full_revalidation",
+  "coverage_ratio": 0.85,
+  "modules": {
+    "runtime_reproduction": "executable",
+    "baseline_comparison": "executable",
+    "behavioral_review": "executable",
+    "documentation_consistency": "executable",
+    "reason_code_review": "executable"
+  }
+}

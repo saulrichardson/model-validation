@@ -1,0 +1,17 @@
+{
+  "summary": "Oakline Auto Finance readiness pack benchmarked as documentation-only with open evidence gaps.",
+  "strengths": [
+    "Core methodology and governance narrative are present.",
+    "A sample extract supports limited data profiling."
+  ],
+  "gaps": [
+    "Monitoring support is generic and lacks metric thresholds.",
+    "Policy exception memo acknowledges unresolved documentation gaps.",
+    "Reason-code mapping is partial and uses generic statements for multiple features."
+  ],
+  "evidence_requests": [
+    "Provide runnable implementation or reproducibility scripts.",
+    "Refresh reason-code mapping for omitted features.",
+    "Provide monitoring evidence with explicit thresholds."
+  ]
+}

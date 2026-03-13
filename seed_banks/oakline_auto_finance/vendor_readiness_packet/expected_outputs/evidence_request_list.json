@@ -1,0 +1,7 @@
+{
+  "requests": [
+    "Provide runnable implementation or reproducibility scripts.",
+    "Refresh reason-code mapping for omitted features.",
+    "Provide monitoring evidence with explicit thresholds."
+  ]
+}

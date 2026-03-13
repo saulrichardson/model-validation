@@ -1,0 +1,87 @@
+{
+  "seed_id": "cedar_installment_threshold_recalibration",
+  "bank_name": "Cedar Retail Bank",
+  "bank_slug": "cedar_retail_bank",
+  "bundle_name": "Installment Threshold Recalibration",
+  "bundle_slug": "installment_threshold_recalibration",
+  "workflow_intent": "full_revalidation",
+  "quality_profile": "mixed",
+  "description": "Runnable material-change package with real implementation evidence but mixed-quality governance and stale threshold documentation.",
+  "upload_story": "Cedar uploaded a candidate score package and supporting materials after an expedited policy recalibration. The upload includes source, data, and comparison metrics, but several governance artifacts are incomplete or stale.",
+  "expected_case_type": "material_change_revalidation",
+  "expected_workflow": "full_revalidation",
+  "expected_report_type": "full_revalidation_memo",
+  "minimum_coverage_ratio": 0.72,
+  "product_context": "Point-of-sale installment lending",
+  "champion_version": "2024.4",
+  "candidate_version": "2025.2",
+  "sample_size": 1600,
+  "rng_seed": 77,
+  "baseline_intercept": -2.38,
+  "candidate_intercept": -2.21,
+  "baseline_threshold": 0.42,
+  "candidate_threshold": 0.39,
+  "baseline_coefficients": {
+    "bureau_headroom": 1.22,
+    "dti_ratio": 1.26,
+    "utilization_rate": 0.7,
+    "delinquency_12m": 0.49,
+    "inquiries_6m": 0.15,
+    "thin_file_flag": 0.29,
+    "short_tenure": 0.17
+  },
+  "candidate_coefficients": {
+    "bureau_headroom": 1.2,
+    "dti_ratio": 1.31,
+    "utilization_rate": 0.73,
+    "delinquency_12m": 0.52,
+    "inquiries_6m": 0.14,
+    "thin_file_flag": 0.51,
+    "short_tenure": 0.2,
+    "low_cash_buffer": 0.54
+  },
+  "threshold_range": [
+    0.35,
+    0.37,
+    0.39,
+    0.41,
+    0.43
+  ],
+  "highlights": [
+    "Champion and candidate packages are runnable and include packaged reference scores.",
+    "Threshold policy moved materially to preserve booking targets.",
+    "Governance artifacts intentionally include stale and incomplete references."
+  ],
+  "intended_issues": [
+    "Methodology and committee minutes reference the old 0.40 threshold instead of the implemented 0.39 cutoff.",
+    "Reason-code mapping omits LOW_CASH_BUFFER even though the candidate can emit it.",
+    "Monitoring thresholds for thin-file approvals are missing from the monitoring plan."
+  ],
+  "expected_findings": [
+    "Documentation does not fully align with the implemented cutoff and reason-code behavior.",
+    "Candidate materially tightens thin-file approvals relative to the champion.",
+    "Governance evidence is sufficient for review but not clean enough for an unconditional sign-off."
+  ],
+  "expected_blocked_modules": [],
+  "reason_code_mapping": {
+    "LOW_BUREAU_SCORE": "External credit score below minimum policy expectation.",
+    "HIGH_DTI": "Debt burden exceeds current policy tolerance.",
+    "HIGH_UTILIZATION": "Revolving exposure is elevated relative to policy.",
+    "RECENT_DELINQUENCY": "Recent delinquency behavior increased expected risk.",
+    "RECENT_CREDIT_SEEKING": "Recent credit seeking activity is elevated.",
+    "THIN_CREDIT_FILE": "Limited credit history reduced underwriting confidence.",
+    "SHORT_EMPLOYMENT_TENURE": "Employment history is shorter than preferred."
+  },
+  "expected_output_files": [
+    "expected_outputs/baseline_vs_candidate_summary.json",
+    "expected_outputs/discovery_summary.json",
+    "expected_outputs/execution_summary.json",
+    "expected_outputs/final_report.json",
+    "expected_outputs/final_report.md",
+    "expected_outputs/monotonicity_checks.json",
+    "expected_outputs/playbook_summary.json",
+    "expected_outputs/reason_code_stability.csv",
+    "expected_outputs/sensitivity_summary.json",
+    "expected_outputs/threshold_sweep.csv"
+  ]
+}

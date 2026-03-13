@@ -6,7 +6,7 @@ import shutil
 import uuid
 from pathlib import Path
 
-from .schemas import CaseRecord, CaseSource, DemoCaseDescriptor
+from .schemas import CaseRecord, CaseSource, SeedBundleDescriptor
 from .settings import Settings
 from .skills import SkillRegistry
 from .storage import CaseRepository
@@ -47,30 +47,30 @@ class ValidationWorkbenchService:
     def get_case(self, case_id: str) -> CaseRecord:
         return self._repo.get_case(case_id)
 
-    def list_demo_cases(self) -> list[DemoCaseDescriptor]:
-        demo_root = self._settings.workbench_demo_cases_dir
+    def list_seed_bundles(self) -> list[SeedBundleDescriptor]:
+        seed_root = self._settings.workbench_seed_banks_dir
         return [
-            DemoCaseDescriptor.model_validate_json(descriptor.read_text(encoding="utf-8"))
-            for descriptor in sorted(demo_root.glob("*/descriptor.json"))
+            SeedBundleDescriptor.model_validate_json(descriptor.read_text(encoding="utf-8"))
+            for descriptor in sorted(seed_root.glob("*/*/seed.json"))
         ]
 
-    def create_case_from_demo(self, demo_id: str) -> CaseRecord:
-        descriptor = next((item for item in self.list_demo_cases() if item.demo_id == demo_id), None)
+    def create_case_from_seed(self, seed_id: str) -> CaseRecord:
+        descriptor = next((item for item in self.list_seed_bundles() if item.seed_id == seed_id), None)
         if descriptor is None:
-            raise KeyError(f"Unknown demo case: {demo_id}")
+            raise KeyError(f"Unknown seed bundle: {seed_id}")
 
         case_id = f"case_{uuid.uuid4().hex[:12]}"
         case_dir = self._repo.create_case_dir(case_id)
         source_dir = Path(descriptor.package_dir)
         if not source_dir.is_absolute():
-            source_dir = self._settings.workbench_demo_cases_dir / source_dir
-        target_dir = case_dir / "input" / source_dir.name
+            source_dir = self._settings.workbench_seed_banks_dir / source_dir
+        target_dir = case_dir / "input" / f"{descriptor.bank_slug}_{descriptor.bundle_slug}"
         shutil.copytree(source_dir, target_dir, dirs_exist_ok=False)
         case = CaseRecord(
             case_id=case_id,
-            name=descriptor.title,
-            source=CaseSource.DEMO,
-            source_id=descriptor.demo_id,
+            name=f"{descriptor.bank_name} - {descriptor.bundle_name}",
+            source=CaseSource.SEED,
+            source_id=descriptor.seed_id,
             root_dir=str(target_dir),
         )
         return self._repo.save_case(case)

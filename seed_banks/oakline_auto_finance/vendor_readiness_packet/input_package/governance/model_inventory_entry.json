@@ -1,0 +1,11 @@
+{
+  "bank_name": "Oakline Auto Finance",
+  "product_context": "Indirect auto finance acquisition model",
+  "quality_profile": "thin",
+  "runtime_artifacts_included": false,
+  "open_gaps": [
+    "Monitoring support is generic and lacks metric thresholds.",
+    "Policy exception memo acknowledges unresolved documentation gaps.",
+    "Reason-code mapping is partial and uses generic statements for multiple features."
+  ]
+}

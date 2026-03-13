@@ -1,0 +1,3 @@
+- Model documentation and committee minutes reference old threshold (0.40) instead of the implemented 0.39 cutoff. 
+- Reason-code mapping does not include LOW_CASH_BUFFER, which the candidate model can emit.
+- Monitoring plan lacks defined thresholds for thin-file approvals.

@@ -14,7 +14,7 @@ def utc_now() -> datetime:
 
 
 class CaseSource(str, Enum):
-    DEMO = "demo"
+    SEED = "seed"
     UPLOAD = "upload"
 
 
@@ -348,12 +348,19 @@ class CaseRecord(BaseModel):
     failure_message: str | None = None
 
 
-class DemoCaseDescriptor(BaseModel):
-    demo_id: str
-    title: str
+class SeedBundleDescriptor(BaseModel):
+    seed_id: str
+    bank_name: str
+    bank_slug: str
+    bundle_name: str
+    bundle_slug: str
+    workflow_intent: WorkflowType
+    quality_profile: str
     description: str
+    upload_story: str
     expected_case_type: CaseType
     package_dir: str
+    expected_outputs_dir: str
     highlights: list[str] = Field(default_factory=list)
     expected_workflow: WorkflowType | None = None
     expected_report_type: ReportType | None = None

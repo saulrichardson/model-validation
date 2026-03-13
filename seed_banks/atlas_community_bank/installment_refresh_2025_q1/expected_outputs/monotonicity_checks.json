@@ -1,0 +1,13 @@
+{
+  "bureau_score_directional_check": {
+    "status": "pass",
+    "detail": "Lower bureau scores increase modeled risk exposure for the scored population.",
+    "share_of_records_stressed": 0.8472
+  },
+  "dti_directional_check": {
+    "status": "pass",
+    "detail": "Higher debt-to-income ratios increase modeled risk exposure for the scored population.",
+    "share_of_records_stressed": 1.0
+  },
+  "baseline_average_pd": 0.4345
+}

@@ -1,0 +1,22 @@
+{
+  "seed_id": "meridian_heloc_readiness_pack_q1",
+  "bank_name": "Meridian Home Equity",
+  "bank_slug": "meridian_home_equity",
+  "bundle_name": "HELOC Readiness Pack Q1",
+  "bundle_slug": "heloc_readiness_pack_q1",
+  "workflow_intent": "conceptual_readiness_review",
+  "quality_profile": "rich_inconsistent",
+  "description": "Rich documentation-led upload with sample data and broad governance materials but no runnable implementation.",
+  "upload_story": "Meridian uploaded a readiness package for a home-equity line model refresh. The package is documentation-heavy and broad, but runtime artifacts are withheld pending vendor release and the pack contains several internal inconsistencies.",
+  "expected_case_type": "documentation_only_review",
+  "package_dir": "meridian_home_equity/heloc_readiness_pack_q1/input_package",
+  "expected_outputs_dir": "meridian_home_equity/heloc_readiness_pack_q1/expected_outputs",
+  "highlights": [
+    "Broad documentation pack includes governance minutes, monitoring proposal, and evidence request tracker.",
+    "Feature counts intentionally conflict between methodology and model card.",
+    "No runtime package or reproducibility script is included."
+  ],
+  "expected_workflow": "conceptual_readiness_review",
+  "expected_report_type": "conceptual_readiness_memo",
+  "minimum_coverage_ratio": 0.6
+}

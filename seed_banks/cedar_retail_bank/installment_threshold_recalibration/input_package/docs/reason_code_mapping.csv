@@ -1,0 +1,8 @@
+reason_code,consumer_statement
+LOW_BUREAU_SCORE,External credit score below minimum policy expectation.
+HIGH_DTI,Debt burden exceeds current policy tolerance.
+HIGH_UTILIZATION,Revolving exposure is elevated relative to policy.
+RECENT_DELINQUENCY,Recent delinquency behavior increased expected risk.
+RECENT_CREDIT_SEEKING,Recent credit seeking activity is elevated.
+THIN_CREDIT_FILE,Limited credit history reduced underwriting confidence.
+SHORT_EMPLOYMENT_TENURE,Employment history is shorter than preferred.

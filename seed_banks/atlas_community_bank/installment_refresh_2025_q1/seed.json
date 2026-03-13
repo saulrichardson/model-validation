@@ -1,0 +1,22 @@
+{
+  "seed_id": "atlas_installment_refresh_2025_q1",
+  "bank_name": "Atlas Community Bank",
+  "bank_slug": "atlas_community_bank",
+  "bundle_name": "Installment Refresh 2025 Q1",
+  "bundle_slug": "installment_refresh_2025_q1",
+  "workflow_intent": "full_revalidation",
+  "quality_profile": "high",
+  "description": "Comprehensive internal material-change package for an installment credit refresh with strong governance evidence and runnable implementation.",
+  "upload_story": "Atlas uploaded the full challenger-to-champion refresh package after internal development sign-off and committee approval, including source code, validation data, prior memo, monitoring plan, and threshold sensitivity evidence.",
+  "expected_case_type": "material_change_revalidation",
+  "package_dir": "atlas_community_bank/installment_refresh_2025_q1/input_package",
+  "expected_outputs_dir": "atlas_community_bank/installment_refresh_2025_q1/expected_outputs",
+  "highlights": [
+    "Champion and candidate scorecards are both runnable from source.",
+    "Threshold recalibration and liquidity-feature introduction are documented consistently.",
+    "Governance materials and implementation runbook are present."
+  ],
+  "expected_workflow": "full_revalidation",
+  "expected_report_type": "full_revalidation_memo",
+  "minimum_coverage_ratio": 0.85
+}

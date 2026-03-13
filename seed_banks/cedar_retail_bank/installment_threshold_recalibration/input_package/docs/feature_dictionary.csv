@@ -1,0 +1,10 @@
+feature_name,business_definition,data_type,expected_range
+bureau_score,External bureau score at application intake.,integer,560-820
+dti_ratio,Debt-to-income ratio at decision time.,float,0.05-0.90
+utilization_rate,Revolving utilization share.,float,0.03-0.99
+delinquency_12m,Number of delinquencies in trailing 12 months.,integer,0-4
+inquiries_6m,Recent bureau inquiries in trailing six months.,integer,0-7
+thin_file_flag,Indicator for thin-file applicants.,integer,0-1
+employment_tenure_mo,Months in current employment.,float,2-160
+recent_cash_buffer_mo,Estimated months of liquid cash buffer.,float,0.2-12
+low_cash_buffer,Derived liquidity stress feature used in candidate model only.,float,0-1

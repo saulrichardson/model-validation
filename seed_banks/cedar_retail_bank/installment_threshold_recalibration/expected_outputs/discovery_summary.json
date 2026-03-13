@@ -1,0 +1,11 @@
+{
+  "case_type": "material_change_revalidation",
+  "runtime_mode": "runnable_source",
+  "likely_execution_path": "full_revalidation",
+  "artifact_highlights": [
+    "Champion and candidate packages are runnable and include packaged reference scores.",
+    "Threshold policy moved materially to preserve booking targets.",
+    "Governance artifacts intentionally include stale and incomplete references."
+  ],
+  "gaps": []
+}

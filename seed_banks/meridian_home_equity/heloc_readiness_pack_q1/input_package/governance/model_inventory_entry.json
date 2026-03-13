@@ -1,0 +1,11 @@
+{
+  "bank_name": "Meridian Home Equity",
+  "product_context": "Home equity line underwriting",
+  "quality_profile": "rich_inconsistent",
+  "runtime_artifacts_included": false,
+  "open_gaps": [
+    "Feature counts differ between methodology and model card.",
+    "Reason-code mapping omits several resilience variables.",
+    "Monitoring proposal refers to runtime evidence that is not present in the package."
+  ]
+}

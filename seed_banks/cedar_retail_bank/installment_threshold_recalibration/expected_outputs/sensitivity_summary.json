@@ -1,0 +1,17 @@
+{
+  "summary": "Cedar Retail Bank candidate threshold sensitivity centered on 0.39.",
+  "stress_cases": [
+    {
+      "name": "bureau_minus_20",
+      "expected_effect": "higher modeled risk and lower approvals"
+    },
+    {
+      "name": "dti_plus_5_points",
+      "expected_effect": "higher modeled risk and more review/decline outcomes"
+    },
+    {
+      "name": "cash_buffer_minus_1_5_months",
+      "expected_effect": "greater LOW_CASH_BUFFER prevalence in top reasons"
+    }
+  ]
+}

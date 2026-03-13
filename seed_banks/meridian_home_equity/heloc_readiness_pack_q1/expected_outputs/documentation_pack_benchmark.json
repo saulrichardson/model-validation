@@ -1,0 +1,17 @@
+{
+  "summary": "Meridian Home Equity readiness pack benchmarked as documentation-only with open evidence gaps.",
+  "strengths": [
+    "Core methodology and governance narrative are present.",
+    "A sample extract supports limited data profiling."
+  ],
+  "gaps": [
+    "Feature counts differ between methodology and model card.",
+    "Reason-code mapping omits several resilience variables.",
+    "Monitoring proposal refers to runtime evidence that is not present in the package."
+  ],
+  "evidence_requests": [
+    "Provide runnable implementation or reproducibility scripts.",
+    "Refresh reason-code mapping for omitted features.",
+    "Provide monitoring evidence with explicit thresholds."
+  ]
+}

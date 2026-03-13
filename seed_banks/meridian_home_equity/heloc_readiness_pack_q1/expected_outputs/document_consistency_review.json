@@ -1,0 +1,13 @@
+{
+  "conflicts": [
+    "Methodology lists 18 features while model card lists 22."
+  ],
+  "missing_reason_code_features": [
+    "payment_shock_index",
+    "verified_income_stability",
+    "override_propensity_score"
+  ],
+  "missing_rate_snapshot": {
+    "verified_income_stability": 0.3147
+  }
+}

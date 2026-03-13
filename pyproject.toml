@@ -23,7 +23,7 @@ packages = [{ include = "model_validation", from = "src" }]
 
 [project.scripts]
 workbench-bridge = "model_validation.codex_bridge:main"
-workbench-demo = "model_validation.demo_cli:main"
+workbench-seed = "model_validation.seed_cli:main"
 
 [tool.black]
 line-length = 100

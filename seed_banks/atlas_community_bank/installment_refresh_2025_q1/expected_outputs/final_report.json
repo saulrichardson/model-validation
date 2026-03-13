@@ -1,0 +1,9 @@
+{
+  "report_type": "full_revalidation_memo",
+  "title": "Atlas Community Bank Installment Refresh 2025 Q1 Revalidation Memo",
+  "executive_summary": "Thin-file approvals decline relative to the champion after the liquidity refresh.",
+  "recommended_actions": [
+    "Confirm post-implementation monitoring thresholds.",
+    "Review thin-file segment movement before final approval."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "bank_name": "Atlas Community Bank",
+  "product_context": "Retail unsecured installment lending",
+  "champion_version": "2024.9",
+  "candidate_version": "2025.1",
+  "quality_profile": "high",
+  "open_conditions": [
+    "Candidate approval rate is lower for thin-file applicants even though overall discrimination improves modestly.",
+    "Liquidity-driven reason codes become materially more common under downturn stress and should remain monitored post-implementation."
+  ]
+}

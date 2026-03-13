@@ -1,0 +1,22 @@
+{
+  "seed_id": "cedar_installment_threshold_recalibration",
+  "bank_name": "Cedar Retail Bank",
+  "bank_slug": "cedar_retail_bank",
+  "bundle_name": "Installment Threshold Recalibration",
+  "bundle_slug": "installment_threshold_recalibration",
+  "workflow_intent": "full_revalidation",
+  "quality_profile": "mixed",
+  "description": "Runnable material-change package with real implementation evidence but mixed-quality governance and stale threshold documentation.",
+  "upload_story": "Cedar uploaded a candidate score package and supporting materials after an expedited policy recalibration. The upload includes source, data, and comparison metrics, but several governance artifacts are incomplete or stale.",
+  "expected_case_type": "material_change_revalidation",
+  "package_dir": "cedar_retail_bank/installment_threshold_recalibration/input_package",
+  "expected_outputs_dir": "cedar_retail_bank/installment_threshold_recalibration/expected_outputs",
+  "highlights": [
+    "Champion and candidate packages are runnable and include packaged reference scores.",
+    "Threshold policy moved materially to preserve booking targets.",
+    "Governance artifacts intentionally include stale and incomplete references."
+  ],
+  "expected_workflow": "full_revalidation",
+  "expected_report_type": "full_revalidation_memo",
+  "minimum_coverage_ratio": 0.72
+}

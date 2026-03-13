@@ -1,9 +1,0 @@
-{
-  "fields": [
-    "application_id",
-    "risk_probability",
-    "risk_score",
-    "decision",
-    "reason_codes"
-  ]
-}

@@ -1,0 +1,23 @@
+{
+  "baseline": {
+    "auc": 0.7092,
+    "approval_rate": 0.4725,
+    "review_rate": 0.1469,
+    "decline_rate": 0.3806,
+    "avg_pd": 0.3926,
+    "avg_score": 634.07
+  },
+  "candidate": {
+    "auc": 0.7076,
+    "approval_rate": 0.2419,
+    "review_rate": 0.1394,
+    "decline_rate": 0.6188,
+    "avg_pd": 0.4802,
+    "avg_score": 585.87
+  },
+  "notes": [
+    "Documentation does not fully align with the implemented cutoff and reason-code behavior.",
+    "Candidate materially tightens thin-file approvals relative to the champion.",
+    "Governance evidence is sufficient for review but not clean enough for an unconditional sign-off."
+  ]
+}
