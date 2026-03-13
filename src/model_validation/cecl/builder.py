@@ -1661,35 +1661,29 @@ def _full_review_evidence_excerpts(case_dir: Path, spec: FullReviewSpec, analysi
         },
         {
             "label": "[BANK INPUT]",
-            "relative_path": "scenarios/adverse.csv + scenarios/severe.csv",
-            "purpose": "Numeric adverse and severe scenario paths that Codex compared for directional severity and segment reasonableness.",
-            "content": "\n".join(
-                [
-                    "[adverse.csv]",
-                    (case_dir / "input_package" / "scenarios" / "adverse.csv").read_text(encoding="utf-8").strip(),
-                    "",
-                    "[severe.csv]",
-                    (case_dir / "input_package" / "scenarios" / "severe.csv").read_text(encoding="utf-8").strip(),
-                ]
+            "relative_path": "docs/scenario_assumptions.md",
+            "purpose": "Documented scenario narrative that Codex challenged against quantitative reserve behavior and the packaged scenario definitions.",
+            "content": _extract_block(
+                case_dir / "input_package" / "docs" / "scenario_assumptions.md",
+                "## Scenario intent and severity ordering",
+                "## Governance note",
             ),
         },
         {
             "label": "[CODEX OUTPUT]",
-            "relative_path": "outputs/support/baseline_reproduction.json",
-            "purpose": "Codex-generated reproduction record showing the packaged baseline reserve and the rerun reserve matched exactly.",
-            "content": (case_dir / "outputs" / "support" / "baseline_reproduction.json").read_text(encoding="utf-8"),
+            "relative_path": "outputs/support/documentation_crosscheck.md",
+            "purpose": "Codex-generated documentation challenge summarizing the forecast, reversion, overlay, and segment-level inconsistencies identified during the review.",
+            "content": (case_dir / "outputs" / "support" / "documentation_crosscheck.md").read_text(encoding="utf-8"),
         },
         {
             "label": "[CODEX OUTPUT]",
-            "relative_path": "outputs/support/segment_reserve_comparison.csv",
-            "purpose": "Codex-generated segment comparison highlighting the Residential Mortgage severe-versus-adverse anomaly.",
-            "content": (case_dir / "outputs" / "support" / "segment_reserve_comparison.csv").read_text(encoding="utf-8"),
-        },
-        {
-            "label": "[CODEX OUTPUT]",
-            "relative_path": "outputs/support/sensitivity_results.csv",
-            "purpose": "Codex-generated sensitivity results used to challenge forecast horizon, reversion, macro severity, and overlay magnitude assumptions.",
-            "content": (case_dir / "outputs" / "support" / "sensitivity_results.csv").read_text(encoding="utf-8"),
+            "relative_path": "outputs/support/review_strategy.md",
+            "purpose": "Codex-generated planning record showing how the review questions and procedures were selected from the discovered evidence.",
+            "content": _extract_block(
+                case_dir / "outputs" / "support" / "review_strategy.md",
+                "## Review Questions",
+                "## Procedure Selection Rationale",
+            ),
         },
     ]
 
@@ -1728,17 +1722,9 @@ def _gap_assessment_evidence_excerpts(case_dir: Path, spec: GapAssessmentSpec) -
         },
         {
             "label": "[BANK INPUT]",
-            "relative_path": "outputs/provided_overlay_bridge.csv + outputs/provided_segment_reserves.csv",
-            "purpose": "Bank-supplied output snapshots used for the documentation-led reconciliation work.",
-            "content": "\n".join(
-                [
-                    "[provided_overlay_bridge.csv]",
-                    (case_dir / "input_package" / "outputs" / "provided_overlay_bridge.csv").read_text(encoding="utf-8").strip(),
-                    "",
-                    "[provided_segment_reserves.csv]",
-                    (case_dir / "input_package" / "outputs" / "provided_segment_reserves.csv").read_text(encoding="utf-8").strip(),
-                ]
-            ),
+            "relative_path": "docs/evidence_request_log.md",
+            "purpose": "Bank-supplied evidence request log showing the package's own acknowledgement of missing runtime and lineage support.",
+            "content": (case_dir / "input_package" / "docs" / "evidence_request_log.md").read_text(encoding="utf-8"),
         },
         {
             "label": "[CODEX OUTPUT]",
@@ -1748,9 +1734,9 @@ def _gap_assessment_evidence_excerpts(case_dir: Path, spec: GapAssessmentSpec) -
         },
         {
             "label": "[CODEX OUTPUT]",
-            "relative_path": "outputs/support/findings_register.json",
-            "purpose": "Codex-generated findings register capturing the primary documentation and evidence gaps.",
-            "content": (case_dir / "outputs" / "support" / "findings_register.json").read_text(encoding="utf-8"),
+            "relative_path": "outputs/support/documentation_crosscheck.md",
+            "purpose": "Codex-generated documentation cross-check summarizing execution blockers, scenario inconsistency, and segment-overlay reconciliation issues.",
+            "content": (case_dir / "outputs" / "support" / "documentation_crosscheck.md").read_text(encoding="utf-8"),
         },
     ]
 

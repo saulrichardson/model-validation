@@ -371,6 +371,32 @@ def render_full_review_latex(
     anomaly_row = segment_comparison.loc[
         segment_comparison["segment_id"] == spec.quantitative_anomaly_segment
     ].iloc[0]
+    scenario_rows = [
+        [
+            _display_scenario(str(row["scenario_name"])),
+            _money(float(row["reserve_amount"])),
+            _pct(float(row["reserve_rate"])),
+            _money(float(row["reserve_amount"] - baseline["reserve_amount"])),
+        ]
+        for _, row in _ordered_scenarios(scenario_summary).iterrows()
+    ]
+    segment_rows = [
+        [
+            _display_segment(str(row["segment_id"])),
+            _money(float(row["baseline"])),
+            _money(float(row["adverse"])),
+            _money(float(row["severe"])),
+            _money(float(row["severe_minus_adverse"])),
+        ]
+        for _, row in segment_comparison.sort_values("segment_id").iterrows()
+    ]
+    driver_rows = [
+        [
+            _display_driver(str(row["driver"])),
+            _money(float(row["reserve_delta_vs_baseline"])),
+        ]
+        for _, row in driver_bridge.sort_values("reserve_delta_vs_baseline", ascending=False).head(4).iterrows()
+    ]
     largest_driver = driver_bridge.sort_values("reserve_delta_vs_baseline", ascending=False).iloc[0]
 
     assumption_rows = [
@@ -400,9 +426,6 @@ def render_full_review_latex(
         ],
     ]
 
-    inventory_items = [f"{item['path']} ({item['kind']})" for item in inventory]
-    uploaded_artifact_items = [_latex_artifact_entry(item) for item in uploaded_artifacts]
-    generated_artifact_items = [_latex_artifact_entry(item) for item in generated_artifacts]
     findings_sections = "\n".join(
         _latex_finding_detail(
             finding,
@@ -424,12 +447,84 @@ def render_full_review_latex(
         ]
         for item in procedure_matrix
     ]
-    planning_artifacts = [
-        "outputs/support/review_plan.md",
-        "outputs/support/review_strategy.md",
-        "outputs/support/executed_test_matrix.md",
-        "outputs/support/evidence_map.md",
-        "outputs/support/procedure_run_log.md",
+    uploaded_paths = [item["path"] for item in inventory]
+    uploaded_groups = [
+        ("Model implementation", [path for path in uploaded_paths if path.startswith("model/")]),
+        ("Portfolio data and overlays", [path for path in uploaded_paths if path.startswith("data/")]),
+        ("Scenario definitions", [path for path in uploaded_paths if path.startswith("scenarios/")]),
+        ("Documentation and governance materials", [path for path in uploaded_paths if path.startswith("docs/")]),
+        ("Packaged prior outputs", [path for path in uploaded_paths if path.startswith("outputs/")]),
+    ]
+    generated_paths = [str(item["relative_path"]) for item in generated_artifacts]
+    generated_groups = [
+        (
+            "Discovery and planning workpapers",
+            [
+                path
+                for path in generated_paths
+                if path
+                in {
+                    "outputs/support/discovery_summary.json",
+                    "outputs/support/discovery_summary.md",
+                    "outputs/support/case_understanding.md",
+                    "outputs/support/review_plan.md",
+                    "outputs/support/review_strategy.md",
+                    "outputs/support/executed_test_matrix.md",
+                    "outputs/support/executed_test_matrix.csv",
+                    "outputs/support/evidence_map.md",
+                    "outputs/support/evidence_ledger.json",
+                    "outputs/support/coverage_statement.md",
+                }
+            ],
+        ),
+        (
+            "Quantitative workpapers",
+            [
+                path
+                for path in generated_paths
+                if path
+                in {
+                    "outputs/support/baseline_reproduction.json",
+                    "outputs/support/scenario_results.csv",
+                    "outputs/support/segment_reserve_comparison.csv",
+                    "outputs/support/sensitivity_results.csv",
+                    "outputs/support/driver_bridge.csv",
+                }
+            ],
+        ),
+        (
+            "Documentation and findings workpapers",
+            [
+                path
+                for path in generated_paths
+                if path
+                in {
+                    "outputs/support/documentation_crosscheck.md",
+                    "outputs/support/findings_register.json",
+                    "outputs/support/evidence_excerpts.md",
+                }
+            ],
+        ),
+        (
+            "Process and trace artifacts",
+            [
+                path
+                for path in generated_paths
+                if path
+                in {
+                    "outputs/support/agentic_review_log.md",
+                    "outputs/support/procedure_run_log.md",
+                    "outputs/support/procedure_run_log.csv",
+                    "outputs/support/codex_trace.md",
+                    "outputs/support/artifact_provenance.md",
+                    "outputs/support/artifact_provenance.json",
+                }
+            ],
+        ),
+        (
+            "Final deliverables",
+            [path for path in generated_paths if path.startswith("outputs/stakeholder/")],
+        ),
     ]
     quantitative_support_files = [
         "outputs/support/baseline_reproduction.json",
@@ -442,6 +537,14 @@ def render_full_review_latex(
         "outputs/support/documentation_crosscheck.md",
         "outputs/support/findings_register.json",
         "outputs/support/evidence_excerpts.md",
+    ]
+    appendix_support_files = [
+        "outputs/support/artifact_provenance.md",
+        "outputs/support/review_plan.md",
+        "outputs/support/review_strategy.md",
+        "outputs/support/executed_test_matrix.md",
+        "outputs/support/procedure_run_log.md",
+        "outputs/support/codex_trace.md",
     ]
 
     executive_summary = (
@@ -472,54 +575,40 @@ def render_full_review_latex(
     )
 
     body_parts = [
-        _latex_section("Executive Summary"),
+        _latex_section("Executive Conclusion"),
         _latex_paragraph(executive_summary),
-        "",
-        _latex_section("Scope and Coverage"),
-        _latex_paragraph(
-            "This review assessed the supplied CECL package for internal coherence, quantitative reasonableness, and documentation alignment. The work covered baseline reproduction, scenario reruns, sensitivity testing, reserve driver analysis, and cross-checking of methodology, scenario, and overlay documentation against implemented behavior."
-        ),
         _latex_itemize(
             [
-                "Supported work: baseline reproduction, scenario reruns, sensitivity testing, driver analysis, and documentation cross-checking.",
-                "Blocked work: none within the scope of the supplied package.",
-                "Coverage note: conclusions are grounded in the supplied engine, portfolio, scenario files, overlays, and supporting documentation.",
+                "Review status: qualified internal review conclusion; package supports substantive CECL challenge work, but identified findings should be remediated before an unqualified governance posture is taken.",
+                "Most material quantitative observation: portfolio reserve ordering is monotonic, but Residential Mortgage reserve declines from Adverse to Severe.",
+                "Most material documentation observation: documented forecast and reversion treatment do not match the implemented reserve engine.",
+                "Most material governance observation: overlay usage is materially larger than the documented cap.",
             ]
         ),
         "",
-        _latex_section("Bank-Uploaded Input Package"),
-        _latex_itemize(inventory_items),
-        "",
-        _latex_section("Artifact Provenance and Review Record"),
+        _latex_section("Review Scope, Package Reviewed, and Coverage"),
         _latex_paragraph(
-            "This report uses explicit provenance markers so a reviewer can distinguish what the bank supplied from what Codex produced during the review. "
-            "[BANK INPUT] indicates a file contained in the uploaded package under input_package/. [CODEX OUTPUT] indicates a review artifact created during discovery, planning, execution, or report rendering."
+            "This memo documents an internal CECL review of the supplied package for Redwood Regional Bank's Q1 2026 CECL Allowance Review. The work focused on whether the package was internally coherent, reproducible, directionally reasonable under stressed scenarios, and aligned to its own methodology and governance materials."
         ),
-        _latex_subsection("Bank-Uploaded Artifacts"),
-        _latex_itemize_raw(uploaded_artifact_items),
-        "",
-        _latex_subsection("Codex-Generated Review Artifacts"),
-        _latex_itemize_raw(generated_artifact_items),
-        "",
-        _latex_subsection("Uploaded Package Tree"),
-        _latex_verbatim_block(input_tree),
-        "",
-        _latex_subsection("Codex Output Tree"),
-        _latex_verbatim_block(generated_tree),
-        "",
-        _latex_section("Package Discovery and Case Understanding"),
-        _latex_paragraph(case_understanding["summary"]),
         _latex_itemize(
-            [f"Central assumption or theme: {item}" for item in case_understanding["central_assumptions"]]
-            + [f"Reviewable scope: {item}" for item in case_understanding["reviewable_scope"]]
-            + [f"Key risk to challenge: {item}" for item in case_understanding["key_risks"]]
-            + [f"Constraint: {item}" for item in case_understanding["constraints"]]
+            [
+                "Supported work: baseline reproduction, portfolio and segment scenario reruns, sensitivity testing, reserve-driver interpretation, and documentation/governance alignment review.",
+                "Blocked work: none within the scope of the supplied package.",
+                "Coverage boundary: conclusions are bounded to the uploaded CECL package, the synthetic portfolio, and the scenarios and overlays included in that package.",
+                f"Constraint: {case_understanding['constraints'][0]}",
+            ]
         ),
-        "",
-        _latex_section("CECL Process Understanding"),
+        _latex_subsection("Materials Reviewed"),
         _latex_paragraph(
-            f"The package describes a loan-level CECL process spanning {len(spec.segments)} segments: {', '.join(segment.display_name for segment in spec.segments)}. "
-            "The quantitative framework applies scenario-dependent macro paths to lifetime PD and LGD components and then layers qualitative overlays by segment and scenario."
+            "The uploaded package contained enough material to support both quantitative reruns and documentation challenge. The artifact groups below reflect the main categories of bank-supplied inputs that informed the review."
+        ),
+        _latex_grouped_file_sections(uploaded_groups),
+        "",
+        _latex_section("CECL Process Overview"),
+        _latex_paragraph(case_understanding["summary"]),
+        _latex_paragraph(
+            f"The documented CECL process covers {len(spec.segments)} primary segments: {', '.join(segment.display_name for segment in spec.segments)}. "
+            "The reserve process applies scenario-dependent macro paths to loan-level reserve components and then layers scenario-specific qualitative overlays by segment."
         ),
         _latex_table(
             ["Assumption Area", "Documented Position", "Observed in Package", "Review Implication"],
@@ -528,14 +617,11 @@ def render_full_review_latex(
             small=True,
         ),
         "",
-        _latex_section("Review Strategy and Planning Logic"),
+        _latex_section("Validation Approach"),
         _latex_paragraph(
-            f"The review strategy was formed from the discovered evidence. Codex considered {len(review_questions)} central review questions, selected {executed_count} executable procedures, and identified {blocked_count} blocked or non-applicable procedures."
+            f"Codex formed the review strategy from the discovered evidence. The package supported {executed_count} executable procedures across quantitative and documentation lanes, with {blocked_count} blocked procedures."
         ),
         _latex_paragraph(case_understanding["strategy_summary"]),
-        _latex_paragraph(
-            "The table below is the high-level procedure register. It is meant to communicate what Codex was trying to prove before running the work. The more detailed planning record remains in the support artifacts listed immediately after the table."
-        ),
         _latex_enumerate(review_questions),
         _latex_table(
             ["ID", "Procedure", "What Codex Was Trying To Test", "Status"],
@@ -543,22 +629,119 @@ def render_full_review_latex(
             column_ratios=[0.10, 0.24, 0.48, 0.12],
             small=True,
         ),
-        _latex_subsection("Planning and Execution Record Files"),
         _latex_paragraph(
-            "The following Codex-generated files contain the full planning rationale, executed procedure register, evidence mapping, and granular step log for this review."
+            "Detailed planning rationale, evidence mapping, and the granular procedure log are retained in the appendices and support files rather than in the main body of the memo."
         ),
-        _latex_file_reference_items(planning_artifacts),
         "",
-        _latex_section("Selected Raw Evidence Excerpts"),
+        _latex_section("Quantitative Review Results"),
+        _latex_subsection("Baseline Reproduction"),
+        _latex_paragraph(quantitative_summary),
+        _latex_table(
+            ["Metric", "Result"],
+            [
+                ["Packaged baseline reserve", _money(float(baseline_reproduction["packaged_total_reserve"]))],
+                ["Rerun baseline reserve", _money(float(baseline_reproduction["rerun_total_reserve"]))],
+                ["Absolute delta", _money(abs(float(baseline_reproduction["absolute_delta"])))],
+                ["Percent delta", f"{float(baseline_reproduction['pct_delta']):.3f}%"],
+                ["Maximum loan-level absolute delta", _money(float(baseline_reproduction["max_loan_level_abs_delta"]))],
+            ],
+            column_ratios=[0.42, 0.33],
+        ),
+        "",
+        _latex_subsection("Scenario Analysis"),
         _latex_paragraph(
-            "The excerpts below are short verbatim snippets from bank-uploaded materials and Codex-generated outputs that support the main findings and illustrate the review lineage."
+            f"Portfolio reserve ordering was monotonic. Adverse increased reserve by {_money(adverse_delta)} versus Baseline, and Severe increased reserve by {_money(severe_delta)} versus Adverse."
         ),
-        evidence_excerpt_sections,
+        _latex_table(
+            ["Scenario", "Reserve", "Reserve Rate", "Change vs Baseline"],
+            scenario_rows,
+            column_ratios=[0.18, 0.22, 0.18, 0.22],
+            small=True,
+        ),
         "",
-        _latex_section("Procedures Performed"),
+        _latex_subsection("Segment-Level Reasonableness"),
+        _latex_paragraph(
+            f"Most segments behaved directionally as expected under worsening macro conditions. The principal exception was {_display_segment(spec.quantitative_anomaly_segment)}, which produced a severe-scenario reserve below its adverse reserve."
+        ),
+        _latex_table(
+            ["Segment", "Baseline", "Adverse", "Severe", "Sev - Adv"],
+            segment_rows,
+            column_ratios=[0.28, 0.15, 0.15, 0.15, 0.15],
+            small=True,
+        ),
+        "",
+        _latex_subsection("Sensitivity Analysis"),
+        _latex_paragraph(sensitivity_summary),
+        _latex_itemize(
+            [
+                f"Forecast horizon sensitivity: moving from 6 to 4 forecast quarters changed reserve by {_money(_lookup_sensitivity(sensitivity_results, 'forecast_horizon', '4') - _lookup_sensitivity(sensitivity_results, 'forecast_horizon', '6'))}.",
+                f"Reversion sensitivity: extending severe-scenario reversion from 2 to 6 quarters increased reserve by {_money(_lookup_sensitivity(sensitivity_results, 'reversion_speed', '6') - _lookup_sensitivity(sensitivity_results, 'reversion_speed', '2'))}.",
+                f"Macro severity sensitivity: scaling severe stress from 1.00x to 1.25x increased reserve by {_money(_lookup_sensitivity(sensitivity_results, 'macro_severity_scale', '1.25') - _lookup_sensitivity(sensitivity_results, 'macro_severity_scale', '1.0'))}.",
+                f"Overlay sensitivity: removing overlays reduced reserve by {_money(_lookup_sensitivity(sensitivity_results, 'overlay_multiplier', '1.0') - _lookup_sensitivity(sensitivity_results, 'overlay_multiplier', '0.0'))}.",
+            ]
+        ),
+        _latex_paragraph(
+            "The full sensitivity grid is retained in the support files and should be used for any follow-on appendix work or management discussion."
+        ),
+        "",
+        _latex_subsection("Reserve Driver Interpretation"),
+        _latex_paragraph(
+            f"The reserve-driver bridge indicates that {_display_driver(str(largest_driver['driver']))} was the largest modeled contributor to the Severe-versus-Baseline reserve increase, adding {_money(float(largest_driver['reserve_delta_vs_baseline']))} on a standalone basis."
+        ),
+        _latex_table(
+            ["Driver", "Reserve Delta vs Baseline"],
+            driver_rows,
+            column_ratios=[0.42, 0.33],
+        ),
+        _latex_subsection("Quantitative Workpapers"),
+        _latex_file_reference_items(quantitative_support_files),
+        "",
+        _latex_section("Documentation and Governance Review"),
+        _latex_paragraph(documentation_summary),
+        _latex_itemize(
+            [
+                f"Documented forecast/reversion: {spec.documented_forecast_quarters}Q forecast and {spec.documented_reversion_quarters}Q reversion.",
+                f"Implemented forecast/reversion: {spec.implemented_forecast_quarters}Q forecast and {spec.implemented_reversion_quarters}Q reversion.",
+                f"Documented overlay cap: {doc_crosscheck['documented_overlay_cap_bps']:.1f} bps; scheduled overlay cap: {doc_crosscheck['actual_overlay_cap_bps']:.1f} bps.",
+                f"Scenario/segment observation: {_display_segment(spec.quantitative_anomaly_segment)} severe reserve {_money(float(anomaly_row['severe']))} versus adverse reserve {_money(float(anomaly_row['adverse']))}.",
+            ]
+        ),
+        _latex_subsection("Documentation and Governance Workpapers"),
+        _latex_file_reference_items(documentation_support_files),
+        "",
+        _latex_section("Findings and Required Remediation"),
+        findings_sections,
+        "",
+        _latex_section("Overall Assessment"),
+        _latex_paragraph(
+            "The supplied package supported a substantive CECL review and allowed execution of the core quantitative and documentation work expected for this scope. "
+            "The baseline output was reproducible and overall reserve direction was reasonable, but documentation and governance artifacts are not yet aligned to implemented behavior, and one segment-level severe result requires explicit management challenge before the package would support an unqualified review conclusion."
+        ),
+        "",
+        _latex_section("Appendix A. Materials Reviewed and Artifact Provenance"),
+        _latex_paragraph(
+            "The main body summarizes the material inputs and outputs. This appendix records the provenance split more explicitly so a reviewer can distinguish what the bank uploaded from what Codex generated during the review."
+        ),
+        _latex_subsection("Bank-Uploaded Input Categories"),
+        _latex_grouped_file_sections(uploaded_groups),
+        _latex_subsection("Codex-Generated Review Categories"),
+        _latex_grouped_file_sections(generated_groups),
+        _latex_subsection("Full Provenance Registers"),
+        _latex_file_reference_items(
+            [
+                "outputs/support/artifact_provenance.md",
+                "outputs/support/artifact_provenance.json",
+                "outputs/support/evidence_ledger.json",
+            ]
+        ),
+        "",
+        _latex_section("Appendix B. Executed Procedure Register"),
         *[_latex_procedure_detail(procedure) for procedure in procedure_matrix],
         "",
-        _latex_section("Agentic Execution Workflow"),
+        _latex_section("Appendix C. Agentic Review Record"),
+        _latex_paragraph(
+            "This appendix records the staged review behavior and the granular action log behind the memo. It is intended to show the review workflow without interrupting the main validation narrative."
+        ),
         *[
             "\n".join(
                 [
@@ -576,90 +759,16 @@ def render_full_review_latex(
             )
             for step in trace_steps
         ],
-        "",
-        _latex_section("Chronological Procedure and Output Log"),
-        _latex_paragraph(
-            "This section records the more granular action sequence for the review, including the specific bank inputs examined, the Codex-generated outputs created, and the observed result at each step."
-        ),
+        _latex_subsection("Planning and Process Files"),
+        _latex_file_reference_items(appendix_support_files),
+        _latex_subsection("Chronological Procedure Log"),
         procedure_log_sections,
         "",
-        _latex_section("Quantitative Results"),
-        _latex_subsection("Baseline Reproduction"),
-        _latex_paragraph(quantitative_summary),
-        _latex_table(
-            ["Metric", "Result"],
-            [
-                ["Packaged baseline reserve", _money(float(baseline_reproduction["packaged_total_reserve"]))],
-                ["Rerun baseline reserve", _money(float(baseline_reproduction["rerun_total_reserve"]))],
-                ["Absolute delta", _money(abs(float(baseline_reproduction["absolute_delta"])))],
-                ["Percent delta", f"{float(baseline_reproduction['pct_delta']):.3f}%"],
-                ["Maximum loan-level absolute delta", _money(float(baseline_reproduction["max_loan_level_abs_delta"]))],
-            ],
-            column_ratios=[0.42, 0.33],
-        ),
-        "",
-        _latex_subsection("Scenario Results"),
+        _latex_section("Appendix D. Selected Evidence Excerpts"),
         _latex_paragraph(
-            f"Portfolio-level reserve ordering was monotonic. Adverse increased reserve by {_money(adverse_delta)} versus Baseline, and Severe increased reserve by {_money(severe_delta)} versus Adverse."
+            "Only text and code excerpts are reproduced here. Structured data outputs are referenced through the support files listed elsewhere in the memo."
         ),
-        _latex_paragraph(
-            "Detailed scenario-level reserve values are recorded in outputs/support/scenario_results.csv. That file should be treated as the full machine-readable record for portfolio scenario reruns."
-        ),
-        "",
-        _latex_subsection("Segment Results"),
-        _latex_paragraph(
-            f"Segment-level behavior was directionally reasonable for most segments. The notable exception was {_display_segment(spec.quantitative_anomaly_segment)}, which declined by {_money(abs(float(anomaly_row['severe_minus_adverse'])))} from Adverse to Severe."
-        ),
-        _latex_paragraph(
-            "The segment-by-segment reserve record is maintained in outputs/support/segment_reserve_comparison.csv. That file should be used for full segment reconciliation and for tracing the Residential Mortgage anomaly."
-        ),
-        "",
-        _latex_subsection("Sensitivity Testing"),
-        _latex_paragraph(sensitivity_summary),
-        _latex_itemize(
-            [
-                f"Forecast horizon: moving from 6 to 4 forecast quarters changed reserve by {_money(_lookup_sensitivity(sensitivity_results, 'forecast_horizon', '4') - _lookup_sensitivity(sensitivity_results, 'forecast_horizon', '6'))}.",
-                f"Reversion speed: extending severe-scenario reversion from 2 to 6 quarters increased reserve by {_money(_lookup_sensitivity(sensitivity_results, 'reversion_speed', '6') - _lookup_sensitivity(sensitivity_results, 'reversion_speed', '2'))}.",
-                f"Macro severity: scaling severe stress from 1.00x to 1.25x increased reserve by {_money(_lookup_sensitivity(sensitivity_results, 'macro_severity_scale', '1.25') - _lookup_sensitivity(sensitivity_results, 'macro_severity_scale', '1.0'))}.",
-                f"Overlay magnitude: removing overlays reduced reserve by {_money(_lookup_sensitivity(sensitivity_results, 'overlay_multiplier', '1.0') - _lookup_sensitivity(sensitivity_results, 'overlay_multiplier', '0.0'))}.",
-            ]
-        ),
-        _latex_paragraph(
-            "The complete sensitivity grid, including all tested settings and reserve outputs, is recorded in outputs/support/sensitivity_results.csv."
-        ),
-        "",
-        _latex_subsection("Driver Analysis"),
-        _latex_paragraph(
-            f"The simple reserve bridge indicates that {_display_driver(str(largest_driver['driver']))} was the largest modeled contributor to the Severe-versus-Baseline reserve increase, adding {_money(float(largest_driver['reserve_delta_vs_baseline']))} on a standalone basis."
-        ),
-        _latex_paragraph(
-            "The full reserve-driver bridge is recorded in outputs/support/driver_bridge.csv and should be used for any deeper driver reconciliation or appendix work."
-        ),
-        "",
-        _latex_subsection("Quantitative Support Files"),
-        _latex_file_reference_items(quantitative_support_files),
-        "",
-        _latex_section("Documentation and Assumption Alignment"),
-        _latex_paragraph(documentation_summary),
-        _latex_itemize(
-            [
-                f"Documented forecast/reversion: {spec.documented_forecast_quarters}Q forecast and {spec.documented_reversion_quarters}Q reversion.",
-                f"Implemented forecast/reversion: {spec.implemented_forecast_quarters}Q forecast and {spec.implemented_reversion_quarters}Q reversion.",
-                f"Documented overlay cap: {doc_crosscheck['documented_overlay_cap_bps']:.1f} bps; scheduled overlay cap: {doc_crosscheck['actual_overlay_cap_bps']:.1f} bps.",
-                f"Anomaly observation: {_display_segment(spec.quantitative_anomaly_segment)} severe reserve {_money(float(anomaly_row['severe']))} versus adverse reserve {_money(float(anomaly_row['adverse']))}.",
-            ]
-        ),
-        _latex_subsection("Documentation Review Files"),
-        _latex_file_reference_items(documentation_support_files),
-        "",
-        _latex_section("Detailed Findings and Remediation"),
-        findings_sections,
-        "",
-        _latex_section("Overall Assessment"),
-        _latex_paragraph(
-            "The supplied package supported a substantive CECL review and allowed execution of the core quantitative and documentation work expected for this scope. "
-            "The baseline output was reproducible and overall reserve direction was reasonable, but documentation and governance artifacts are not yet aligned to implemented behavior, and one segment-level severe result requires explicit management challenge before the package would support an unqualified review conclusion."
-        ),
+        evidence_excerpt_sections,
     ]
 
     return _wrap_latex_document(
@@ -694,6 +803,23 @@ def render_gap_assessment_latex(
         .reset_index()
         .rename_axis(columns=None)
     )
+    scenario_rows = [
+        [
+            _display_scenario(str(row["scenario_name"])),
+            _money(float(row["reserve_amount"])),
+            _pct(float(row["reserve_rate"])),
+        ]
+        for _, row in _ordered_scenarios(scenario_summary).iterrows()
+    ]
+    segment_rows = [
+        [
+            _display_segment(str(row["segment_id"])),
+            _money(float(row.get("baseline", 0.0))),
+            _money(float(row.get("adverse", 0.0))),
+            _money(float(row.get("severe", 0.0))),
+        ]
+        for _, row in segment_pivot.sort_values("segment_id").iterrows()
+    ]
 
     assumption_rows = [
         [
@@ -722,9 +848,6 @@ def render_gap_assessment_latex(
         ],
     ]
 
-    inventory_items = [f"{item['path']} ({item['kind']})" for item in inventory]
-    uploaded_artifact_items = [_latex_artifact_entry(item) for item in uploaded_artifacts]
-    generated_artifact_items = [_latex_artifact_entry(item) for item in generated_artifacts]
     mismatch_text = ", ".join(str(item["quarter"]) for item in scenario_mismatch_quarters) or "none"
     evidence_excerpt_sections = "\n".join(_latex_evidence_excerpt(excerpt) for excerpt in evidence_excerpts)
     procedure_log_sections = "\n".join(_latex_log_event(event) for event in procedure_run_log)
@@ -748,12 +871,71 @@ def render_gap_assessment_latex(
         ]
         for item in procedure_matrix
     ]
-    planning_artifacts = [
-        "outputs/support/review_plan.md",
-        "outputs/support/review_strategy.md",
-        "outputs/support/executed_test_matrix.md",
-        "outputs/support/evidence_map.md",
-        "outputs/support/procedure_run_log.md",
+    uploaded_paths = [item["path"] for item in inventory]
+    uploaded_groups = [
+        ("Documentation and governance materials", [path for path in uploaded_paths if path.startswith("docs/")]),
+        ("Scenario definitions", [path for path in uploaded_paths if path.startswith("scenarios/")]),
+        ("Provided reserve outputs", [path for path in uploaded_paths if path.startswith("outputs/")]),
+        ("Reference data", [path for path in uploaded_paths if path.startswith("data/")]),
+    ]
+    generated_paths = [str(item["relative_path"]) for item in generated_artifacts]
+    generated_groups = [
+        (
+            "Discovery and planning workpapers",
+            [
+                path
+                for path in generated_paths
+                if path
+                in {
+                    "outputs/support/discovery_summary.json",
+                    "outputs/support/discovery_summary.md",
+                    "outputs/support/case_understanding.md",
+                    "outputs/support/review_plan.md",
+                    "outputs/support/review_strategy.md",
+                    "outputs/support/executed_test_matrix.md",
+                    "outputs/support/executed_test_matrix.csv",
+                    "outputs/support/evidence_map.md",
+                    "outputs/support/evidence_ledger.json",
+                    "outputs/support/coverage_statement.md",
+                }
+            ],
+        ),
+        (
+            "Documentation and reconciliation workpapers",
+            [
+                path
+                for path in generated_paths
+                if path
+                in {
+                    "outputs/support/documentation_crosscheck.md",
+                    "outputs/support/provided_reserve_summary.csv",
+                    "outputs/support/provided_segment_reserves.csv",
+                    "outputs/support/provided_overlay_bridge.csv",
+                    "outputs/support/findings_register.json",
+                    "outputs/support/evidence_request_list.md",
+                }
+            ],
+        ),
+        (
+            "Process and trace artifacts",
+            [
+                path
+                for path in generated_paths
+                if path
+                in {
+                    "outputs/support/agentic_review_log.md",
+                    "outputs/support/procedure_run_log.md",
+                    "outputs/support/procedure_run_log.csv",
+                    "outputs/support/codex_trace.md",
+                    "outputs/support/artifact_provenance.md",
+                    "outputs/support/artifact_provenance.json",
+                }
+            ],
+        ),
+        (
+            "Final deliverables",
+            [path for path in generated_paths if path.startswith("outputs/stakeholder/")],
+        ),
     ]
     gap_support_files = [
         "outputs/support/provided_reserve_summary.csv",
@@ -763,6 +945,14 @@ def render_gap_assessment_latex(
         "outputs/support/evidence_request_list.md",
         "outputs/support/findings_register.json",
     ]
+    appendix_support_files = [
+        "outputs/support/artifact_provenance.md",
+        "outputs/support/review_plan.md",
+        "outputs/support/review_strategy.md",
+        "outputs/support/executed_test_matrix.md",
+        "outputs/support/procedure_run_log.md",
+        "outputs/support/codex_trace.md",
+    ]
 
     executive_summary = (
         f"This assessment covers {spec.bank_name}'s {spec.portfolio_name} package. "
@@ -771,54 +961,40 @@ def render_gap_assessment_latex(
     )
 
     body_parts = [
-        _latex_section("Executive Summary"),
+        _latex_section("Executive Conclusion"),
         _latex_paragraph(executive_summary),
+        _latex_itemize(
+            [
+                "Assessment status: documentation-led CECL gap assessment only; the package does not support an execution-based validation opinion.",
+                "Primary blocker: no reserve engine, reproducibility script, or lineaged runbook was supplied.",
+                "Primary documentation issue: horizon, segment, and scenario descriptions are not fully reconciled across the package.",
+                "Primary governance issue: provided overlay magnitude exceeds the documented cap and is not quantitatively explained.",
+            ]
+        ),
         "",
-        _latex_section("Scope and Coverage Boundary"),
+        _latex_section("Scope, Package Reviewed, and Coverage Boundary"),
         _latex_paragraph(
-            "This work assessed whether the supplied CECL package is sufficient to support a deeper reserve review and whether the materials provided are internally consistent. The review did not attempt baseline reproduction, scenario reruns, or sensitivity testing because the implementation artifacts required for those procedures were not part of the package."
+            "This memo documents a documentation-led CECL gap assessment of the supplied package for Harborlight Savings. The work focused on whether the package is sufficient for a deeper CECL review and whether the documents, scenario definitions, and prior output snapshots are internally consistent."
         ),
         _latex_itemize(
             [
                 "Supported work: evidence sufficiency review, scenario-definition consistency review, provided-output reconciliation, and overlay documentation review.",
                 "Blocked work: reserve-engine execution, baseline reproduction, implementation sensitivity testing, and model-code review.",
-                "Coverage note: all conclusions are bounded to the documents, scenario tables, and output snapshots provided in the package.",
+                "Coverage boundary: all conclusions are bounded to the documents, scenario tables, and output snapshots provided in the package.",
+                "Key limitation: no execution-based opinion is supportable from this package alone.",
             ]
         ),
-        "",
-        _latex_section("Bank-Uploaded Input Package"),
-        _latex_itemize(inventory_items),
-        "",
-        _latex_section("Artifact Provenance and Review Record"),
+        _latex_subsection("Materials Reviewed"),
         _latex_paragraph(
-            "This report uses explicit provenance markers so a reviewer can distinguish what the bank supplied from what Codex produced during the review. "
-            "[BANK INPUT] indicates a file contained in the uploaded package under input_package/. [CODEX OUTPUT] indicates a review artifact created during discovery, planning, gap assessment, or report rendering."
+            "The package was rich enough to support a formal gap assessment, but not rich enough to support CECL reruns or implementation challenge. The artifact groups below summarize the bank-supplied materials that were reviewed."
         ),
-        _latex_subsection("Bank-Uploaded Artifacts"),
-        _latex_itemize_raw(uploaded_artifact_items),
+        _latex_grouped_file_sections(uploaded_groups),
         "",
-        _latex_subsection("Codex-Generated Review Artifacts"),
-        _latex_itemize_raw(generated_artifact_items),
-        "",
-        _latex_subsection("Uploaded Package Tree"),
-        _latex_verbatim_block(input_tree),
-        "",
-        _latex_subsection("Codex Output Tree"),
-        _latex_verbatim_block(generated_tree),
-        "",
-        _latex_section("Package Discovery and Case Understanding"),
+        _latex_section("Documented CECL Process Overview"),
         _latex_paragraph(case_understanding["summary"]),
-        _latex_itemize(
-            [f"Central assumption or theme: {item}" for item in case_understanding["central_assumptions"]]
-            + [f"Reviewable scope: {item}" for item in case_understanding["reviewable_scope"]]
-            + [f"Key risk to challenge: {item}" for item in case_understanding["key_risks"]]
-            + [f"Constraint: {item}" for item in case_understanding["constraints"]]
-        ),
-        "",
-        _latex_section("Documented CECL Process Understanding"),
         _latex_paragraph(
             f"The package describes a CECL process covering {len(spec.documented_segments)} documented segments: {', '.join(_display_segment(item) for item in spec.documented_segments)}. "
-            "Documentation frames the workflow as a narrative and prior-output review package rather than a reproducible model handoff."
+            "Documentation frames the package as a narrative and prior-output review pack rather than a reproducible model handoff."
         ),
         _latex_table(
             ["Assumption Area", "Documented Position", "Observed in Package", "Review Implication"],
@@ -827,14 +1003,11 @@ def render_gap_assessment_latex(
             small=True,
         ),
         "",
-        _latex_section("Review Strategy and Planning Logic"),
+        _latex_section("Assessment Approach"),
         _latex_paragraph(
-            f"The review strategy was shaped by the discovered package boundary. Codex considered {len(review_questions)} central review questions, executed {executed_count} documentation-led procedures, and marked {blocked_count} procedures as blocked because the package lacked runnable implementation artifacts."
+            f"Codex formed the assessment approach from the discovered evidence boundary. The package supported {executed_count} documentation-led procedures and left {blocked_count} procedures blocked because runnable implementation artifacts were not supplied."
         ),
         _latex_paragraph(case_understanding["strategy_summary"]),
-        _latex_paragraph(
-            "The table below is the high-level procedure register. It is meant to show what Codex was trying to establish from the package before work proceeded, not to reproduce the full underlying support data."
-        ),
         _latex_enumerate(review_questions),
         _latex_table(
             ["ID", "Procedure", "What Codex Was Trying To Test", "Status"],
@@ -842,22 +1015,82 @@ def render_gap_assessment_latex(
             column_ratios=[0.10, 0.24, 0.48, 0.12],
             small=True,
         ),
-        _latex_subsection("Planning and Execution Record Files"),
         _latex_paragraph(
-            "The following Codex-generated files contain the detailed review strategy, executed procedure register, evidence mapping, and granular gap-assessment run log."
+            "Detailed planning rationale, procedure-level records, and the granular process log are retained in the appendices and support files rather than in the main narrative."
         ),
-        _latex_file_reference_items(planning_artifacts),
         "",
-        _latex_section("Selected Raw Evidence Excerpts"),
+        _latex_section("Documentation-Led Review Results"),
+        _latex_subsection("Execution Readiness"),
         _latex_paragraph(
-            "The excerpts below are short verbatim snippets from bank-uploaded materials and Codex-generated outputs that support the current gap assessment and coverage boundary."
+            "The package does not support runtime validation. No reserve engine, no reproducibility notebook, and no lineaged runbook were included, so the review could not test whether the provided reserves are reproducible from the documented methodology."
         ),
-        evidence_excerpt_sections,
+        _latex_subsection("Scenario Definition Consistency"),
+        _latex_paragraph(
+            f"The numeric scenario files cover six quarters, not the full documented forecast and reversion path. In addition, the severe scenario is not uniformly harsher than the adverse scenario for house-price growth in the following quarters: {mismatch_text}."
+        ),
+        _latex_subsection("Provided Output Reconciliation"),
+        _latex_paragraph(
+            "Although the package did not support reruns, it did contain prior reserve summaries and segment output snapshots that could be reconciled at a high level."
+        ),
+        _latex_table(
+            ["Scenario", "Provided Reserve", "Provided Reserve Rate"],
+            scenario_rows,
+            column_ratios=[0.22, 0.26, 0.22],
+        ),
+        _latex_table(
+            ["Output Segment", "Baseline", "Adverse", "Severe"],
+            segment_rows,
+            column_ratios=[0.30, 0.18, 0.18, 0.18],
+            small=True,
+        ),
+        _latex_itemize(
+            [
+                f"The supplied output files reconcile to {len(segment_pivot)} reporting segments rather than the {len(spec.documented_segments)} documented methodology segments.",
+                f"The largest provided overlay in the bridge is {max(spec.provided_overlay_bps_by_segment.values()):.1f} bps, above the documented {spec.documented_overlay_cap_bps:.1f} bps cap.",
+            ]
+        ),
+        _latex_subsection("Documentation and Gap-Assessment Workpapers"),
+        _latex_file_reference_items(gap_support_files),
         "",
-        _latex_section("Procedures Performed"),
+        _latex_section("Findings and Required Evidence"),
+        findings_sections,
+        "",
+        _latex_section("Evidence Requests and Next Actions"),
+        _latex_paragraph(
+            "The following items are required before the package can support execution-based CECL review procedures."
+        ),
+        _latex_enumerate(evidence_requests),
+        "",
+        _latex_section("Overall Assessment"),
+        _latex_paragraph(
+            "The package is sufficient for a structured CECL gap assessment, but not for a model-driven review opinion. "
+            "The principal blockers are missing execution artifacts, inconsistent horizon and segment documentation, scenario narratives that do not fully align to numeric tables, and overlay support that is not quantitatively reconciled."
+        ),
+        "",
+        _latex_section("Appendix A. Materials Reviewed and Artifact Provenance"),
+        _latex_paragraph(
+            "This appendix separates bank-supplied materials from Codex-generated review records so the provenance of the assessment is explicit without interrupting the main narrative."
+        ),
+        _latex_subsection("Bank-Uploaded Input Categories"),
+        _latex_grouped_file_sections(uploaded_groups),
+        _latex_subsection("Codex-Generated Review Categories"),
+        _latex_grouped_file_sections(generated_groups),
+        _latex_subsection("Full Provenance Registers"),
+        _latex_file_reference_items(
+            [
+                "outputs/support/artifact_provenance.md",
+                "outputs/support/artifact_provenance.json",
+                "outputs/support/evidence_ledger.json",
+            ]
+        ),
+        "",
+        _latex_section("Appendix B. Executed Procedure Register"),
         *[_latex_procedure_detail(procedure) for procedure in procedure_matrix],
         "",
-        _latex_section("Agentic Execution Workflow"),
+        _latex_section("Appendix C. Agentic Review Record"),
+        _latex_paragraph(
+            "This appendix records the staged assessment behavior and the granular action log behind the memo. It is intended to make the review workflow legible without overwhelming the main body."
+        ),
         *[
             "\n".join(
                 [
@@ -875,59 +1108,16 @@ def render_gap_assessment_latex(
             )
             for step in trace_steps
         ],
-        "",
-        _latex_section("Chronological Procedure and Output Log"),
-        _latex_paragraph(
-            "This section records the more granular action sequence for the gap assessment, including both executed documentation-led checks and explicitly blocked runtime procedures."
-        ),
+        _latex_subsection("Planning and Process Files"),
+        _latex_file_reference_items(appendix_support_files),
+        _latex_subsection("Chronological Procedure Log"),
         procedure_log_sections,
         "",
-        _latex_section("Provided Output Snapshot"),
+        _latex_section("Appendix D. Selected Evidence Excerpts"),
         _latex_paragraph(
-            "Although no executable reserve engine was supplied, the package included prior reserve summaries and segment output snapshots that could be reconciled at a high level."
+            "Only text excerpts are reproduced here. Structured output tables remain in the support files listed elsewhere in the memo."
         ),
-        _latex_itemize(
-            [
-                f"Provided portfolio reserve ordering is Baseline {_money(float(_ordered_scenarios(scenario_summary).iloc[0]['reserve_amount']))}, Adverse {_money(float(_ordered_scenarios(scenario_summary).iloc[1]['reserve_amount']))}, Severe {_money(float(_ordered_scenarios(scenario_summary).iloc[2]['reserve_amount']))}.",
-                f"The supplied output files reconcile to {len(segment_pivot)} reporting segments rather than the {len(spec.documented_segments)} documented methodology segments.",
-                f"The largest provided overlay in the bridge is {max(spec.provided_overlay_bps_by_segment.values()):.1f} bps, above the documented {spec.documented_overlay_cap_bps:.1f} bps cap.",
-            ]
-        ),
-        _latex_paragraph(
-            "Detailed provided-output snapshots remain in outputs/support/provided_reserve_summary.csv, outputs/support/provided_segment_reserves.csv, and outputs/support/provided_overlay_bridge.csv."
-        ),
-        "",
-        _latex_section("Documentation and Evidence Assessment"),
-        _latex_subsection("Execution Readiness"),
-        _latex_paragraph(
-            "The package does not support runtime validation. No reserve engine, no reproducibility notebook, and no lineaged runbook were included, so the review could not test whether the provided reserves are reproducible from the documented methodology."
-        ),
-        _latex_subsection("Scenario Consistency"),
-        _latex_paragraph(
-            f"The numeric scenario files cover six quarters, not the full documented forecast and reversion path. In addition, the severe scenario is not uniformly harsher than the adverse scenario for house-price growth in the following quarters: {mismatch_text}."
-        ),
-        _latex_subsection("Segment and Overlay Reconciliation"),
-        _latex_paragraph(
-            f"Documentation references {len(spec.documented_segments)} segments, while the provided reserve output files reconcile to {len(spec.output_segments)} segments. "
-            f"The overlay memo frames qualitative adjustments as capped at {spec.documented_overlay_cap_bps:.1f} bps, but the supplied bridge reaches {max(spec.provided_overlay_bps_by_segment.values()):.1f} bps."
-        ),
-        _latex_subsection("Gap Assessment Support Files"),
-        _latex_file_reference_items(gap_support_files),
-        "",
-        _latex_section("Detailed Gaps and Findings"),
-        findings_sections,
-        "",
-        _latex_section("Evidence Requests and Next Actions"),
-        _latex_paragraph(
-            "The following items are required before the package can support execution-based review procedures."
-        ),
-        _latex_enumerate(evidence_requests),
-        "",
-        _latex_section("Overall Assessment"),
-        _latex_paragraph(
-            "The package is sufficient for a structured CECL gap assessment, but not for a model-driven review opinion. "
-            "The principal blockers are missing execution artifacts, inconsistent horizon and segment documentation, scenario narratives that do not fully align to numeric tables, and overlay support that is not quantitatively reconciled."
-        ),
+        evidence_excerpt_sections,
     ]
 
     return _wrap_latex_document(
@@ -1174,6 +1364,21 @@ def _latex_file_reference_items(paths: list[str], *, prefix: str = "") -> str:
         return _latex_itemize_raw(["\\textit{None}"])
     items = [f"{prefix}\\texttt{{{_latex_escape(path)}}}" for path in paths]
     return _latex_itemize_raw(items)
+
+
+def _latex_grouped_file_sections(groups: list[tuple[str, list[str]]]) -> str:
+    sections: list[str] = []
+    for title, paths in groups:
+        if not paths:
+            continue
+        sections.extend(
+            [
+                _latex_subsection(title),
+                _latex_file_reference_items(paths),
+                "",
+            ]
+        )
+    return "\n".join(part for part in sections if part)
 
 
 def _latex_procedure_detail(procedure: dict[str, Any]) -> str:
