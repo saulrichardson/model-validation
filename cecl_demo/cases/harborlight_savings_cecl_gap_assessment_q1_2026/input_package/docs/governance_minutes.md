@@ -1,57 +1,60 @@
-# Governance Minutes (Documentation-led Review Meeting)
+# Governance Minutes (CECL Documentation Review - Non-Execution)
 
 **Bank:** Harborlight Savings  
-**Committee/Forum:** CECL Readiness Working Group (Finance, Credit Risk, Model Risk Management)  
-**Meeting date:** 2026-02-10  
-**Subject:** Q1 2026 CECL Readiness Gap Assessment - documentation-led review status
+**Committee:** CECL Working Group / Model Governance Working Session  
+**Meeting date:** 2026-02-18  
+**Meeting type:** Documentation-led readiness review (non-execution)
 
 ## 1. Attendees
-- Finance Controller (Chair)
-- Head of Credit Risk
-- Model Risk Management (MRM) Lead
-- CECL Program Manager
-- Portfolio Analytics Manager
-- Internal Audit Liaison (observer)
+- Finance (Controller's Office): A. Patel, J. Moreno
+- Credit Risk: L. Chen, R. Daniels
+- Treasury / ALM: S. Whitaker
+- Data Management: K. Ibrahim
+- Model Risk Management (MRM): T. O'Neill
+- Internal Audit (observer): M. Ruiz
 
-## 2. Purpose
-Review progress and preliminary gaps identified in the documentation-led CECL gap assessment; agree scope limitations and remediation ownership.
+## 2. Purpose and Scope Limitation
+The purpose of this meeting was to review CECL documentation completeness and internal consistency for readiness purposes.
 
-## 3. Scope Limitation (Explicit)
-The Working Group confirmed that **execution-based review is not possible at this time** due to missing artifacts, including:
-- Reserve engine run package (run IDs, runtime logs, parameter snapshots)
-- End-to-end data lineage evidence (source-to-target mapping, transformation code, reconciliations)
+**Explicit limitation:** Due to **missing reserve engine execution artifacts and missing data lineage evidence**, the working group agreed the review package is limited to **non-execution review**. No conclusions were reached regarding runtime accuracy, reproducibility, or end-to-end calculation integrity.
 
-Accordingly, the package is **explicitly limited to non-execution review** (documentation adequacy, design consistency, and governance sufficiency). No reliance should be placed on this package as evidence of numerical accuracy or operational effectiveness.
+## 3. Materials Reviewed
+- CECL methodology document (forecast/reversion, segmentation, overlays)
+- Model card summary (horizons, scenarios, process description)
+- Scenario tables (baseline/adverse/severe paths for 2026Q1-2027Q2)
+- Reserve output extracts by segment (four output segments)
+- Overlay summary (bps by segment)
 
 ## 4. Discussion Summary
-### 4.1 Forecast and reversion horizon inconsistency
-- Finance referenced methodology language of **8-quarter forecast** and **4-quarter reversion**.
-- MRM noted the model card indicates **6-quarter forecast** and **2-quarter reversion**.
-- Decision: treat as a documentation control issue requiring resolution and re-approval of the authoritative horizon.
+### 4.1 Forecast/Reversion Horizon
+- Finance noted the methodology states **8-quarter forecast / 4-quarter reversion**.
+- MRM noted the model card states **6-quarter forecast / 2-quarter reversion**, and scenario tables provided also cover **6 quarters**.
+- Action agreed: confirm the approved horizon and update artifacts for consistency, or provide documentation supporting different horizons across components.
 
-### 4.2 Scenario narrative alignment
-- Credit Risk noted the severe scenario narrative describes "prolonged contraction," but the numeric path shows partial improvement by 2027Q2, including house price growth turning positive.
-- Decision: update narrative and include explicit tie-out to numeric paths and governance approval.
+### 4.2 Segmentation
+- Credit Risk noted documented segments include **CRE Owner Occupied**.
+- Finance confirmed outputs do not include a separate owner-occupied CRE segment.
+- Action agreed: provide a segment mapping and rationale for any consolidation.
 
-### 4.3 Segmentation reconciliation
-- Portfolio Analytics confirmed output reporting currently produces segments: residential_mortgage, heloc, cre_investor, commercial_and_industrial.
-- Finance asked where CRE Owner Occupied is represented.
-- Decision: Analytics to provide a documented mapping and population reconciliation; until then, segmentation is treated as a material documentation gap.
+### 4.3 Scenario Narrative Alignment
+- Treasury/ALM raised a concern that the severe scenario narrative described in management commentary does not clearly align with the numeric trough timing.
+- Action agreed: provide the scenario governance deck and narrative used for approval and reconcile narrative statements to numeric paths.
 
-### 4.4 Overlay cap inconsistency
-- Methodology shows a **6.0 bps** overlay cap; the provided segment overlays (12-18 bps) exceed this.
-- Decision: Finance to clarify cap basis and scope; MRM to require documented rationale and approvals for any overlays above stated cap.
+### 4.4 Overlays
+- MRM noted the documented overlay cap is **6.0 bps**; provided overlays are materially higher.
+- Finance indicated overlays reflect "conservatism pending data maturation" but did not provide a quantification memo or exception approvals.
+- Action agreed: develop overlay calculation memos and clarify cap definition and governance escalation requirements.
 
-## 5. Decisions and Actions
-| Item | Decision / Action | Owner | Due date | Status |
+## 5. Decisions
+- **Decision 1:** Proceed with a documentation-led gap assessment package for Q1 2026 readiness.
+- **Decision 2:** Defer any execution-based validation, benchmarking, or re-performance until reserve engine run logs, configuration, and lineage are provided.
+
+## 6. Action Items
+| ID | Action | Owner | Due Date | Status |
 |---|---|---|---|---|
-| Horizon inconsistency | Identify authoritative forecast/reversion horizon; update documentation and obtain approval | CECL Program Manager | 2026-03-06 | Open |
-| Scenario narrative | Update scenario narratives to match numeric paths; provide approval evidence | Head of Credit Risk | 2026-03-13 | Open |
-| Segment mapping | Provide segment mapping including CRE Owner Occupied treatment and reconciliation to outputs | Portfolio Analytics Manager | 2026-03-06 | Open |
-| Overlay governance | Clarify overlay cap definition and basis; produce overlay approval memo with bridge | Finance Controller | 2026-03-13 | Open |
-| Execution artifacts | Produce reserve engine run package template; schedule a dry-run with archived inputs and logs | CECL Program Manager / Analytics | 2026-03-27 | Open |
-| Data lineage | Provide source-to-target mapping and key reconciliations for one quarter | Data Management Lead | 2026-03-27 | Open |
-
-## 6. Next Meeting
-- Scheduled: 2026-03-17
-- Objective: review provided mapping/overlay/scenario artifacts; determine readiness for limited execution-based testing.
+| GOV-01 | Provide reserve engine run package (inputs, configuration, run logs, outputs) | Finance / Credit Risk | 2026-03-15 | Open |
+| GOV-02 | Provide data lineage mapping from source to CECL inputs; include GL/balance recon | Data Mgmt | 2026-03-22 | Open |
+| GOV-03 | Confirm approved forecast/reversion horizons and update methodology/model card | Finance / MRM | 2026-03-08 | In progress |
+| GOV-04 | Provide segment mapping (documented → output segments) and justification | Credit Risk | 2026-03-08 | Open |
+| GOV-05 | Provide scenario governance deck and narrative alignment memo | Treasury / ALM | 2026-03-12 | Open |
+| GOV-06 | Provide overlay calculation memos and cap/exception governance evidence | Finance | 2026-03-12 | Open |

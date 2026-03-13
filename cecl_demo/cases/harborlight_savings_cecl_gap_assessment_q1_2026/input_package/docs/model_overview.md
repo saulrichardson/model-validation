@@ -1,65 +1,54 @@
-# Model Overview (Current-State Summary)
+# Model Overview (Model Card Summary)
 
 **Bank:** Harborlight Savings  
 **Portfolio:** Q1 2026 CECL Readiness Gap Assessment  
-**Product context:** Consumer and real-estate portfolio reserve process
+**Model/Process:** Consumer and Real-Estate CECL Reserve Estimation Process  
+**Intended Use:** Allowance for Credit Losses (ACL) estimation for financial reporting
 
-## 1. Model Purpose and Use
-The CECL reserve process is intended to estimate the allowance for credit losses (ACL) for:
-- Consumer real estate (Residential Mortgage, HELOC)
-- Commercial real estate (CRE)
-- Commercial and industrial (C&I)
-
-Primary use: quarterly financial reporting and management reporting; secondary use: risk monitoring and portfolio oversight.
-
-## 2. Model Type and Core Approach
-Based on the model card summary provided for review, the current approach is described as:
-- **Segment-level loss estimation** using a macro-conditioned framework, producing lifetime loss estimates aggregated to the ACL.
-- Model outputs are produced by segment and rolled up for management review.
-
-**Note on horizon (per model card):**
-- **Forecast horizon:** **6 quarters** explicit forecast
-- **Reversion horizon:** **2 quarters** reversion to long-run
-
-This is not consistent with the methodology narrative indicating 8-quarter forecast and 4-quarter reversion.
-
-## 3. Segmentation & Output Structure
-### 3.1 Documented segments (policy/methodology)
-- Residential Mortgage
-- HELOC
-- CRE Investor
-- CRE Owner Occupied
-- Commercial and Industrial
-
-### 3.2 Output segments (reserve outputs provided)
-Reserve outputs provided for this gap assessment are organized as:
+## 1. Model Purpose and Outputs
+The process produces segment-level ACL estimates and reserve bridge reporting suitable for quarterly financial close. Outputs are reported for the following segments (as reflected in provided reserve outputs):
 - `residential_mortgage`
 - `heloc`
 - `cre_investor`
 - `commercial_and_industrial`
 
-**Observed reconciliation issue:** `CRE Owner Occupied` appears in documentation but is not present as a distinct output segment. It is not evidenced whether this population is:
-- mapped into `cre_investor`,
-- mapped into another output segment, or
-- excluded from modeled outputs and handled via overlay/manual process.
+> Observation: Output segments do not include a distinct `cre_owner_occupied` output.
 
-## 4. Scenario Framework (As Implemented per Model Card)
-The model card indicates three scenarios are supported (Baseline, Adverse, Severe) with scenario application at the segment level.
+## 2. Model Type and Core Method
+Per the model card, the process is a macro-conditioned loss estimation framework with segment-level reserve outputs. The model card indicates:
+- Scenario-conditioned paths drive forward-looking loss estimates.
+- Segment-level overlays may be applied post-model to reflect limitations not captured in the quantitative framework.
 
-**Weights and governance:** Not evidenced in the materials provided (no approved scenario weight memo, committee decision, or quarterly weight history provided).
+## 3. Forecast and Reversion (Model Card)
+- **Forecast horizon (reasonable & supportable): 6 quarters**.
+- **Reversion period: 2 quarters**.
 
-## 5. Key Inputs and Data Dependencies (High-level)
-Inputs referenced in documentation include:
-- Loan-level attributes and performance history (originations, balances, delinquency, charge-off/recovery)
-- Segment identifiers
-- Macroeconomic variables: unemployment, GDP growth, house price growth, CRE price growth, prime rate
+The model card describes linear reversion to a long-run level following the reasonable & supportable period.
 
-**Data lineage and transformations:** Not evidenced end-to-end. No source-to-target mapping, transformation logic, or reconciliations were provided sufficient to confirm completeness and accuracy.
+## 4. Scenarios and Variables
+The model card references baseline, adverse, and severe scenarios and the use of:
+- unemployment rate
+- GDP growth
+- house price growth
+- CRE price growth
+- prime rate
 
-## 6. Controls and Governance (As Observed)
-- Model ownership and ongoing monitoring roles are referenced but not fully supported by current meeting minutes and approval artifacts.
-- Change control evidence (versioning, parameter approvals, implementation sign-off) is not present.
+Provided scenario data includes quarterly values from **2026Q1 to 2027Q2**.
 
-## 7. Known Constraints for This Review
-- Execution-based review is blocked due to missing reserve engine artifacts (run package, run IDs, parameter files, and runtime logs).
-- Validation results and performance monitoring packages (backtesting, benchmarking) were not provided for this cycle.
+## 5. Overlay Application (As Reflected in Outputs)
+Provided overlay bps by output segment:
+- `residential_mortgage`: **12.0 bps**
+- `heloc`: **16.0 bps**
+- `cre_investor`: **18.0 bps**
+- `commercial_and_industrial`: **14.0 bps**
+
+> Observation: These overlay magnitudes exceed the 6.0 bps cap referenced in methodology documentation.
+
+## 6. Operational Dependencies (Not Evidenced)
+The model card references routine production activities (data refresh, scenario load, execution, QC checks). However, this package does not include:
+- reserve engine run logs
+- code versioning / release artifacts
+- input/output lineage traces
+- reproducible run package (inputs, configuration, outputs)
+
+Accordingly, the review is limited to documentation-level design assessment.

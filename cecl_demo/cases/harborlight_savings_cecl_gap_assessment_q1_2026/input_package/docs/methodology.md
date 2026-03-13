@@ -6,78 +6,71 @@
 **Workflow:** Documentation-led gap assessment (non-execution)
 
 ## 1. Objective
-Assess the current-state CECL design and documentation sufficiency relative to internal policy expectations and supervisory-ready practices, focusing on:
-- Methodology design (segmentation, loss estimation approach, scenario framework)
-- Governance and control expectations (model risk management, change control, overlays)
-- Data and lineage readiness (inputs, transformations, reconciliations)
-- Operational readiness for quarterly close (repeatability, evidence, sign-offs)
+Assess the design and documentation completeness of Harborlight Savings' CECL methodology, including governance, data, segmentation, forecast/reversion approach, scenario framework, overlays, and reporting artifacts. The objective is to identify gaps that prevent a defensible implementation and to define remediation actions and evidence requirements.
 
-This package is designed to support a **documentation-led review**; execution-based testing is explicitly out of scope pending availability of reserve engine artifacts and lineage evidence.
+## 2. Review Approach (Documentation-Led)
+The review is performed using artifacts provided by Management (policies, model documentation, sample reports, scenario decks, overlay memos, and reserve bridge narratives). **No independent model execution, reserve engine re-performance, or code review** is performed under this package due to missing runtime evidence and lineage artifacts.
 
-## 2. Review Approach
 ### 2.1 Workstreams
-1) **Design & Conceptual Soundness**  
-   Review model design, segmentation logic, and expected behavior under macro scenarios.
+1. **Methodology design & CECL accounting alignment** (ASC 326, reasonable and supportable forecast, reversion, data treatment).
+2. **Segmentation & pooling** (documented segments, output segments, reconciliation to GL/FR Y-9C call-report lines as applicable).
+3. **Scenario framework** (baseline/adverse/severe, scenario selection, narrative alignment, and variable definitions).
+4. **Forecast & reversion mechanics** (term structure, horizon, reversion method).
+5. **Overlay framework** (governance, caps/limits, quantification, traceability to reserve bridge).
+6. **Controls & governance** (model risk governance, approvals, change control, monitoring).
 
-2) **Scenario Framework & Forecasting**  
-   Review scenario definitions, governance of scenario selection/weights, and mapping of macro variables to segment-level risk drivers.
+## 3. Key Methodology Specifications (Per Documentation)
+### 3.1 Forecast and Reversion Horizons
+- **Reasonable & supportable forecast horizon:** **8 quarters**.
+- **Reversion period:** **4 quarters**.
+- **Total modeled horizon:** life-of-loan, with macro-driven path applied through forecast and reversion periods.
 
-3) **Operational Controls & Close Process**  
-   Review process flow, roles/responsibilities, change management, and evidence standards.
+> Note: This methodology states 8+4 quarters as the implemented horizon in the CECL framework documentation.
 
-4) **Overlays & Qualitative Adjustments**  
-   Review overlay policy/limits, rationale, calculation method, and auditability.
-
-5) **Data, Lineage, and Reconciliation**  
-   Review data sourcing, transformations, lineage documentation, and tie-outs to GL/loan systems.
-
-### 2.2 Evidence Standards (Documentation-led)
-We evaluate whether documentation is:
-- **Complete:** sufficient to support independent understanding and challenge
-- **Consistent:** no unresolved contradictions across model card, methodology, and process narratives
-- **Traceable:** inputs/outputs and decisions tie to artifacts with dates, owners, and approvals
-- **Repeatable:** documented steps enable consistent quarter-over-quarter execution
-
-### 2.3 Scenario Horizon & Reversion (Documented)
-Per methodology documentation reviewed, the CECL scenario framework is described as:
-- **Forecast horizon:** **8 quarters** of explicit macroeconomic forecast
-- **Reversion horizon:** **4 quarters** of linear reversion to long-run assumptions
-
-**Note:** This section reflects the **methodology narrative** currently on file; identified discrepancies with the model card are logged as gaps.
-
-### 2.4 Segmentation Basis (Documented)
-The segmentation framework described in documentation comprises the following segments:
+### 3.2 Segmentation (Documented)
+Documented segments used for CECL estimation and reporting:
 - Residential Mortgage
 - HELOC
 - CRE Investor
 - CRE Owner Occupied
 - Commercial and Industrial
 
-Segmentation is expected to be consistently applied across:
-- Data extracts and population definitions
-- Model estimation and calibration artifacts
-- Reserve output reporting and management review packages
+### 3.3 Scenario Set and Variables
+Three scenarios are included:
+- Baseline
+- Adverse
+- Severe
 
-### 2.5 Overlay Framework (Documented)
-The methodology indicates a **portfolio overlay cap of 6.0 bps** (documentation states cap is applied to limit qualitative adjustments absent formal model redevelopment).
+Variables referenced in the scenario package:
+- Unemployment rate
+- GDP growth
+- House price growth
+- CRE price growth
+- Prime rate
 
-This package evaluates:
-- Whether overlay governance exists (owner, triggers, approvals)
-- Whether overlay size is reconcilable to the reserve bridge and segment-level movements
-- Whether documentation accurately reflects overlay magnitude and application
+Scenario paths provided cover **2026Q1-2027Q2** (6 quarters) for each scenario.
 
-## 3. Deliverables in this Upload Package
-- Methodology summary (this document)
-- Model overview / model card summary
-- Scenario assumptions (numeric paths and narrative alignment assessment)
-- Overlay memo (documentation vs provided bridge outputs)
-- Prior review note (legacy items and carry-forward issues)
-- Governance minutes (non-execution review limitation and decisions)
-- Evidence request log (working log)
-- Gap tracker (working log)
+### 3.4 Overlay Policy Constraint (Documented)
+- **Documented overlay cap:** **6.0 bps** (portfolio-level cap as described in the overlay policy section).
 
-## 4. Limitations
-- **No reserve engine execution testing** performed (no runtime logs, run IDs, parameter files, or reproducible reserve runs provided).
-- **No end-to-end data lineage testing** performed (no source-to-target mappings, transformation code, or reconciliations to servicing/GL provided).
+## 4. Testing Procedures and Evidence Standards
+### 4.1 Design Assessment Procedures
+- Trace each major methodological choice (segmentation, horizons, scenarios, reversion) to a controlled document (policy, model methodology, governance minutes).
+- Confirm internal consistency between: model card, methodology paper, scenario narrative/deck, overlay memo, and management reporting.
+- Identify required operational controls for production use (data lineage, model run logs, change control).
 
-As a result, conclusions are limited to **documentation adequacy and design consistency**; effectiveness of controls and numerical accuracy cannot be confirmed at this stage.
+### 4.2 Execution-Based Procedures (Not Performed)
+The following procedures are **explicitly out of scope** for this package due to missing evidence:
+- Reserve engine re-run / independent calculation
+- Data lineage reconciliation from source systems to model inputs
+- Parameter estimation re-performance
+- End-to-end backtesting in production-equivalent environment
+
+## 5. Deliverables
+- Methodology and model overview summaries
+- Scenario assumptions appendix (numeric paths and narrative observations)
+- Overlay memo (documentation-led critique and required remediation)
+- Prior review note (blocking items and contradictions)
+- Governance minutes (non-execution limitation noted)
+- Evidence request log (open items and due dates)
+- Gap tracker (issues, severity, owners, and remediation plan)

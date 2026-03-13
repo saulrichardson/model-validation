@@ -1,20 +1,21 @@
 # Scenario Assumptions - Q1 2026 CECL Allowance Review
 
-## 1. Scenario set
-Redwood Regional Bank uses three quarterly macroeconomic scenarios for CECL measurement:
-- **Baseline**
-- **Adverse**
-- **Severe**
+## Scenario framing
+Redwood Regional Bank uses three macroeconomic scenarios to condition CECL lifetime loss estimates:
 
-Each scenario includes quarterly paths for:
+- **Baseline:** Gradual normalization with stable labor markets and modest growth; modestly declining prime rate by 2027.
+- **Adverse:** Moderate downturn concentrated in 2026 with negative house/CRE price growth through 2026, followed by a gradual recovery.
+- **Severe:** Sharper 2026 deterioration (higher unemployment and more negative GDP/CRE price changes) with earlier stabilization and a recovery pattern that differs across variables after late 2026.
+
+All scenarios are specified quarterly for the following variables:
 - Unemployment rate (%)
 - GDP growth (%)
 - House price growth (%)
 - CRE price growth (%)
 - Prime rate (%)
 
-## 2. Baseline scenario (2026Q1-2027Q4)
-| Quarter | Unemp. | GDP | HPI | CRE PI | Prime |
+## Baseline scenario path (2026Q1-2027Q4)
+| Quarter | Unemployment | GDP growth | House price growth | CRE price growth | Prime rate |
 |---|---:|---:|---:|---:|---:|
 | 2026Q1 | 4.6 | 1.8 | 2.3 | 1.8 | 5.25 |
 | 2026Q2 | 4.7 | 1.7 | 2.0 | 1.5 | 5.25 |
@@ -25,8 +26,8 @@ Each scenario includes quarterly paths for:
 | 2027Q3 | 4.7 | 1.7 | 2.0 | 1.4 | 4.90 |
 | 2027Q4 | 4.7 | 1.7 | 2.0 | 1.4 | 4.90 |
 
-## 3. Adverse scenario (2026Q1-2027Q4)
-| Quarter | Unemp. | GDP | HPI | CRE PI | Prime |
+## Adverse scenario path (2026Q1-2027Q4)
+| Quarter | Unemployment | GDP growth | House price growth | CRE price growth | Prime rate |
 |---|---:|---:|---:|---:|---:|
 | 2026Q1 | 5.4 | 0.8 | -1.5 | -2.2 | 5.60 |
 | 2026Q2 | 5.9 | 0.3 | -3.2 | -4.1 | 5.75 |
@@ -37,8 +38,8 @@ Each scenario includes quarterly paths for:
 | 2027Q3 | 5.1 | 1.0 | 0.1 | -0.4 | 5.10 |
 | 2027Q4 | 4.9 | 1.2 | 0.8 | 0.2 | 5.00 |
 
-## 4. Severe scenario (2026Q1-2027Q4)
-| Quarter | Unemp. | GDP | HPI | CRE PI | Prime |
+## Severe scenario path (2026Q1-2027Q4)
+| Quarter | Unemployment | GDP growth | House price growth | CRE price growth | Prime rate |
 |---|---:|---:|---:|---:|---:|
 | 2026Q1 | 6.0 | 0.2 | -2.0 | -3.2 | 5.75 |
 | 2026Q2 | 6.9 | -0.8 | -4.4 | -6.6 | 6.00 |
@@ -49,9 +50,13 @@ Each scenario includes quarterly paths for:
 | 2027Q3 | 5.4 | 0.9 | 1.8 | 0.1 | 5.10 |
 | 2027Q4 | 5.0 | 1.2 | 2.0 | 0.6 | 5.00 |
 
-## 5. Scenario framing observations for model review
-- **House price dynamics:** Severe includes a notable post-2026Q4 recovery in house price growth (positive by 2027Q1), while Adverse remains negative through 2027Q2.
-- **CRE price dynamics:** Severe remains more stressed than Adverse through most of 2026, with partial recovery by late 2027.
-- **Rate path:** Prime rate peaks higher in Severe in 2026 and normalizes toward 5.0 by 2027Q4.
+## Noted scenario interaction relevant to reasonableness checks
+- For **Residential Mortgage**, the scenario design includes a **faster recovery in house price growth under Severe than under Adverse after 2026Q4**.
+- Because the Residential Mortgage segment is highly sensitive to house price growth, the severe path may mechanically reduce modeled severity earlier than expected relative to adverse, absent controls or overlays.
 
-These characteristics are expected to interact with segment macro sensitivities, particularly for **Residential Mortgage** (high house price growth sensitivity) and **CRE** (high CRE price growth sensitivity).
+## CECL horizon assumptions (documentation reference)
+The CECL policy documentation specifies:
+- **Reasonable and supportable forecast period:** **4 quarters**
+- **Reversion to long-run:** **4 quarters**
+
+These assumptions are expected to be applied consistently within scenario-conditioned modeling.

@@ -311,7 +311,18 @@ def _build_full_review_case(
         ),
     )
 
-    latex = render_full_review_latex(spec, scenario_results, sensitivity_results, findings, doc_crosscheck)
+    latex = render_full_review_latex(
+        spec,
+        inventory,
+        plan_items,
+        scenario_results,
+        segment_comparison,
+        sensitivity_results,
+        driver_bridge,
+        baseline_reproduction,
+        findings,
+        doc_crosscheck,
+    )
     tex_path = stakeholder_dir / "cecl_review_memo.tex"
     _write_text(tex_path, latex)
     stakeholder_artifacts = [str(tex_path.relative_to(case_dir))]
@@ -535,7 +546,12 @@ def _build_gap_assessment_case(
 
     latex = render_gap_assessment_latex(
         spec,
+        inventory,
+        plan_items,
         analysis["scenario_summary"],
+        analysis["segment_summary"],
+        analysis["overlay_bridge"],
+        analysis["scenario_mismatch_quarters"],
         analysis["findings"],
         analysis["evidence_requests"],
     )

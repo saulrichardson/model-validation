@@ -1,32 +1,30 @@
 # Evidence Request Log (Working)
 
 **Bank:** Harborlight Savings  
-**Case slug:** harborlight_savings_cecl_gap_assessment_q1_2026  
+**Case:** harborlight_savings_cecl_gap_assessment_q1_2026  
 **Log owner:** Model Risk Management (MRM)  
 **Last updated:** 2026-03-01
 
-## Instructions
-This log tracks evidence requested to complete the documentation-led gap assessment and to unblock any future execution-based testing. Items marked "Blocked" are prerequisites for execution-based review.
+## Log Legend
+- **Priority:** H (High), M (Medium), L (Low)
+- **Status:** Open / Received / Partially received / Not available
 
 ## Evidence Requests
-| Req ID | Date requested | Evidence / Artifact | Purpose | Owner | Status | Follow-up notes |
-|---|---|---|---|---|---|---|
-| ER-001 | 2026-02-03 | CECL methodology document (current approved version) | Establish documented horizon, segmentation, overlays | CECL Program Manager | Received | Version provided lacks approval page/signature block; confirm effective date. |
-| ER-002 | 2026-02-03 | Model card / model overview (current) | Confirm implemented horizon, segmentation, scenario handling | Portfolio Analytics | Received | Model card indicates 6Q forecast / 2Q reversion (conflicts with methodology). |
-| ER-003 | 2026-02-05 | Scenario numeric files for Baseline/Adverse/Severe (forecast + reversion + long-run) | Validate horizon coverage and reversion mechanics | Credit Risk | Partial | Only 6 quarters provided (2026Q1-2027Q2); no reversion/long-run assumptions. |
-| ER-004 | 2026-02-05 | Scenario narratives tied to numeric files and approval evidence | Governance and alignment | Credit Risk | Open | Narrative described in email but not delivered as approved artifact. |
-| ER-005 | 2026-02-06 | Scenario weights memo (quarterly weights and approvals) | Confirm governance and application | Finance | Open | No evidence of committee-approved weights provided. |
-| ER-006 | 2026-02-06 | Segment definition memo and mapping to output segments | Reconcile documented vs output segments | Portfolio Analytics | Open | Need explicit treatment of CRE Owner Occupied (mapped/merged/excluded). |
-| ER-007 | 2026-02-07 | Data dictionary for loan-level input fields (by segment) | Confirm input completeness and definitions | Data Management | Open | Provide field definitions, source system, and refresh cadence. |
-| ER-008 | 2026-02-07 | Source-to-target mapping and transformation logic (ETL specs or code excerpts) | **Blocked:** lineage and completeness | Data Management | Blocked | Not provided; required to proceed to execution-based review. |
-| ER-009 | 2026-02-10 | Reconciliation: loan system balances to CECL population (as-of date) | Completeness and controls | Finance / Data | Open | Request one quarter example with exceptions list and resolution. |
-| ER-010 | 2026-02-10 | Reserve engine run package (inputs archive, parameters, run IDs, logs) | **Blocked:** reproducibility and testing | Portfolio Analytics | Blocked | No run package exists in shared repository; needs template and first populated run. |
-| ER-011 | 2026-02-12 | Overlay policy and cap definition (basis, scope, monitoring) | Resolve cap inconsistency | Finance | Partial | Methodology references 6.0 bps cap; basis and monitoring not described. |
-| ER-012 | 2026-02-12 | Overlay calculation workbook / system output and segment attribution | Tie overlay to results | Finance | Open | Provided overlay bps by segment but no calculation support or bridge. |
-| ER-013 | 2026-02-13 | Reserve bridge (modeled ACL → overlays → final ACL) by segment | Validate transparency | Finance | Open | Needed to reconcile to reported overlay levels (12-18 bps). |
-| ER-014 | 2026-02-14 | Validation report / MRM review for CECL model | Governance and conceptual soundness | MRM | Open | No current validation; provide plan/timeline and any interim memos. |
-| ER-015 | 2026-02-18 | Change management log (versions, parameter changes, approvals) | Control expectations | CECL Program Manager | Open | No centralized log provided. |
-| ER-016 | 2026-02-20 | Close calendar / operating procedure for quarter-end | Repeatability | Finance | Open | Provide steps, owners, and evidence checklist for quarterly close. |
+| Req ID | Request | Rationale / Use | Owner | Priority | Date Requested | Due Date | Status | Notes / Follow-up |
+|---|---|---|---|---|---|---|---|---|
+| ER-001 | Reserve engine end-to-end run package (inputs, scenario load file, configuration, run logs, outputs) for one quarter close | Required to move from documentation-led to execution-based review; supports reproducibility | Finance | H | 2026-02-19 | 2026-03-15 | Open | Finance indicated reserve engine environment "in build"; no run log available yet |
+| ER-002 | Data lineage mapping from core systems to CECL input datasets (field mapping + transformation logic + QC checks) | Supports lineage and control assessment; ties to GL and reporting | Data Mgmt | H | 2026-02-19 | 2026-03-22 | Open | Provide balance reconciliation to subledger/GL by segment |
+| ER-003 | Segment mapping and reconciliation: documented segments → output segments (including treatment of CRE Owner Occupied) | Required to resolve segmentation mismatch; supports reporting and governance | Credit Risk | H | 2026-02-20 | 2026-03-08 | Open | Outputs exclude `cre_owner_occupied`; needs justification for consolidation |
+| ER-004 | Model card (latest approved), including horizon specification and reversion method detail | Resolve contradiction between methodology and model card; governance traceability | MRM | H | 2026-02-20 | 2026-03-05 | Partially received | Summary provided; approval page and change log missing |
+| ER-005 | CECL methodology document (latest controlled version) with references to forecast/reversion and overlay cap definition | Confirm policy language and definitions; identify whether cap is portfolio or segment | Finance | H | 2026-02-20 | 2026-03-05 | Received | Version control metadata not included; request doc control header/footer |
+| ER-006 | Scenario governance deck (baseline/adverse/severe narrative + selection rationale + approvals) | Align narrative to numeric paths; confirm horizon coverage | Treasury/ALM | H | 2026-02-20 | 2026-03-12 | Open | Only numeric tables received (6 quarters) |
+| ER-007 | Full scenario time series for 8-quarter forecast period (if applicable) and reversion assumptions for remaining quarters | Resolve horizon mismatch; needed for methodology consistency | Treasury/ALM | H | 2026-02-24 | 2026-03-12 | Open | If 6 quarters is final, update methodology and approvals accordingly |
+| ER-008 | Overlay calculation memo(s) showing driver, basis, math, and governance approvals; include any cap exceptions | Address overlay cap vs observed bps; supports auditability | Finance | H | 2026-02-20 | 2026-03-12 | Open | Current overlay bps: 12-18 vs documented cap 6 |
+| ER-009 | Reserve bridge report tying modeled ACL to final ACL (including overlays) by segment and total | Traceability; aligns to financial close controls | Finance | M | 2026-02-24 | 2026-03-19 | Open | Provide template even if numbers are illustrative |
+| ER-010 | Inventory of controls: QC checks, approvals, sign-offs for quarterly CECL process | Supports SOX-style control mapping; governance | Finance / IA | M | 2026-02-24 | 2026-03-22 | Open | Include evidence examples for one quarter when available |
+| ER-011 | Change management log for model/process changes since last quarter | Governance; supports model risk expectations | MRM | M | 2026-02-24 | 2026-03-22 | Open | Needed to reconcile differences across artifacts |
+| ER-012 | Definitions for macro variables (units, source, seasonal adjustment) used in scenario tables | Prevents misinterpretation; input control | Treasury/ALM | L | 2026-02-24 | 2026-03-26 | Open | Confirm GDP growth measure (q/q annualized vs y/y) |
 
-## Blocking Items Summary
-Execution-based review remains blocked until ER-008 and ER-010 are provided (lineage evidence and reserve engine run package).
+## Current Blocking Status Summary
+- **Blocked for execution-based review:** ER-001, ER-002 (not received)
+- **Material documentation inconsistencies requiring resolution:** ER-003, ER-004/ER-005, ER-006/ER-007, ER-008

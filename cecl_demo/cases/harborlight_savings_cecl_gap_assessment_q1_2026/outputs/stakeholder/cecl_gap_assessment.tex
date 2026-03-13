@@ -2,56 +2,154 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{tabularx}
+\usepackage{enumitem}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \setlength{\parskip}{0.6em}
 \setlength{\parindent}{0pt}
+\setlist[itemize]{topsep=3pt,itemsep=3pt,leftmargin=1.4em}
+\setlist[enumerate]{topsep=3pt,itemsep=3pt,leftmargin=1.6em}
 \title{Harborlight Savings CECL Gap Assessment}
 \date{March 13, 2026}
 \begin{document}
 \maketitle
 \section*{Executive Summary}
-This assessment covers Harborlight Savings's Q1 2026 CECL Readiness Gap Assessment package. The materials support a meaningful documentation-led review, but the absence of a runnable reserve engine and lineaged execution evidence prevents an execution-based opinion. The review therefore focuses on package sufficiency, scenario consistency, segment reconciliation, and qualitative overlay support.
-\section*{Package Reviewed}
+This assessment covers Harborlight Savings's Q1 2026 CECL Readiness Gap Assessment package. The materials are sufficient for a structured documentation-led gap assessment, but they do not support an execution-based CECL review because no reserve engine, reproducibility notebook, or lineaged execution runbook was supplied. The review therefore focuses on evidence sufficiency, scenario-definition consistency, provided-output reconciliation, and overlay documentation support.
+\section*{Scope and Coverage Boundary}
+This work assessed whether the supplied CECL package is sufficient to support a deeper reserve review and whether the materials provided are internally consistent. The review did not attempt baseline reproduction, scenario reruns, or sensitivity testing because the implementation artifacts required for those procedures were not part of the package.
 \begin{itemize}
-\item Methodology, model overview, scenario assumptions, overlay memo, and prior review note
-\item Scenario tables and provided reserve outputs
-\item Evidence request log and governance/gap-tracker materials
+\item Supported work: evidence sufficiency review, scenario-definition consistency review, provided-output reconciliation, and overlay documentation review.
+\item Blocked work: reserve-engine execution, baseline reproduction, implementation sensitivity testing, and model-code review.
+\item Coverage note: all conclusions are bounded to the documents, scenario tables, and output snapshots provided in the package.
 \end{itemize}
-\section*{Work Performed}
+\section*{Artifacts Reviewed}
 \begin{itemize}
-\item Inventoried the supplied package and identified execution blockers
-\item Compared scenario narrative to supplied scenario tables
-\item Compared documented segment structure to the provided reserve outputs
-\item Assessed whether overlay documentation was consistent with the supplied reserve bridge
+\item docs/methodology.md (document)
+\item docs/model\_overview.md (document)
+\item docs/scenario\_assumptions.md (document)
+\item docs/overlay\_memo.md (document)
+\item docs/prior\_review\_note.md (document)
+\item docs/evidence\_request\_log.md (document)
+\item docs/gap\_tracker.md (document)
+\item data/data\_dictionary.csv (document)
+\item scenarios/baseline.csv (scenario)
+\item scenarios/adverse.csv (scenario)
+\item scenarios/severe.csv (scenario)
+\item outputs/provided\_reserve\_summary.csv (metrics)
+\item outputs/provided\_segment\_reserves.csv (metrics)
 \end{itemize}
-\section*{Provided Reserve Outputs}
-\begin{tabular}{p{0.24\textwidth} | p{0.24\textwidth} | p{0.24\textwidth}}
+\section*{Documented CECL Process Understanding}
+The package describes a CECL process covering 5 documented segments: Residential Mortgage, Heloc, Cre Investor, Cre Owner Occupied, Commercial And Industrial. Documentation frames the workflow as a narrative and prior-output review package rather than a reproducible model handoff.
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.171\textwidth}>{\raggedright\arraybackslash}p{0.235\textwidth}>{\raggedright\arraybackslash}p{0.256\textwidth}>{\raggedright\arraybackslash}p{0.299\textwidth}}
 \toprule
-Scenario & Reserve & Reserve Rate \\
+Assumption Area & Documented Position & Observed in Package & Review Implication \\
+\midrule
+Forecast horizon & 8 quarters in methodology & 6 quarters in model overview / 6 numeric quarters provided & Horizon treatment is not consistently documented or evidenced. \\
+Reversion horizon & 4 quarters in methodology & 2 quarters in model overview / no reversion files provided & Reversion mechanics cannot be independently assessed. \\
+Segment taxonomy & 5 documented segments & 4 output segments in reserve files & Output reporting does not reconcile to the documented segment structure. \\
+Overlay guardrail & 6.0 bps documented cap & 18.0 bps shown in output bridge & Qualitative adjustment support is incomplete and inconsistent. \\
+\bottomrule
+\end{tabularx}
+\normalsize
+\end{center}
+\section*{Procedures Performed}
+\subsection*{Evidence sufficiency}
+The first job is to determine whether the package supports a review memo or only a gap assessment.
+\begin{itemize}
+\item Evidence relied upon: docs/evidence\_request\_log.md, docs/gap\_tracker.md, outputs/provided\_reserve\_summary.csv
+\item Checks performed: runtime blocker assessment, lineage assessment, coverage statement
+\end{itemize}
+\subsection*{Scenario consistency}
+If scenario narratives do not match the numeric scenario tables, management cannot rely on directional reserve conclusions.
+\begin{itemize}
+\item Evidence relied upon: docs/scenario\_assumptions.md, scenarios/adverse.csv, scenarios/severe.csv
+\item Checks performed: narrative versus table comparison, severity ordering review
+\end{itemize}
+\subsection*{Output reconciliation}
+Even without code, prior reserve outputs can be checked for segment reconciliation and overlay magnitude claims.
+\begin{itemize}
+\item Evidence relied upon: outputs/provided\_segment\_reserves.csv, outputs/provided\_overlay\_bridge.csv, docs/overlay\_memo.md
+\item Checks performed: segment taxonomy comparison, overlay magnitude comparison
+\end{itemize}
+\section*{Provided Output Snapshot}
+Although no executable reserve engine was supplied, the package included prior reserve summaries and segment output snapshots that could be reconciled at a high level.
+\begin{center}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.302\textwidth}>{\raggedright\arraybackslash}p{0.357\textwidth}>{\raggedright\arraybackslash}p{0.302\textwidth}}
+\toprule
+Scenario & Provided Reserve & Provided Reserve Rate \\
 \midrule
 Baseline & \$38,420,000 & 1.84\% \\
 Adverse & \$52,180,000 & 2.48\% \\
 Severe & \$53,010,000 & 2.51\% \\
 \bottomrule
-\end{tabular}
-\section*{Key Gaps and Findings}
-\begin{itemize}
-\item [HIGH] Execution-based review is blocked by missing reserve engine and lineage evidence: The package includes prior outputs and narrative materials, but no reserve engine, reproducibility script, or lineaged runbook sufficient for execution-based review.
-\item [HIGH] Scenario narrative is not fully aligned to the supplied scenario tables: The severe scenario narrative describes a uniformly harsher path, but the supplied numeric scenarios show 4 quarter(s) where severe house-price growth is less severe than adverse.
-\item [MEDIUM] Documented segment structure does not reconcile to the provided reserve outputs: Documentation describes 5 segments, while the provided reserve outputs reconcile to 4 output segments.
-\item [MEDIUM] Overlay documentation understates the magnitude implied by the provided reserve bridge: The overlay memo frames qualitative adjustment as capped at 6.0 bps, but the provided bridge shows up to 18.0 bps.
-\end{itemize}
-\section*{Coverage Position}
-This package supports a documentation-led gap assessment only. Baseline reproduction, scenario reruns, sensitivity testing, and implementation validation remain blocked pending runnable model artifacts and execution lineage.
-\section*{Evidence Requests}
-\begin{itemize}
+\end{tabularx}
+\end{center}
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.343\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}}
+\toprule
+Output Segment & Baseline & Adverse & Severe \\
+\midrule
+Commercial And Industrial & \$12,920,000 & \$17,310,000 & \$17,720,000 \\
+Cre Investor & \$11,900,000 & \$17,120,000 & \$17,880,000 \\
+Heloc & \$5,180,000 & \$6,450,000 & \$6,430,000 \\
+Residential Mortgage & \$8,420,000 & \$11,300,000 & \$10,980,000 \\
+\bottomrule
+\end{tabularx}
+\normalsize
+\end{center}
+\begin{center}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.640\textwidth}>{\raggedright\arraybackslash}p{0.320\textwidth}}
+\toprule
+Segment & Provided Overlay \\
+\midrule
+Cre Investor & 18.0 bps \\
+Heloc & 16.0 bps \\
+Commercial And Industrial & 14.0 bps \\
+Residential Mortgage & 12.0 bps \\
+\bottomrule
+\end{tabularx}
+\end{center}
+\section*{Documentation and Evidence Assessment}
+\subsection*{Execution Readiness}
+The package does not support runtime validation. No reserve engine, no reproducibility notebook, and no lineaged runbook were included, so the review could not test whether the provided reserves are reproducible from the documented methodology.
+\subsection*{Scenario Consistency}
+The numeric scenario files cover six quarters, not the full documented forecast and reversion path. In addition, the severe scenario is not uniformly harsher than the adverse scenario for house-price growth in the following quarters: 2026Q3, 2026Q4, 2027Q1, 2027Q2.
+\subsection*{Segment and Overlay Reconciliation}
+Documentation references 5 segments, while the provided reserve output files reconcile to 4 segments. The overlay memo frames qualitative adjustments as capped at 6.0 bps, but the supplied bridge reaches 18.0 bps.
+\section*{Detailed Gaps and Findings}
+\subsection*{Execution-based review is blocked by missing reserve engine and lineage evidence}
+\textbf{Severity:} HIGH\\
+\textbf{Observation:} The package includes prior outputs and narrative materials, but no reserve engine, reproducibility script, or lineaged runbook sufficient for execution-based review.\\
+\textbf{Evidence:} docs/evidence\_request\_log.md, docs/gap\_tracker.md, outputs/provided\_reserve\_summary.csv\\
+\textbf{Recommended response:} Provide executable model artifacts, a reproducibility notebook or script, and a lineaged runbook before requesting an execution-based CECL opinion.
+\subsection*{Scenario narrative is not fully aligned to the supplied scenario tables}
+\textbf{Severity:} HIGH\\
+\textbf{Observation:} The severe scenario narrative describes a uniformly harsher path, but the supplied numeric scenarios show 4 quarter(s) where severe house-price growth is less severe than adverse.\\
+\textbf{Evidence:} docs/scenario\_assumptions.md, scenarios/adverse.csv, scenarios/severe.csv\\
+\textbf{Recommended response:} Refresh the scenario narrative so it matches the numeric path quarter by quarter and include governance approval for the final scenario set.
+\subsection*{Documented segment structure does not reconcile to the provided reserve outputs}
+\textbf{Severity:} MEDIUM\\
+\textbf{Observation:} Documentation describes 5 segments, while the provided reserve outputs reconcile to 4 output segments.\\
+\textbf{Evidence:} docs/methodology.md, docs/model\_overview.md, outputs/provided\_segment\_reserves.csv\\
+\textbf{Recommended response:} Reconcile segment taxonomy across methodology, model overview, and reserve reporting, then restate the official segment inventory in one controlled artifact.
+\subsection*{Overlay documentation understates the magnitude implied by the provided reserve bridge}
+\textbf{Severity:} MEDIUM\\
+\textbf{Observation:} The overlay memo frames qualitative adjustment as capped at 6.0 bps, but the provided bridge shows up to 18.0 bps.\\
+\textbf{Evidence:} docs/overlay\_memo.md, outputs/provided\_overlay\_bridge.csv\\
+\textbf{Recommended response:} Quantify and document the overlay methodology and cap so the reserve bridge can be independently reconciled.
+\section*{Evidence Requests and Next Actions}
+The following items are required before the package can support execution-based review procedures.
+\begin{enumerate}
 \item Provide the runnable CECL reserve engine or reproducibility notebook used to generate the supplied reserve outputs.
 \item Provide a lineaged runbook linking the prior output snapshots to the model version and scenario definitions reviewed by governance.
 \item Reconcile documented segment taxonomy to the segment structure used in the reserve outputs.
 \item Refresh scenario documentation so the severe narrative matches the numeric severe path quarter by quarter.
-\end{itemize}
+\end{enumerate}
 \section*{Overall Assessment}
-The package is sufficient for a structured gap assessment but not for a model-driven CECL review opinion. The primary blockers are missing implementation artifacts, unresolved scenario-definition inconsistencies, and overlay support that is not quantitatively reconciled.
+The package is sufficient for a structured CECL gap assessment, but not for a model-driven review opinion. The principal blockers are missing execution artifacts, inconsistent horizon and segment documentation, scenario narratives that do not fully align to numeric tables, and overlay support that is not quantitatively reconciled.
 \end{document}
