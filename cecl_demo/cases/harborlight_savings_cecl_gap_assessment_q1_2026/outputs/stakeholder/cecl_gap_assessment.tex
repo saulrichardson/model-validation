@@ -177,6 +177,7 @@ Overlay guardrail & 6.0 bps documented cap & 18.0 bps shown in output bridge & Q
 \section*{Review Strategy and Planning Logic}
 The review strategy was shaped by the discovered package boundary. Codex considered 4 central review questions, executed 7 documentation-led procedures, and marked 2 procedures as blocked because the package lacked runnable implementation artifacts.
 Because the package lacks a reserve engine and execution lineage, the review strategy intentionally shifts from runtime validation to evidence sufficiency, scenario consistency, output reconciliation, and remediation planning. The goal is to show what can be credibly reviewed now and what remains blocked.
+The table below is the high-level procedure register. It is meant to show what Codex was trying to establish from the package before work proceeded, not to reproduce the full underlying support data.
 \begin{enumerate}
 \item Does the package support a model-driven CECL opinion, or only a documentation-led gap assessment?
 \item Are the scenario narratives and numeric scenario files aligned closely enough to support directional reserve conclusions?
@@ -185,23 +186,32 @@ Because the package lacks a reserve engine and execution lineage, the review str
 \end{enumerate}
 \begin{center}
 \small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.107\textwidth}>{\raggedright\arraybackslash}p{0.235\textwidth}>{\raggedright\arraybackslash}p{0.149\textwidth}>{\raggedright\arraybackslash}p{0.469\textwidth}}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.102\textwidth}>{\raggedright\arraybackslash}p{0.245\textwidth}>{\raggedright\arraybackslash}p{0.490\textwidth}>{\raggedright\arraybackslash}p{0.123\textwidth}}
 \toprule
-ID & Procedure & Status & Why Selected \\
+ID & Procedure & What Codex Was Trying To Test & Status \\
 \midrule
-GA-01 & Package inventory and coverage classification & Executed & The package contained scenario files, output snapshots, and governance documents but no reserve engine or runtime lineage. \\
-GA-02 & Execution readiness and lineage assessment & Executed & A clear coverage boundary is necessary before any deeper opinion can be formed. \\
-GA-03 & Scenario narrative versus table comparison & Executed & Scenario definition quality is reviewable even without runnable code. \\
-GA-04 & Horizon and reversion consistency review & Executed & Horizon and reversion are governance-critical CECL assumptions even when the implementation is absent. \\
-GA-05 & Segment taxonomy reconciliation & Executed & Output reconciliation is one of the few quantitative checks available without the model. \\
-GA-06 & Overlay magnitude reconciliation & Executed & Overlay support is reviewable from documentation and provided output snapshots even without code. \\
-GA-07 & Baseline reproduction & Blocked & This would normally be a core CECL procedure if the package contained runnable implementation artifacts. \\
-GA-08 & Scenario reruns and sensitivity testing & Blocked & These procedures were considered because they would normally follow scenario and methodology review. \\
-GA-09 & Evidence request and remediation planning & Executed & The package still supports useful next-step guidance even without runnable code. \\
+GA-01 & Package inventory and coverage classification & Determine whether the upload supports execution-based review or only a documentation-led assessment. & Executed \\
+GA-02 & Execution readiness and lineage assessment & Establish whether the package includes the artifacts required for baseline reproduction and scenario reruns. & Executed \\
+GA-03 & Scenario narrative versus table comparison & Test whether the severe scenario narrative matches the supplied numeric scenario path. & Executed \\
+GA-04 & Horizon and reversion consistency review & Test whether documented forecast and reversion descriptions reconcile across methodology, model overview, and supplied scenario files. & Executed \\
+GA-05 & Segment taxonomy reconciliation & Compare documented segment definitions to the segment structure in the provided reserve outputs. & Executed \\
+GA-06 & Overlay magnitude reconciliation & Compare documented overlay posture to the reserve bridge included in the package. & Executed \\
+GA-07 & Baseline reproduction & Reproduce the baseline reserve from the implementation and baseline scenario. & Blocked \\
+GA-08 & Scenario reruns and sensitivity testing & Rerun scenarios and challenge reserve sensitivity to key assumptions. & Blocked \\
+GA-09 & Evidence request and remediation planning & Translate identified blockers and inconsistencies into a prioritized request list for a future execution-based review. & Executed \\
 \bottomrule
 \end{tabularx}
 \normalsize
 \end{center}
+\subsection*{Planning and Execution Record Files}
+The following Codex-generated files contain the detailed review strategy, executed procedure register, evidence mapping, and granular gap-assessment run log.
+\begin{itemize}
+\item \texttt{outputs/support/review\_plan.md}
+\item \texttt{outputs/support/review\_strategy.md}
+\item \texttt{outputs/support/executed\_test\_matrix.md}
+\item \texttt{outputs/support/evidence\_map.md}
+\item \texttt{outputs/support/procedure\_run\_log.md}
+\end{itemize}
 \section*{Selected Raw Evidence Excerpts}
 The excerpts below are short verbatim snippets from bank-uploaded materials and Codex-generated outputs that support the current gap assessment and coverage boundary.
 \subsection*{[BANK INPUT] docs/methodology.md}
@@ -563,43 +573,12 @@ This section records the more granular action sequence for the gap assessment, i
 \end{itemize}
 \section*{Provided Output Snapshot}
 Although no executable reserve engine was supplied, the package included prior reserve summaries and segment output snapshots that could be reconciled at a high level.
-\begin{center}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.302\textwidth}>{\raggedright\arraybackslash}p{0.357\textwidth}>{\raggedright\arraybackslash}p{0.302\textwidth}}
-\toprule
-Scenario & Provided Reserve & Provided Reserve Rate \\
-\midrule
-Baseline & \$38,420,000 & 1.84\% \\
-Adverse & \$52,180,000 & 2.48\% \\
-Severe & \$53,010,000 & 2.51\% \\
-\bottomrule
-\end{tabularx}
-\end{center}
-\begin{center}
-\small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.343\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}>{\raggedright\arraybackslash}p{0.206\textwidth}}
-\toprule
-Output Segment & Baseline & Adverse & Severe \\
-\midrule
-Commercial And Industrial & \$12,920,000 & \$17,310,000 & \$17,720,000 \\
-Cre Investor & \$11,900,000 & \$17,120,000 & \$17,880,000 \\
-Heloc & \$5,180,000 & \$6,450,000 & \$6,430,000 \\
-Residential Mortgage & \$8,420,000 & \$11,300,000 & \$10,980,000 \\
-\bottomrule
-\end{tabularx}
-\normalsize
-\end{center}
-\begin{center}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.640\textwidth}>{\raggedright\arraybackslash}p{0.320\textwidth}}
-\toprule
-Segment & Provided Overlay \\
-\midrule
-Cre Investor & 18.0 bps \\
-Heloc & 16.0 bps \\
-Commercial And Industrial & 14.0 bps \\
-Residential Mortgage & 12.0 bps \\
-\bottomrule
-\end{tabularx}
-\end{center}
+\begin{itemize}
+\item Provided portfolio reserve ordering is Baseline \$38,420,000, Adverse \$52,180,000, Severe \$53,010,000.
+\item The supplied output files reconcile to 4 reporting segments rather than the 5 documented methodology segments.
+\item The largest provided overlay in the bridge is 18.0 bps, above the documented 6.0 bps cap.
+\end{itemize}
+Detailed provided-output snapshots remain in outputs/support/provided\_reserve\_summary.csv, outputs/support/provided\_segment\_reserves.csv, and outputs/support/provided\_overlay\_bridge.csv.
 \section*{Documentation and Evidence Assessment}
 \subsection*{Execution Readiness}
 The package does not support runtime validation. No reserve engine, no reproducibility notebook, and no lineaged runbook were included, so the review could not test whether the provided reserves are reproducible from the documented methodology.
@@ -607,6 +586,15 @@ The package does not support runtime validation. No reserve engine, no reproduci
 The numeric scenario files cover six quarters, not the full documented forecast and reversion path. In addition, the severe scenario is not uniformly harsher than the adverse scenario for house-price growth in the following quarters: 2026Q3, 2026Q4, 2027Q1, 2027Q2.
 \subsection*{Segment and Overlay Reconciliation}
 Documentation references 5 segments, while the provided reserve output files reconcile to 4 segments. The overlay memo frames qualitative adjustments as capped at 6.0 bps, but the supplied bridge reaches 18.0 bps.
+\subsection*{Gap Assessment Support Files}
+\begin{itemize}
+\item \texttt{outputs/support/provided\_reserve\_summary.csv}
+\item \texttt{outputs/support/provided\_segment\_reserves.csv}
+\item \texttt{outputs/support/provided\_overlay\_bridge.csv}
+\item \texttt{outputs/support/documentation\_crosscheck.md}
+\item \texttt{outputs/support/evidence\_request\_list.md}
+\item \texttt{outputs/support/findings\_register.json}
+\end{itemize}
 \section*{Detailed Gaps and Findings}
 \subsection*{Execution-based review is blocked by missing reserve engine and lineage evidence}
 \textbf{Severity:} HIGH\\

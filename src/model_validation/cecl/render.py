@@ -368,85 +368,9 @@ def render_full_review_latex(
     severe_delta = severe["reserve_amount"] - adverse["reserve_amount"]
     severe_vs_baseline = severe["reserve_amount"] - baseline["reserve_amount"]
 
-    segment_rows = [
-        [
-            _display_segment(str(row["segment_id"])),
-            _money(float(row["baseline"])),
-            _money(float(row["adverse"])),
-            _money(float(row["severe"])),
-            _money(float(row["adverse_minus_baseline"])),
-            _money(float(row["severe_minus_adverse"])),
-        ]
-        for _, row in segment_comparison.sort_values("segment_id").iterrows()
-    ]
     anomaly_row = segment_comparison.loc[
         segment_comparison["segment_id"] == spec.quantitative_anomaly_segment
     ].iloc[0]
-
-    scenario_rows = [
-        [
-            _display_scenario(str(row["scenario_name"])),
-            _money(float(row["reserve_amount"])),
-            _pct(float(row["reserve_rate"])),
-            _money(float(row["reserve_amount"] - baseline["reserve_amount"])),
-        ]
-        for _, row in _ordered_scenarios(scenario_summary).iterrows()
-    ]
-
-    horizon_rows = _subset_rows(
-        sensitivity_results,
-        "forecast_horizon",
-        ["Forecast Horizon", "Scenario", "Reserve", "Change vs 6Q Base"],
-        lambda row: [
-            f"{row['setting']} quarters",
-            _display_scenario(str(row["scenario_name"])),
-            _money(float(row["reserve_amount"])),
-            _money(float(row["reserve_amount"] - _lookup_sensitivity(sensitivity_results, 'forecast_horizon', '6'))),
-        ],
-    )
-    reversion_rows = _subset_rows(
-        sensitivity_results,
-        "reversion_speed",
-        ["Reversion Speed", "Scenario", "Reserve", "Change vs 2Q Base"],
-        lambda row: [
-            f"{row['setting']} quarters",
-            _display_scenario(str(row["scenario_name"])),
-            _money(float(row["reserve_amount"])),
-            _money(float(row["reserve_amount"] - _lookup_sensitivity(sensitivity_results, 'reversion_speed', '2'))),
-        ],
-    )
-    severity_rows = _subset_rows(
-        sensitivity_results,
-        "macro_severity_scale",
-        ["Severity Scale", "Scenario", "Reserve", "Change vs 1.00x"],
-        lambda row: [
-            f"{row['setting']}x",
-            _display_scenario(str(row["scenario_name"])),
-            _money(float(row["reserve_amount"])),
-            _money(
-                float(row["reserve_amount"] - _lookup_sensitivity(sensitivity_results, "macro_severity_scale", "1.0"))
-            ),
-        ],
-    )
-    overlay_rows = _subset_rows(
-        sensitivity_results,
-        "overlay_multiplier",
-        ["Overlay Multiplier", "Scenario", "Reserve", "Change vs 1.00x"],
-        lambda row: [
-            f"{row['setting']}x",
-            _display_scenario(str(row["scenario_name"])),
-            _money(float(row["reserve_amount"])),
-            _money(float(row["reserve_amount"] - _lookup_sensitivity(sensitivity_results, "overlay_multiplier", "1.0"))),
-        ],
-    )
-
-    driver_rows = [
-        [
-            _display_driver(str(row["driver"])),
-            _money(float(row["reserve_delta_vs_baseline"])),
-        ]
-        for _, row in driver_bridge.sort_values("reserve_delta_vs_baseline", ascending=False).iterrows()
-    ]
     largest_driver = driver_bridge.sort_values("reserve_delta_vs_baseline", ascending=False).iloc[0]
 
     assumption_rows = [
@@ -495,10 +419,29 @@ def render_full_review_latex(
         [
             item["procedure_id"],
             item["procedure_name"],
+            item["objective"],
             item["status"].replace("_", " ").title(),
-            item["selection_rationale"],
         ]
         for item in procedure_matrix
+    ]
+    planning_artifacts = [
+        "outputs/support/review_plan.md",
+        "outputs/support/review_strategy.md",
+        "outputs/support/executed_test_matrix.md",
+        "outputs/support/evidence_map.md",
+        "outputs/support/procedure_run_log.md",
+    ]
+    quantitative_support_files = [
+        "outputs/support/baseline_reproduction.json",
+        "outputs/support/scenario_results.csv",
+        "outputs/support/segment_reserve_comparison.csv",
+        "outputs/support/sensitivity_results.csv",
+        "outputs/support/driver_bridge.csv",
+    ]
+    documentation_support_files = [
+        "outputs/support/documentation_crosscheck.md",
+        "outputs/support/findings_register.json",
+        "outputs/support/evidence_excerpts.md",
     ]
 
     executive_summary = (
@@ -590,13 +533,21 @@ def render_full_review_latex(
             f"The review strategy was formed from the discovered evidence. Codex considered {len(review_questions)} central review questions, selected {executed_count} executable procedures, and identified {blocked_count} blocked or non-applicable procedures."
         ),
         _latex_paragraph(case_understanding["strategy_summary"]),
+        _latex_paragraph(
+            "The table below is the high-level procedure register. It is meant to communicate what Codex was trying to prove before running the work. The more detailed planning record remains in the support artifacts listed immediately after the table."
+        ),
         _latex_enumerate(review_questions),
         _latex_table(
-            ["ID", "Procedure", "Status", "Why Selected"],
+            ["ID", "Procedure", "What Codex Was Trying To Test", "Status"],
             strategy_rows,
-            column_ratios=[0.10, 0.22, 0.14, 0.44],
+            column_ratios=[0.10, 0.24, 0.48, 0.12],
             small=True,
         ),
+        _latex_subsection("Planning and Execution Record Files"),
+        _latex_paragraph(
+            "The following Codex-generated files contain the full planning rationale, executed procedure register, evidence mapping, and granular step log for this review."
+        ),
+        _latex_file_reference_items(planning_artifacts),
         "",
         _latex_section("Selected Raw Evidence Excerpts"),
         _latex_paragraph(
@@ -651,43 +602,42 @@ def render_full_review_latex(
         _latex_paragraph(
             f"Portfolio-level reserve ordering was monotonic. Adverse increased reserve by {_money(adverse_delta)} versus Baseline, and Severe increased reserve by {_money(severe_delta)} versus Adverse."
         ),
-        _latex_table(
-            ["Scenario", "Reserve", "Reserve Rate", "Change vs Baseline"],
-            scenario_rows,
-            column_ratios=[0.18, 0.22, 0.18, 0.22],
-            small=True,
+        _latex_paragraph(
+            "Detailed scenario-level reserve values are recorded in outputs/support/scenario_results.csv. That file should be treated as the full machine-readable record for portfolio scenario reruns."
         ),
         "",
         _latex_subsection("Segment Results"),
         _latex_paragraph(
             f"Segment-level behavior was directionally reasonable for most segments. The notable exception was {_display_segment(spec.quantitative_anomaly_segment)}, which declined by {_money(abs(float(anomaly_row['severe_minus_adverse'])))} from Adverse to Severe."
         ),
-        _latex_table(
-            ["Segment", "Baseline", "Adverse", "Severe", "Adv - Base", "Sev - Adv"],
-            segment_rows,
-            column_ratios=[0.18, 0.14, 0.14, 0.14, 0.14, 0.14],
-            small=True,
+        _latex_paragraph(
+            "The segment-by-segment reserve record is maintained in outputs/support/segment_reserve_comparison.csv. That file should be used for full segment reconciliation and for tracing the Residential Mortgage anomaly."
         ),
         "",
         _latex_subsection("Sensitivity Testing"),
         _latex_paragraph(sensitivity_summary),
-        _latex_table(horizon_rows["headers"], horizon_rows["rows"], column_ratios=[0.18, 0.18, 0.22, 0.22], small=True),
-        "",
-        _latex_table(reversion_rows["headers"], reversion_rows["rows"], column_ratios=[0.18, 0.18, 0.22, 0.22], small=True),
-        "",
-        _latex_table(severity_rows["headers"], severity_rows["rows"], column_ratios=[0.18, 0.18, 0.22, 0.22], small=True),
-        "",
-        _latex_table(overlay_rows["headers"], overlay_rows["rows"], column_ratios=[0.18, 0.18, 0.22, 0.22], small=True),
+        _latex_itemize(
+            [
+                f"Forecast horizon: moving from 6 to 4 forecast quarters changed reserve by {_money(_lookup_sensitivity(sensitivity_results, 'forecast_horizon', '4') - _lookup_sensitivity(sensitivity_results, 'forecast_horizon', '6'))}.",
+                f"Reversion speed: extending severe-scenario reversion from 2 to 6 quarters increased reserve by {_money(_lookup_sensitivity(sensitivity_results, 'reversion_speed', '6') - _lookup_sensitivity(sensitivity_results, 'reversion_speed', '2'))}.",
+                f"Macro severity: scaling severe stress from 1.00x to 1.25x increased reserve by {_money(_lookup_sensitivity(sensitivity_results, 'macro_severity_scale', '1.25') - _lookup_sensitivity(sensitivity_results, 'macro_severity_scale', '1.0'))}.",
+                f"Overlay magnitude: removing overlays reduced reserve by {_money(_lookup_sensitivity(sensitivity_results, 'overlay_multiplier', '1.0') - _lookup_sensitivity(sensitivity_results, 'overlay_multiplier', '0.0'))}.",
+            ]
+        ),
+        _latex_paragraph(
+            "The complete sensitivity grid, including all tested settings and reserve outputs, is recorded in outputs/support/sensitivity_results.csv."
+        ),
         "",
         _latex_subsection("Driver Analysis"),
         _latex_paragraph(
             f"The simple reserve bridge indicates that {_display_driver(str(largest_driver['driver']))} was the largest modeled contributor to the Severe-versus-Baseline reserve increase, adding {_money(float(largest_driver['reserve_delta_vs_baseline']))} on a standalone basis."
         ),
-        _latex_table(
-            ["Driver", "Reserve Delta vs Baseline"],
-            driver_rows,
-            column_ratios=[0.42, 0.33],
+        _latex_paragraph(
+            "The full reserve-driver bridge is recorded in outputs/support/driver_bridge.csv and should be used for any deeper driver reconciliation or appendix work."
         ),
+        "",
+        _latex_subsection("Quantitative Support Files"),
+        _latex_file_reference_items(quantitative_support_files),
         "",
         _latex_section("Documentation and Assumption Alignment"),
         _latex_paragraph(documentation_summary),
@@ -699,6 +649,8 @@ def render_full_review_latex(
                 f"Anomaly observation: {_display_segment(spec.quantitative_anomaly_segment)} severe reserve {_money(float(anomaly_row['severe']))} versus adverse reserve {_money(float(anomaly_row['adverse']))}.",
             ]
         ),
+        _latex_subsection("Documentation Review Files"),
+        _latex_file_reference_items(documentation_support_files),
         "",
         _latex_section("Detailed Findings and Remediation"),
         findings_sections,
@@ -737,35 +689,11 @@ def render_gap_assessment_latex(
     findings: list[dict[str, Any]],
     evidence_requests: list[str],
 ) -> str:
-    scenario_rows = [
-        [
-            _display_scenario(str(row["scenario_name"])),
-            _money(float(row["reserve_amount"])),
-            _pct(float(row["reserve_rate"])),
-        ]
-        for _, row in _ordered_scenarios(scenario_summary).iterrows()
-    ]
     segment_pivot = (
         segment_summary.pivot(index="segment_id", columns="scenario_name", values="reserve_amount")
         .reset_index()
         .rename_axis(columns=None)
     )
-    segment_rows = [
-        [
-            _display_segment(str(row["segment_id"])),
-            _money(float(row.get("baseline", 0.0))),
-            _money(float(row.get("adverse", 0.0))),
-            _money(float(row.get("severe", 0.0))),
-        ]
-        for _, row in segment_pivot.sort_values("segment_id").iterrows()
-    ]
-    overlay_rows = [
-        [
-            _display_segment(str(row["segment_id"])),
-            f"{float(row['provided_overlay_bps']):.1f} bps",
-        ]
-        for _, row in overlay_bridge.sort_values("provided_overlay_bps", ascending=False).iterrows()
-    ]
 
     assumption_rows = [
         [
@@ -815,10 +743,25 @@ def render_gap_assessment_latex(
         [
             item["procedure_id"],
             item["procedure_name"],
+            item["objective"],
             item["status"].replace("_", " ").title(),
-            item["selection_rationale"],
         ]
         for item in procedure_matrix
+    ]
+    planning_artifacts = [
+        "outputs/support/review_plan.md",
+        "outputs/support/review_strategy.md",
+        "outputs/support/executed_test_matrix.md",
+        "outputs/support/evidence_map.md",
+        "outputs/support/procedure_run_log.md",
+    ]
+    gap_support_files = [
+        "outputs/support/provided_reserve_summary.csv",
+        "outputs/support/provided_segment_reserves.csv",
+        "outputs/support/provided_overlay_bridge.csv",
+        "outputs/support/documentation_crosscheck.md",
+        "outputs/support/evidence_request_list.md",
+        "outputs/support/findings_register.json",
     ]
 
     executive_summary = (
@@ -889,13 +832,21 @@ def render_gap_assessment_latex(
             f"The review strategy was shaped by the discovered package boundary. Codex considered {len(review_questions)} central review questions, executed {executed_count} documentation-led procedures, and marked {blocked_count} procedures as blocked because the package lacked runnable implementation artifacts."
         ),
         _latex_paragraph(case_understanding["strategy_summary"]),
+        _latex_paragraph(
+            "The table below is the high-level procedure register. It is meant to show what Codex was trying to establish from the package before work proceeded, not to reproduce the full underlying support data."
+        ),
         _latex_enumerate(review_questions),
         _latex_table(
-            ["ID", "Procedure", "Status", "Why Selected"],
+            ["ID", "Procedure", "What Codex Was Trying To Test", "Status"],
             strategy_rows,
-            column_ratios=[0.10, 0.22, 0.14, 0.44],
+            column_ratios=[0.10, 0.24, 0.48, 0.12],
             small=True,
         ),
+        _latex_subsection("Planning and Execution Record Files"),
+        _latex_paragraph(
+            "The following Codex-generated files contain the detailed review strategy, executed procedure register, evidence mapping, and granular gap-assessment run log."
+        ),
+        _latex_file_reference_items(planning_artifacts),
         "",
         _latex_section("Selected Raw Evidence Excerpts"),
         _latex_paragraph(
@@ -935,23 +886,15 @@ def render_gap_assessment_latex(
         _latex_paragraph(
             "Although no executable reserve engine was supplied, the package included prior reserve summaries and segment output snapshots that could be reconciled at a high level."
         ),
-        _latex_table(
-            ["Scenario", "Provided Reserve", "Provided Reserve Rate"],
-            scenario_rows,
-            column_ratios=[0.22, 0.26, 0.22],
+        _latex_itemize(
+            [
+                f"Provided portfolio reserve ordering is Baseline {_money(float(_ordered_scenarios(scenario_summary).iloc[0]['reserve_amount']))}, Adverse {_money(float(_ordered_scenarios(scenario_summary).iloc[1]['reserve_amount']))}, Severe {_money(float(_ordered_scenarios(scenario_summary).iloc[2]['reserve_amount']))}.",
+                f"The supplied output files reconcile to {len(segment_pivot)} reporting segments rather than the {len(spec.documented_segments)} documented methodology segments.",
+                f"The largest provided overlay in the bridge is {max(spec.provided_overlay_bps_by_segment.values()):.1f} bps, above the documented {spec.documented_overlay_cap_bps:.1f} bps cap.",
+            ]
         ),
-        "",
-        _latex_table(
-            ["Output Segment", "Baseline", "Adverse", "Severe"],
-            segment_rows,
-            column_ratios=[0.30, 0.18, 0.18, 0.18],
-            small=True,
-        ),
-        "",
-        _latex_table(
-            ["Segment", "Provided Overlay"],
-            overlay_rows,
-            column_ratios=[0.44, 0.22],
+        _latex_paragraph(
+            "Detailed provided-output snapshots remain in outputs/support/provided_reserve_summary.csv, outputs/support/provided_segment_reserves.csv, and outputs/support/provided_overlay_bridge.csv."
         ),
         "",
         _latex_section("Documentation and Evidence Assessment"),
@@ -968,6 +911,8 @@ def render_gap_assessment_latex(
             f"Documentation references {len(spec.documented_segments)} segments, while the provided reserve output files reconcile to {len(spec.output_segments)} segments. "
             f"The overlay memo frames qualitative adjustments as capped at {spec.documented_overlay_cap_bps:.1f} bps, but the supplied bridge reaches {max(spec.provided_overlay_bps_by_segment.values()):.1f} bps."
         ),
+        _latex_subsection("Gap Assessment Support Files"),
+        _latex_file_reference_items(gap_support_files),
         "",
         _latex_section("Detailed Gaps and Findings"),
         findings_sections,
@@ -1222,6 +1167,13 @@ def _latex_path_list(paths: list[str]) -> str:
     if not paths:
         return "\\textit{None}"
     return ", ".join(f"\\texttt{{{_latex_escape(path)}}}" for path in paths)
+
+
+def _latex_file_reference_items(paths: list[str], *, prefix: str = "") -> str:
+    if not paths:
+        return _latex_itemize_raw(["\\textit{None}"])
+    items = [f"{prefix}\\texttt{{{_latex_escape(path)}}}" for path in paths]
+    return _latex_itemize_raw(items)
 
 
 def _latex_procedure_detail(procedure: dict[str, Any]) -> str:
