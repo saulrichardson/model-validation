@@ -1,0 +1,68 @@
+{
+  "case_type": "cecl_gap_assessment",
+  "workflow": "documentation_led_gap_assessment",
+  "artifact_inventory": [
+    {
+      "path": "docs/methodology.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/model_overview.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/scenario_assumptions.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/overlay_memo.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/prior_review_note.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/evidence_request_log.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/gap_tracker.md",
+      "kind": "document"
+    },
+    {
+      "path": "data/data_dictionary.csv",
+      "kind": "document"
+    },
+    {
+      "path": "scenarios/baseline.csv",
+      "kind": "scenario"
+    },
+    {
+      "path": "scenarios/adverse.csv",
+      "kind": "scenario"
+    },
+    {
+      "path": "scenarios/severe.csv",
+      "kind": "scenario"
+    },
+    {
+      "path": "outputs/provided_reserve_summary.csv",
+      "kind": "metrics"
+    },
+    {
+      "path": "outputs/provided_segment_reserves.csv",
+      "kind": "metrics"
+    }
+  ],
+  "runnable": false,
+  "gaps": [
+    "No CECL reserve engine or reproducibility notebook supplied.",
+    "No lineaged execution runbook linking prior outputs to a model build."
+  ],
+  "key_observations": [
+    "Scenario tables, prior reserve outputs, and rich narrative materials are present.",
+    "Execution-based validation is blocked by missing implementation artifacts.",
+    "The package is still sufficient for scenario, segment, and evidence-completeness review."
+  ]
+}

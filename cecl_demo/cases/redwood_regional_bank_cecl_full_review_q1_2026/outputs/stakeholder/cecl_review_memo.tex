@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+\title{Redwood Regional Bank CECL Review Memo}
+\date{March 13, 2026}
+\begin{document}
+\maketitle
+\section*{Executive Summary}
+This review covers Redwood Regional Bank's Q1 2026 CECL Allowance Review package. The reserve engine was runnable, baseline reserve results were reproducible within tolerance, and scenario reruns plus targeted sensitivities were completed. Two material issues were identified: a documented-versus-implemented forecast/reversion mismatch and a segment-level severe-scenario anomaly tied to scenario and overlay interaction.
+\section*{Package Reviewed}
+\begin{itemize}
+\item Runnable CECL reserve engine and synthetic loan-level portfolio
+\item Baseline, adverse, and severe scenario tables
+\item Methodology, model overview, scenario assumptions, and overlay memo
+\item Prior baseline reserve output and governance/supporting notes
+\end{itemize}
+\section*{Review Work Performed}
+\begin{itemize}
+\item Reproduced the supplied baseline reserve output and compared results at loan and segment level
+\item Ran baseline, adverse, and severe reserve projections using the supplied CECL engine
+\item Executed sensitivity analysis for forecast horizon, reversion speed, macro severity, and overlay magnitude
+\item Cross-checked documented methodology, scenario assumptions, and overlay posture against implementation behavior
+\end{itemize}
+\section*{Scenario Results}
+\begin{tabular}{p{0.24\textwidth} | p{0.24\textwidth} | p{0.24\textwidth}}
+\toprule
+Scenario & Reserve & Reserve Rate \\
+\midrule
+Baseline & \$4,876,841 & 0.60\% \\
+Adverse & \$7,132,022 & 0.88\% \\
+Severe & \$8,287,703 & 1.03\% \\
+\bottomrule
+\end{tabular}
+\section*{Key Sensitivity Results}
+\begin{tabular}{p{0.24\textwidth} | p{0.24\textwidth} | p{0.24\textwidth} | p{0.24\textwidth}}
+\toprule
+Test & Setting & Scenario & Reserve \\
+\midrule
+Forecast Horizon & 4 & Baseline & \$4,877,987 \\
+Forecast Horizon & 6 & Baseline & \$4,876,841 \\
+Forecast Horizon & 8 & Baseline & \$4,876,841 \\
+Reversion Speed & 2 & Severe & \$8,287,703 \\
+Reversion Speed & 4 & Severe & \$8,384,331 \\
+Reversion Speed & 6 & Severe & \$8,472,904 \\
+Macro Severity Scale & 0.75 & Severe & \$7,126,890 \\
+Macro Severity Scale & 1.0 & Severe & \$8,287,703 \\
+\bottomrule
+\end{tabular}
+\section*{Findings}
+\begin{itemize}
+\item [HIGH] Documented CECL horizon and reversion do not match the implemented reserve engine: Documentation describes a 4-quarter reasonable-and-supportable period with 4-quarter reversion, while the reserve engine is configured for 6 forecast quarters and 2 reversion quarters.
+\item [MEDIUM] Qualitative overlay effect is materially larger than documentation suggests: The documentation frames qualitative overlays as capped at 5.0 bps, but the supplied overlay table uses up to 9.0 bps.
+\item [HIGH] One segment behaves directionally oddly under the severe scenario: Segment residential\_mortgage produces a severe-scenario reserve of 217710.91, below the adverse reserve of 327699.21. The severe path allows house prices to recover faster than adverse after 2026Q4 while the overlay schedule applies negative mortgage relief, creating a directionally odd segment result.
+\item [LOW] Baseline reserve was reproducible within tolerance: Rerunning the supplied baseline logic reproduced the packaged baseline reserve within 0.000\%.
+\end{itemize}
+\section*{Overall Assessment}
+The package supported a substantive CECL review. Overall reserve direction was reasonable at portfolio level, but the documented forecast/reversion treatment does not match the engine configuration and one segment exhibits counterintuitive severe-scenario behavior. Remediation should address documentation alignment and segment-level scenario governance before approval without qualification.
+\section*{Recommended Actions}
+\begin{itemize}
+\item Align methodology and model overview documents to the implemented 6-quarter forecast and 2-quarter reversion, or update the engine to match documented policy.
+\item Investigate the residential mortgage severe-scenario result and the related overlay/scenario interaction before relying on the severe output for governance reporting.
+\item Reconcile overlay documentation to the actual overlay cap of 9.0 bps and restate governance thresholds accordingly.
+\end{itemize}
+\end{document}

@@ -1,0 +1,37 @@
+{
+  "packaged_total_reserve": 4876841.47,
+  "rerun_total_reserve": 4876841.47,
+  "absolute_delta": 0.0,
+  "pct_delta": 0.0,
+  "max_loan_level_abs_delta": 0.0,
+  "segment_deltas": [
+    {
+      "segment_id": "commercial_and_industrial",
+      "reserve_amount_packaged": 1977246.19,
+      "reserve_amount_rerun": 1977246.19,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    },
+    {
+      "segment_id": "commercial_real_estate",
+      "reserve_amount_packaged": 2545519.51,
+      "reserve_amount_rerun": 2545519.51,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    },
+    {
+      "segment_id": "consumer_unsecured",
+      "reserve_amount_packaged": 100355.66,
+      "reserve_amount_rerun": 100355.66,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    },
+    {
+      "segment_id": "residential_mortgage",
+      "reserve_amount_packaged": 253720.11,
+      "reserve_amount_rerun": 253720.11,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    }
+  ]
+}

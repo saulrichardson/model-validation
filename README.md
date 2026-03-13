@@ -1,6 +1,26 @@
 # Model Validation
 
-Codex-first model validation workbench for local bank-style workflows.
+Codex-first model validation repo with a contained CECL demo layer and older generic workbench scaffolding.
+
+## Primary Demo
+
+The shortest path to a convincing demo in this repo is now the contained [CECL demo](cecl_demo/README.md).
+
+It ships two self-contained workflows:
+
+1. `redwood_regional_bank_cecl_full_review_q1_2026`
+   A model-driven CECL review with a runnable reserve engine, scenario reruns, sensitivity testing, documentation cross-checking, and a final LaTeX/PDF review memo.
+
+2. `harborlight_savings_cecl_gap_assessment_q1_2026`
+   A documentation-led CECL case with prior outputs and scenario materials but no runnable engine, resulting in a LaTeX/PDF gap assessment and supporting evidence requests.
+
+Build both with:
+
+```bash
+poetry run python scripts/build_cecl_demo.py --case all --authoring-mode gateway --compile-pdf
+```
+
+Use `--authoring-mode local` if the gateway utility is unavailable.
 
 This repo is the main product repo. The parent repo owns:
 

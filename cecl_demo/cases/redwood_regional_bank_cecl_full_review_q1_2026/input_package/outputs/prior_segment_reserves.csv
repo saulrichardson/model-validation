@@ -1,0 +1,13 @@
+scenario_name,segment_id,segment_name,reserve_amount,balance,avg_lifetime_pd,avg_overlay_rate,reserve_rate
+baseline,commercial_and_industrial,Commercial and Industrial,1977246.19,287213546.22,0.021277,0.0002,0.006884
+baseline,commercial_real_estate,Commercial Real Estate,2545519.51,409841553.26,0.018734,0.0002,0.006211
+baseline,consumer_unsecured,Consumer Unsecured,100355.66,3882090.99,0.036309,0.0003,0.025851
+baseline,residential_mortgage,Residential Mortgage,253720.11,106255395.61,0.016789,0.0001,0.002388
+adverse,commercial_and_industrial,Commercial and Industrial,2712808.82,287213546.22,0.028851,0.0004,0.009445
+adverse,commercial_real_estate,Commercial Real Estate,3972723.25,409841553.26,0.028335,0.0005,0.009693
+adverse,consumer_unsecured,Consumer Unsecured,118790.69,3882090.99,0.042828,0.0006,0.0306
+adverse,residential_mortgage,Residential Mortgage,327699.21,106255395.61,0.020627,0.0002,0.003084
+severe,commercial_and_industrial,Commercial and Industrial,3148323.76,287213546.22,0.03274,0.0007,0.010962
+severe,commercial_real_estate,Commercial Real Estate,4787769.99,409841553.26,0.033482,0.0008,0.011682
+severe,consumer_unsecured,Consumer Unsecured,133898.81,3882090.99,0.048106,0.0009,0.034491
+severe,residential_mortgage,Residential Mortgage,217710.91,106255395.61,0.021115,-0.0009,0.002049

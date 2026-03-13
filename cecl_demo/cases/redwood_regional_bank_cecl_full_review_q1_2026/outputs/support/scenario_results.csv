@@ -1,0 +1,4 @@
+scenario_name,reserve_amount,reserve_rate,loan_count,documented_forecast_quarters,implemented_forecast_quarters
+baseline,4876841.47,0.006042,1200,4,6
+adverse,7132021.97,0.008836,1200,4,6
+severe,8287703.47,0.010267,1200,4,6

@@ -1,0 +1,61 @@
+{
+  "case_type": "cecl_full_review",
+  "workflow": "model_driven_review_memo",
+  "artifact_inventory": [
+    {
+      "path": "model/cecl_engine.py",
+      "kind": "code"
+    },
+    {
+      "path": "data/loan_level_snapshot.csv",
+      "kind": "dataset"
+    },
+    {
+      "path": "data/data_dictionary.csv",
+      "kind": "document"
+    },
+    {
+      "path": "data/overlay_schedule.csv",
+      "kind": "config"
+    },
+    {
+      "path": "scenarios/baseline.csv",
+      "kind": "scenario"
+    },
+    {
+      "path": "scenarios/adverse.csv",
+      "kind": "scenario"
+    },
+    {
+      "path": "scenarios/severe.csv",
+      "kind": "scenario"
+    },
+    {
+      "path": "docs/methodology.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/model_overview.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/scenario_assumptions.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/overlay_memo.md",
+      "kind": "document"
+    },
+    {
+      "path": "outputs/prior_baseline_reserve.csv",
+      "kind": "metrics"
+    }
+  ],
+  "runnable": true,
+  "gaps": [],
+  "key_observations": [
+    "Reserve engine, scenario tables, prior outputs, and supporting methodology documents were all present.",
+    "The package supports baseline reproduction, scenario reruns, sensitivity testing, and documentation cross-checking.",
+    "Documentation claims a different forecast/reversion treatment than the implemented engine."
+  ]
+}

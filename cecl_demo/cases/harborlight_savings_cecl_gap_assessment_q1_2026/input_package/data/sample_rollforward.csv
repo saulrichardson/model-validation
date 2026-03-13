@@ -1,0 +1,5 @@
+segment_id,ead,historical_loss_rate,avg_ltv
+residential_mortgage,810000000.0,0.0081,0.681
+heloc,356000000.0,0.0112,0.731
+cre_investor,522000000.0,0.0191,0.702
+commercial_and_industrial,611000000.0,0.0178,0.0

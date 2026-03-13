@@ -1,0 +1,13 @@
+test_type,setting,scenario_name,reserve_amount
+forecast_horizon,4,baseline,4877986.54
+forecast_horizon,6,baseline,4876841.47
+forecast_horizon,8,baseline,4876841.47
+reversion_speed,2,severe,8287703.47
+reversion_speed,4,severe,8384330.79
+reversion_speed,6,severe,8472904.31
+macro_severity_scale,0.75,severe,7126890.49
+macro_severity_scale,1.0,severe,8287703.47
+macro_severity_scale,1.25,severe,9803105.55
+overlay_multiplier,0.0,severe,7850916.88
+overlay_multiplier,1.0,severe,8287703.47
+overlay_multiplier,1.5,severe,8506096.88

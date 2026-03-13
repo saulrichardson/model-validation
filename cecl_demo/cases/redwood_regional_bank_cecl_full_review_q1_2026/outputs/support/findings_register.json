@@ -1,0 +1,44 @@
+{
+  "findings": [
+    {
+      "severity": "high",
+      "title": "Documented CECL horizon and reversion do not match the implemented reserve engine",
+      "summary": "Documentation describes a 4-quarter reasonable-and-supportable period with 4-quarter reversion, while the reserve engine is configured for 6 forecast quarters and 2 reversion quarters.",
+      "evidence": [
+        "docs/methodology.md",
+        "docs/model_overview.md",
+        "model/cecl_engine.py"
+      ]
+    },
+    {
+      "severity": "medium",
+      "title": "Qualitative overlay effect is materially larger than documentation suggests",
+      "summary": "The documentation frames qualitative overlays as capped at 5.0 bps, but the supplied overlay table uses up to 9.0 bps.",
+      "evidence": [
+        "docs/overlay_memo.md",
+        "data/overlay_schedule.csv",
+        "outputs/support/sensitivity_results.csv"
+      ]
+    },
+    {
+      "severity": "high",
+      "title": "One segment behaves directionally oddly under the severe scenario",
+      "summary": "Segment residential_mortgage produces a severe-scenario reserve of 217710.91, below the adverse reserve of 327699.21. The severe path allows house prices to recover faster than adverse after 2026Q4 while the overlay schedule applies negative mortgage relief, creating a directionally odd segment result.",
+      "evidence": [
+        "outputs/support/segment_reserve_comparison.csv",
+        "scenarios/severe.csv",
+        "docs/scenario_assumptions.md",
+        "docs/overlay_memo.md"
+      ]
+    },
+    {
+      "severity": "low",
+      "title": "Baseline reserve was reproducible within tolerance",
+      "summary": "Rerunning the supplied baseline logic reproduced the packaged baseline reserve within 0.000%.",
+      "evidence": [
+        "outputs/prior_baseline_reserve.csv",
+        "outputs/support/baseline_reproduction.json"
+      ]
+    }
+  ]
+}

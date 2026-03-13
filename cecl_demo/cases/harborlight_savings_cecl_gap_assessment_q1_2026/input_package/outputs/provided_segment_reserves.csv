@@ -1,0 +1,13 @@
+segment_id,scenario_name,reserve_amount
+residential_mortgage,baseline,8420000.0
+residential_mortgage,adverse,11300000.0
+residential_mortgage,severe,10980000.0
+heloc,baseline,5180000.0
+heloc,adverse,6450000.0
+heloc,severe,6430000.0
+cre_investor,baseline,11900000.0
+cre_investor,adverse,17120000.0
+cre_investor,severe,17880000.0
+commercial_and_industrial,baseline,12920000.0
+commercial_and_industrial,adverse,17310000.0
+commercial_and_industrial,severe,17720000.0

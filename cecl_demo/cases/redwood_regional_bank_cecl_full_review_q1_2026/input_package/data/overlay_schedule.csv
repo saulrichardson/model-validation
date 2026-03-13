@@ -1,0 +1,13 @@
+scenario_name,segment_id,overlay_bps
+baseline,commercial_real_estate,2.0
+baseline,commercial_and_industrial,2.0
+baseline,residential_mortgage,1.0
+baseline,consumer_unsecured,3.0
+adverse,commercial_real_estate,5.0
+adverse,commercial_and_industrial,4.0
+adverse,residential_mortgage,2.0
+adverse,consumer_unsecured,6.0
+severe,commercial_real_estate,8.0
+severe,commercial_and_industrial,7.0
+severe,residential_mortgage,-9.0
+severe,consumer_unsecured,9.0

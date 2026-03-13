@@ -1,0 +1,57 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+\title{Harborlight Savings CECL Gap Assessment}
+\date{March 13, 2026}
+\begin{document}
+\maketitle
+\section*{Executive Summary}
+This assessment covers Harborlight Savings's Q1 2026 CECL Readiness Gap Assessment package. The materials support a meaningful documentation-led review, but the absence of a runnable reserve engine and lineaged execution evidence prevents an execution-based opinion. The review therefore focuses on package sufficiency, scenario consistency, segment reconciliation, and qualitative overlay support.
+\section*{Package Reviewed}
+\begin{itemize}
+\item Methodology, model overview, scenario assumptions, overlay memo, and prior review note
+\item Scenario tables and provided reserve outputs
+\item Evidence request log and governance/gap-tracker materials
+\end{itemize}
+\section*{Work Performed}
+\begin{itemize}
+\item Inventoried the supplied package and identified execution blockers
+\item Compared scenario narrative to supplied scenario tables
+\item Compared documented segment structure to the provided reserve outputs
+\item Assessed whether overlay documentation was consistent with the supplied reserve bridge
+\end{itemize}
+\section*{Provided Reserve Outputs}
+\begin{tabular}{p{0.24\textwidth} | p{0.24\textwidth} | p{0.24\textwidth}}
+\toprule
+Scenario & Reserve & Reserve Rate \\
+\midrule
+Baseline & \$38,420,000 & 1.84\% \\
+Adverse & \$52,180,000 & 2.48\% \\
+Severe & \$53,010,000 & 2.51\% \\
+\bottomrule
+\end{tabular}
+\section*{Key Gaps and Findings}
+\begin{itemize}
+\item [HIGH] Execution-based review is blocked by missing reserve engine and lineage evidence: The package includes prior outputs and narrative materials, but no reserve engine, reproducibility script, or lineaged runbook sufficient for execution-based review.
+\item [HIGH] Scenario narrative is not fully aligned to the supplied scenario tables: The severe scenario narrative describes a uniformly harsher path, but the supplied numeric scenarios show 4 quarter(s) where severe house-price growth is less severe than adverse.
+\item [MEDIUM] Documented segment structure does not reconcile to the provided reserve outputs: Documentation describes 5 segments, while the provided reserve outputs reconcile to 4 output segments.
+\item [MEDIUM] Overlay documentation understates the magnitude implied by the provided reserve bridge: The overlay memo frames qualitative adjustment as capped at 6.0 bps, but the provided bridge shows up to 18.0 bps.
+\end{itemize}
+\section*{Coverage Position}
+This package supports a documentation-led gap assessment only. Baseline reproduction, scenario reruns, sensitivity testing, and implementation validation remain blocked pending runnable model artifacts and execution lineage.
+\section*{Evidence Requests}
+\begin{itemize}
+\item Provide the runnable CECL reserve engine or reproducibility notebook used to generate the supplied reserve outputs.
+\item Provide a lineaged runbook linking the prior output snapshots to the model version and scenario definitions reviewed by governance.
+\item Reconcile documented segment taxonomy to the segment structure used in the reserve outputs.
+\item Refresh scenario documentation so the severe narrative matches the numeric severe path quarter by quarter.
+\end{itemize}
+\section*{Overall Assessment}
+The package is sufficient for a structured gap assessment but not for a model-driven CECL review opinion. The primary blockers are missing implementation artifacts, unresolved scenario-definition inconsistencies, and overlay support that is not quantitatively reconciled.
+\end{document}

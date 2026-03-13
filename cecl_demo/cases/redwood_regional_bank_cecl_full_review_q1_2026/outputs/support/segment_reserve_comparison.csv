@@ -1,0 +1,5 @@
+segment_id,adverse,baseline,severe,adverse_minus_baseline,severe_minus_adverse
+commercial_and_industrial,2712808.82,1977246.19,3148323.76,735562.63,435514.94
+commercial_real_estate,3972723.25,2545519.51,4787769.99,1427203.74,815046.74
+consumer_unsecured,118790.69,100355.66,133898.81,18435.03,15108.12
+residential_mortgage,327699.21,253720.11,217710.91,73979.1,-109988.3

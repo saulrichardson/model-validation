@@ -1,0 +1,165 @@
+{
+  "workflow": "full_review",
+  "case_slug": "redwood_regional_bank_cecl_full_review_q1_2026",
+  "bank_name": "Redwood Regional Bank",
+  "portfolio_name": "Q1 2026 CECL Allowance Review",
+  "product_context": "regional bank commercial and retail loan portfolio",
+  "sample_size": 1200,
+  "rng_seed": 23,
+  "documented_forecast_quarters": 4,
+  "documented_reversion_quarters": 4,
+  "implemented_forecast_quarters": 6,
+  "implemented_reversion_quarters": 2,
+  "segments": [
+    {
+      "segment_id": "commercial_real_estate",
+      "display_name": "Commercial Real Estate",
+      "mix_weight": 0.27,
+      "balance_range": [250000.0, 2200000.0],
+      "fico_range": [640, 770],
+      "ltv_range": [0.52, 0.84],
+      "dti_range": [0.18, 0.48],
+      "dscr_range": [0.95, 1.65],
+      "utilization_range": [0.22, 0.78],
+      "payment_shock_range": [0.02, 0.24],
+      "remaining_term_range": [6, 20],
+      "risk_rating_range": [3, 8],
+      "base_intercept": -2.9,
+      "lgd_base": 0.34,
+      "macro_sensitivities": {
+        "unemployment_rate": 0.22,
+        "gdp_growth": 0.24,
+        "house_price_growth": 0.06,
+        "cre_price_growth": 0.31,
+        "prime_rate": 0.12
+      }
+    },
+    {
+      "segment_id": "commercial_and_industrial",
+      "display_name": "Commercial and Industrial",
+      "mix_weight": 0.25,
+      "balance_range": [125000.0, 1800000.0],
+      "fico_range": [620, 760],
+      "ltv_range": [0.20, 0.68],
+      "dti_range": [0.16, 0.42],
+      "dscr_range": [0.88, 1.58],
+      "utilization_range": [0.28, 0.86],
+      "payment_shock_range": [0.03, 0.28],
+      "remaining_term_range": [4, 16],
+      "risk_rating_range": [4, 9],
+      "base_intercept": -2.72,
+      "lgd_base": 0.3,
+      "macro_sensitivities": {
+        "unemployment_rate": 0.19,
+        "gdp_growth": 0.29,
+        "house_price_growth": 0.04,
+        "cre_price_growth": 0.11,
+        "prime_rate": 0.15
+      }
+    },
+    {
+      "segment_id": "residential_mortgage",
+      "display_name": "Residential Mortgage",
+      "mix_weight": 0.28,
+      "balance_range": [95000.0, 540000.0],
+      "fico_range": [655, 805],
+      "ltv_range": [0.48, 0.91],
+      "dti_range": [0.16, 0.5],
+      "dscr_range": [1.0, 1.42],
+      "utilization_range": [0.05, 0.28],
+      "payment_shock_range": [0.04, 0.34],
+      "remaining_term_range": [8, 24],
+      "risk_rating_range": [2, 7],
+      "base_intercept": -3.18,
+      "lgd_base": 0.18,
+      "macro_sensitivities": {
+        "unemployment_rate": 0.15,
+        "gdp_growth": 0.12,
+        "house_price_growth": 0.39,
+        "cre_price_growth": 0.02,
+        "prime_rate": 0.08
+      }
+    },
+    {
+      "segment_id": "consumer_unsecured",
+      "display_name": "Consumer Unsecured",
+      "mix_weight": 0.2,
+      "balance_range": [2500.0, 32000.0],
+      "fico_range": [585, 735],
+      "ltv_range": [0.0, 0.0],
+      "dti_range": [0.2, 0.62],
+      "dscr_range": [1.0, 1.0],
+      "utilization_range": [0.26, 0.94],
+      "payment_shock_range": [0.08, 0.52],
+      "remaining_term_range": [3, 12],
+      "risk_rating_range": [5, 10],
+      "base_intercept": -2.4,
+      "lgd_base": 0.61,
+      "macro_sensitivities": {
+        "unemployment_rate": 0.33,
+        "gdp_growth": 0.17,
+        "house_price_growth": 0.0,
+        "cre_price_growth": 0.0,
+        "prime_rate": 0.11
+      }
+    }
+  ],
+  "baseline_scenario": [
+    {"quarter": "2026Q1", "unemployment_rate": 4.6, "gdp_growth": 1.8, "house_price_growth": 2.3, "cre_price_growth": 1.8, "prime_rate": 5.25},
+    {"quarter": "2026Q2", "unemployment_rate": 4.7, "gdp_growth": 1.7, "house_price_growth": 2.0, "cre_price_growth": 1.5, "prime_rate": 5.25},
+    {"quarter": "2026Q3", "unemployment_rate": 4.8, "gdp_growth": 1.6, "house_price_growth": 1.8, "cre_price_growth": 1.2, "prime_rate": 5.0},
+    {"quarter": "2026Q4", "unemployment_rate": 4.8, "gdp_growth": 1.6, "house_price_growth": 1.7, "cre_price_growth": 1.1, "prime_rate": 5.0},
+    {"quarter": "2027Q1", "unemployment_rate": 4.7, "gdp_growth": 1.7, "house_price_growth": 1.9, "cre_price_growth": 1.3, "prime_rate": 4.9},
+    {"quarter": "2027Q2", "unemployment_rate": 4.7, "gdp_growth": 1.7, "house_price_growth": 2.0, "cre_price_growth": 1.4, "prime_rate": 4.9},
+    {"quarter": "2027Q3", "unemployment_rate": 4.7, "gdp_growth": 1.7, "house_price_growth": 2.0, "cre_price_growth": 1.4, "prime_rate": 4.9},
+    {"quarter": "2027Q4", "unemployment_rate": 4.7, "gdp_growth": 1.7, "house_price_growth": 2.0, "cre_price_growth": 1.4, "prime_rate": 4.9}
+  ],
+  "adverse_scenario": [
+    {"quarter": "2026Q1", "unemployment_rate": 5.4, "gdp_growth": 0.8, "house_price_growth": -1.5, "cre_price_growth": -2.2, "prime_rate": 5.6},
+    {"quarter": "2026Q2", "unemployment_rate": 5.9, "gdp_growth": 0.3, "house_price_growth": -3.2, "cre_price_growth": -4.1, "prime_rate": 5.75},
+    {"quarter": "2026Q3", "unemployment_rate": 6.3, "gdp_growth": -0.4, "house_price_growth": -4.8, "cre_price_growth": -5.6, "prime_rate": 5.75},
+    {"quarter": "2026Q4", "unemployment_rate": 6.1, "gdp_growth": -0.1, "house_price_growth": -4.4, "cre_price_growth": -4.7, "prime_rate": 5.55},
+    {"quarter": "2027Q1", "unemployment_rate": 5.8, "gdp_growth": 0.2, "house_price_growth": -2.8, "cre_price_growth": -3.1, "prime_rate": 5.4},
+    {"quarter": "2027Q2", "unemployment_rate": 5.5, "gdp_growth": 0.6, "house_price_growth": -1.3, "cre_price_growth": -1.5, "prime_rate": 5.25},
+    {"quarter": "2027Q3", "unemployment_rate": 5.1, "gdp_growth": 1.0, "house_price_growth": 0.1, "cre_price_growth": -0.4, "prime_rate": 5.1},
+    {"quarter": "2027Q4", "unemployment_rate": 4.9, "gdp_growth": 1.2, "house_price_growth": 0.8, "cre_price_growth": 0.2, "prime_rate": 5.0}
+  ],
+  "severe_scenario": [
+    {"quarter": "2026Q1", "unemployment_rate": 6.0, "gdp_growth": 0.2, "house_price_growth": -2.0, "cre_price_growth": -3.2, "prime_rate": 5.75},
+    {"quarter": "2026Q2", "unemployment_rate": 6.9, "gdp_growth": -0.8, "house_price_growth": -4.4, "cre_price_growth": -6.6, "prime_rate": 6.0},
+    {"quarter": "2026Q3", "unemployment_rate": 7.6, "gdp_growth": -1.6, "house_price_growth": -5.8, "cre_price_growth": -8.0, "prime_rate": 6.05},
+    {"quarter": "2026Q4", "unemployment_rate": 7.2, "gdp_growth": -0.9, "house_price_growth": -2.9, "cre_price_growth": -5.1, "prime_rate": 5.85},
+    {"quarter": "2027Q1", "unemployment_rate": 6.6, "gdp_growth": -0.2, "house_price_growth": 0.4, "cre_price_growth": -2.6, "prime_rate": 5.55},
+    {"quarter": "2027Q2", "unemployment_rate": 6.0, "gdp_growth": 0.4, "house_price_growth": 1.6, "cre_price_growth": -1.0, "prime_rate": 5.3},
+    {"quarter": "2027Q3", "unemployment_rate": 5.4, "gdp_growth": 0.9, "house_price_growth": 1.8, "cre_price_growth": 0.1, "prime_rate": 5.1},
+    {"quarter": "2027Q4", "unemployment_rate": 5.0, "gdp_growth": 1.2, "house_price_growth": 2.0, "cre_price_growth": 0.6, "prime_rate": 5.0}
+  ],
+  "overlay_bps_by_scenario": {
+    "baseline": {
+      "commercial_real_estate": 2.0,
+      "commercial_and_industrial": 2.0,
+      "residential_mortgage": 1.0,
+      "consumer_unsecured": 3.0
+    },
+    "adverse": {
+      "commercial_real_estate": 5.0,
+      "commercial_and_industrial": 4.0,
+      "residential_mortgage": 2.0,
+      "consumer_unsecured": 6.0
+    },
+    "severe": {
+      "commercial_real_estate": 8.0,
+      "commercial_and_industrial": 7.0,
+      "residential_mortgage": -9.0,
+      "consumer_unsecured": 9.0
+    }
+  },
+  "documented_overlay_cap_bps": 5.0,
+  "quantitative_anomaly_segment": "residential_mortgage",
+  "quantitative_anomaly_description": "The severe path allows house prices to recover faster than adverse after 2026Q4 while the overlay schedule applies negative mortgage relief, creating a directionally odd segment result.",
+  "expected_findings": [
+    "Documented forecast and reversion assumptions do not match the reserve engine.",
+    "Residential mortgage reserve under severe is directionally odd relative to adverse.",
+    "Qualitative overlays are more material than the overlay memo suggests."
+  ]
+}

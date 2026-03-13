@@ -1,0 +1,5 @@
+segment_id,documented_cap_bps,provided_overlay_bps
+residential_mortgage,6.0,12.0
+heloc,6.0,16.0
+cre_investor,6.0,18.0
+commercial_and_industrial,6.0,14.0

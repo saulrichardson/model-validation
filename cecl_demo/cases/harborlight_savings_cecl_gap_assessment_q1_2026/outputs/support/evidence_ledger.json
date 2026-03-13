@@ -1,0 +1,100 @@
+{
+  "evidence": [
+    {
+      "evidence_id": "E001",
+      "relative_path": "docs/methodology.md",
+      "title": "methodology.md",
+      "summary": "Evidence from docs/methodology.md"
+    },
+    {
+      "evidence_id": "E002",
+      "relative_path": "docs/model_overview.md",
+      "title": "model_overview.md",
+      "summary": "Evidence from docs/model_overview.md"
+    },
+    {
+      "evidence_id": "E003",
+      "relative_path": "docs/scenario_assumptions.md",
+      "title": "scenario_assumptions.md",
+      "summary": "Evidence from docs/scenario_assumptions.md"
+    },
+    {
+      "evidence_id": "E004",
+      "relative_path": "docs/overlay_memo.md",
+      "title": "overlay_memo.md",
+      "summary": "Evidence from docs/overlay_memo.md"
+    },
+    {
+      "evidence_id": "E005",
+      "relative_path": "docs/prior_review_note.md",
+      "title": "prior_review_note.md",
+      "summary": "Evidence from docs/prior_review_note.md"
+    },
+    {
+      "evidence_id": "E006",
+      "relative_path": "docs/evidence_request_log.md",
+      "title": "evidence_request_log.md",
+      "summary": "Evidence from docs/evidence_request_log.md"
+    },
+    {
+      "evidence_id": "E007",
+      "relative_path": "docs/gap_tracker.md",
+      "title": "gap_tracker.md",
+      "summary": "Evidence from docs/gap_tracker.md"
+    },
+    {
+      "evidence_id": "E008",
+      "relative_path": "data/data_dictionary.csv",
+      "title": "data_dictionary.csv",
+      "summary": "Evidence from data/data_dictionary.csv"
+    },
+    {
+      "evidence_id": "E009",
+      "relative_path": "scenarios/baseline.csv",
+      "title": "baseline.csv",
+      "summary": "Evidence from scenarios/baseline.csv"
+    },
+    {
+      "evidence_id": "E010",
+      "relative_path": "scenarios/adverse.csv",
+      "title": "adverse.csv",
+      "summary": "Evidence from scenarios/adverse.csv"
+    },
+    {
+      "evidence_id": "E011",
+      "relative_path": "scenarios/severe.csv",
+      "title": "severe.csv",
+      "summary": "Evidence from scenarios/severe.csv"
+    },
+    {
+      "evidence_id": "E012",
+      "relative_path": "outputs/provided_reserve_summary.csv",
+      "title": "provided_reserve_summary.csv",
+      "summary": "Evidence from outputs/provided_reserve_summary.csv"
+    },
+    {
+      "evidence_id": "E013",
+      "relative_path": "outputs/provided_segment_reserves.csv",
+      "title": "provided_segment_reserves.csv",
+      "summary": "Evidence from outputs/provided_segment_reserves.csv"
+    },
+    {
+      "evidence_id": "E014",
+      "relative_path": "outputs/support/documentation_crosscheck.md",
+      "title": "documentation_crosscheck.md",
+      "summary": "Evidence from outputs/support/documentation_crosscheck.md"
+    },
+    {
+      "evidence_id": "E015",
+      "relative_path": "outputs/support/findings_register.json",
+      "title": "findings_register.json",
+      "summary": "Evidence from outputs/support/findings_register.json"
+    },
+    {
+      "evidence_id": "E016",
+      "relative_path": "outputs/support/coverage_statement.md",
+      "title": "coverage_statement.md",
+      "summary": "Evidence from outputs/support/coverage_statement.md"
+    }
+  ]
+}

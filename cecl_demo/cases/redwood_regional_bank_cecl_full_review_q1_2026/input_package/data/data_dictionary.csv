@@ -1,0 +1,14 @@
+field_name,definition,type
+loan_id,Stable synthetic loan identifier,string
+segment_id,CECL segment identifier,string
+current_balance,Current amortized cost basis,float
+remaining_term_quarters,Remaining modeled life in quarters,integer
+risk_rating,Internal risk rating on a 1-10 scale,integer
+fico,Borrower credit score or proxy score,integer
+ltv_ratio,Current loan-to-value ratio,float
+dti_ratio,Debt-to-income ratio or analogous burden metric,float
+dscr,Debt-service coverage ratio,float
+utilization_rate,Line or borrowing-base utilization,float
+payment_shock_index,Synthetic payment shock proxy used in reserve sensitivity,float
+delinquency_flag,Indicator for recent delinquency or nonaccrual signal,integer
+collateral_buffer,Collateral support buffer or haircut proxy,float

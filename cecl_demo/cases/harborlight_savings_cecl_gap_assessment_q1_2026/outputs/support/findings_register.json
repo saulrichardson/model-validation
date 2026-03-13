@@ -1,0 +1,43 @@
+{
+  "findings": [
+    {
+      "severity": "high",
+      "title": "Execution-based review is blocked by missing reserve engine and lineage evidence",
+      "summary": "The package includes prior outputs and narrative materials, but no reserve engine, reproducibility script, or lineaged runbook sufficient for execution-based review.",
+      "evidence": [
+        "docs/evidence_request_log.md",
+        "docs/gap_tracker.md",
+        "outputs/provided_reserve_summary.csv"
+      ]
+    },
+    {
+      "severity": "high",
+      "title": "Scenario narrative is not fully aligned to the supplied scenario tables",
+      "summary": "The severe scenario narrative describes a uniformly harsher path, but the supplied numeric scenarios show 4 quarter(s) where severe house-price growth is less severe than adverse.",
+      "evidence": [
+        "docs/scenario_assumptions.md",
+        "scenarios/adverse.csv",
+        "scenarios/severe.csv"
+      ]
+    },
+    {
+      "severity": "medium",
+      "title": "Documented segment structure does not reconcile to the provided reserve outputs",
+      "summary": "Documentation describes 5 segments, while the provided reserve outputs reconcile to 4 output segments.",
+      "evidence": [
+        "docs/methodology.md",
+        "docs/model_overview.md",
+        "outputs/provided_segment_reserves.csv"
+      ]
+    },
+    {
+      "severity": "medium",
+      "title": "Overlay documentation understates the magnitude implied by the provided reserve bridge",
+      "summary": "The overlay memo frames qualitative adjustment as capped at 6.0 bps, but the provided bridge shows up to 18.0 bps.",
+      "evidence": [
+        "docs/overlay_memo.md",
+        "outputs/provided_overlay_bridge.csv"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+scenario_name,reserve_amount,reserve_rate
+baseline,38420000.0,0.0184
+adverse,52180000.0,0.0248
+severe,53010000.0,0.0251
