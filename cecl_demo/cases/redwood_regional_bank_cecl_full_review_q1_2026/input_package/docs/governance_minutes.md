@@ -1,57 +1,52 @@
 # CECL Governance Committee Minutes - Q1 2026 Allowance Review
 
-**Committee:** CECL Governance Committee (Finance, Credit Risk, Treasury, Model Risk)
-
-**Meeting date:** Q1 2026 allowance close cycle (final review session)
-
-## Attendees
-- CFO (Chair)
-- Chief Credit Officer (CCO)
-- Controller
-- Head of Credit Risk Analytics
-- Allowance/CECL Program Manager
-- Treasury Representative
-- Model Risk Management (MRM) Representative
-- Internal Audit Liaison (observer)
+**Bank:** Redwood Regional Bank  
+**Meeting:** CECL Governance Committee (Q1 2026 Allowance Review)  
+**Date:** 2026-03-xx  
+**Chair:** Chief Credit Officer (CCO)  
+**Attendees:** CFO (or delegate), Controller, CECL Model Owner, Credit Risk Analytics, Portfolio Managers (CRE/C&I/Consumer), Internal Audit (observer), Model Risk Management (MRM)
 
 ## Agenda
-1. Review macroeconomic scenarios and qualitative framing
-2. Review quantitative results by segment and scenario
-3. Review overlays and compliance with policy guardrails
-4. Review key model risk items and required escalations
-5. Approvals and action items
+1. Review Q1 2026 allowance results and drivers
+2. Review macroeconomic scenarios (baseline/adverse/severe)
+3. Horizon and reversion alignment to policy
+4. Review qualitative overlays and governance cap expectations
+5. Outliers / reasonableness findings and approvals
 
-## Discussion notes
-### 1) Scenario review
-- Management affirmed continued use of **Baseline, Adverse, and Severe** scenario set for Q1 2026.
-- Committee discussed that the **Severe** scenario includes a sharper 2026 contraction but a **faster house price recovery after 2026Q4** relative to **Adverse**.
-- Credit Risk noted this may create **non-monotonic** mortgage results if the model heavily weights house price growth.
+## Discussion summary
+### 1) Allowance movement and key drivers
+- Credit Risk Analytics summarized quarter-over-quarter movement by segment and noted that macro scenario paths drove expected increases in consumer and CRE stress losses, while mortgage losses were comparatively stable.
+- Portfolio managers commented that delinquency and criticized/classified trends remain within expectations; committee requested continued monitoring of pockets of weakness in leveraged C&I.
 
-### 2) Quantitative results and reasonableness
-- Segment results were reviewed for directional consistency.
-- **Residential Mortgage:** Committee noted a **directionally odd relationship** where **Severe** can produce a lower modeled outcome than **Adverse** under certain settings. This was attributed to (i) scenario house price path behavior after 2026Q4 and (ii) the interaction with qualitative adjustments.
-- **CRE/C&I:** Committee agreed the quantitative model appropriately reflects elevated risk under stress scenarios, though refinancing risk and borrower cash flow pressure remain key watch items.
-- **Consumer Unsecured:** Committee agreed stress sensitivity is expected given unemployment sensitivity and higher base LGD.
+### 2) Scenario review
+- Committee reviewed the provided scenario tables through 2027Q4.
+- MRM noted that the severe path includes a faster house price growth recovery after 2026Q4 relative to adverse, and requested documentation of how that interacts with mortgage PD/LGD and overlays.
 
 ### 3) Forecast horizon and reversion
-- Model Risk asked for confirmation that the production engine aligns to the **documented 4-quarter forecast and 4-quarter reversion** assumptions.
-- Credit Risk Analytics reported the engine configuration currently reflects a different setup (**6-quarter forecast and 2-quarter reversion**). Committee noted this as a **policy alignment issue** requiring remediation and formal documentation of interim operation.
-- CFO requested a quantified impact assessment for the horizon mismatch and a change control plan for remediation.
+- The Model Owner reiterated the **documented** methodology: **4 quarters forecast** followed by **4 quarters straight-line reversion**.
+- MRM requested confirmation that the production engine settings match documentation and asked for a run configuration extract (forecast quarters and reversion quarters) to be added to the final package.
+- Action item assigned to CECL Model Owner to provide evidence of applied horizon/reversion in the reserve run package prior to final sign-off.
 
-### 4) Overlays
-- Overlays were presented by segment and scenario.
-- Committee discussed the **policy overlay cap (5.0 bps)** and noted that certain segment/scenario overlay values exceed the documented cap.
-- Finance stated that, while some overlay line items are higher, the consolidated effect is moderated by portfolio mix and scenario weighting; however, the committee agreed documentation should be tightened to avoid ambiguity.
-- The **negative overlay in Residential Mortgage under Severe** was specifically discussed. Credit Risk described it as reflective of collateral recovery dynamics; Model Risk reiterated that the combination of faster severe house price recovery and negative overlay may drive the non-intuitive ordering and requires clear justification.
+### 4) Qualitative overlays
+- Management presented the overlay schedule by scenario and segment.
+- Committee discussion focused on:
+  - Severe scenario overlays for CRE, C&I, and Consumer Unsecured exceeding the **documented 5 bps cap**.
+  - The **negative** severe mortgage overlay and whether it is consistent with the severe scenario narrative.
+- Controller requested that the overlay memo clearly describe governance treatment when overlays exceed the documented cap (e.g., cap as guideline vs. hard limit) and include an explicit rationale for any negative overlay.
 
-## Decisions / approvals
-- Committee approved proceeding with the Q1 2026 allowance recommendation **subject to** the action items below being tracked to closure.
+### 5) Outliers / reasonableness findings
+- MRM highlighted a directional issue: **Residential Mortgage** results under **severe** appear directionally more favorable than **adverse**, which was described as counterintuitive given typical stress ordering.
+- Credit Risk Analytics attributed the outcome to (i) the macro path differences for house price growth after 2026Q4 and (ii) the severe mortgage overlay direction.
+- Committee agreed that the issue requires explicit documentation and a decision whether to adjust overlays or accept with governance acknowledgement.
+
+## Decisions
+- **Provisional approval** of Q1 2026 allowance methodology and scenario use, subject to closure of action items below.
+- Committee requested no changes to segmentation this quarter.
 
 ## Action items
-1. **Horizon configuration remediation** - Credit Risk Analytics to propose timeline and change control package to align implementation to documented **4-quarter forecast / 4-quarter reversion** policy, including parallel run evidence.
-2. **Impact assessment** - Finance and Credit Risk Analytics to quantify allowance sensitivity to forecast/reversion settings by segment.
-3. **Residential Mortgage ordering** - Credit Risk Analytics to produce a focused memo explaining severe vs. adverse mortgage behavior, including scenario-path contribution and overlay interaction.
-4. **Overlay cap clarity** - CECL Program Manager to reconcile policy cap language with applied overlay schedule and reporting basis; propose revised disclosure for next quarter.
+1. **Horizon/reversion evidence:** Provide production run settings demonstrating applied forecast and reversion quarters and reconcile to documented standard. *(Owner: CECL Model Owner; Due: prior to final close)*
+2. **Mortgage scenario ordering:** Provide a written explanation of severe vs. adverse mortgage behavior and propose remediation (overlay change, cap application, or documented acceptance). *(Owner: Credit Risk Analytics; Due: prior to final close)*
+3. **Overlay governance:** Clarify whether the 5 bps cap is a hard control or a guideline; document approvals and rationale for exceptions. *(Owner: Controller; Due: prior to final close)*
 
-## Escalations
-- Horizon mismatch and overlay cap inconsistency to be included in the quarterly Model Risk issue log and tracked through standard governance reporting.
+## Next meeting
+Follow-up session scheduled during quarter close to confirm action item closure and finalize approval.

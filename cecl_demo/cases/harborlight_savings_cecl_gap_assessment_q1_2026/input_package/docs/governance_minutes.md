@@ -1,60 +1,81 @@
-# Governance Minutes (CECL Documentation Review - Non-Execution)
+# Harborlight Savings - CECL Governance Minutes (Gap Assessment Review Session)
 
-**Bank:** Harborlight Savings  
-**Committee:** CECL Working Group / Model Governance Working Session  
-**Meeting date:** 2026-02-18  
-**Meeting type:** Documentation-led readiness review (non-execution)
+**Case slug:** `harborlight_savings_cecl_gap_assessment_q1_2026`  
+**Meeting type:** Documentation-led gap assessment review (non-execution)  
+**Date:** 2026-02-18  
+**Location:** Hybrid (Finance conference room / Teams)
 
 ## 1. Attendees
-- Finance (Controller's Office): A. Patel, J. Moreno
-- Credit Risk: L. Chen, R. Daniels
-- Treasury / ALM: S. Whitaker
-- Data Management: K. Ibrahim
-- Model Risk Management (MRM): T. O'Neill
-- Internal Audit (observer): M. Ruiz
+- Controller (Chair)
+- CECL Program Lead (Finance)
+- Credit Risk Officer (Credit Administration)
+- Model Risk Management (MRM) Reviewer
+- Treasury Representative
+- Data Governance Representative
+- Internal Audit Liaison (observer)
 
-## 2. Purpose and Scope Limitation
-The purpose of this meeting was to review CECL documentation completeness and internal consistency for readiness purposes.
+## 2. Purpose
+Review the Q1 2026 CECL readiness documentation package and agree on gap assessment findings, required evidence, and ownership for remediation.
 
-**Explicit limitation:** Due to **missing reserve engine execution artifacts and missing data lineage evidence**, the working group agreed the review package is limited to **non-execution review**. No conclusions were reached regarding runtime accuracy, reproducibility, or end-to-end calculation integrity.
+## 3. Explicit limitation of review (non-execution)
+MRM stated, and the Chair confirmed, that this session and the associated upload package are limited to a **documentation-led, non-execution review** due to missing runtime and lineage evidence, including:
+- Reserve engine configuration/runbooks and execution logs
+- End-to-end data lineage from source systems to reserve outputs
+- Reproducible run package (inputs, outputs, and controls)
 
-## 3. Materials Reviewed
-- CECL methodology document (forecast/reversion, segmentation, overlays)
-- Model card summary (horizons, scenarios, process description)
-- Scenario tables (baseline/adverse/severe paths for 2026Q1-2027Q2)
-- Reserve output extracts by segment (four output segments)
-- Overlay summary (bps by segment)
+Accordingly, no conclusions were reached regarding numerical accuracy of reserve outputs, stability of implementation, or effectiveness of runtime controls.
 
-## 4. Discussion Summary
-### 4.1 Forecast/Reversion Horizon
-- Finance noted the methodology states **8-quarter forecast / 4-quarter reversion**.
-- MRM noted the model card states **6-quarter forecast / 2-quarter reversion**, and scenario tables provided also cover **6 quarters**.
-- Action agreed: confirm the approved horizon and update artifacts for consistency, or provide documentation supporting different horizons across components.
+## 4. Materials reviewed
+- CECL process methodology narrative (forecast/reversion, segmentation, overlay cap)
+- Model card summary (forecast/reversion horizons)
+- Scenario tables (baseline/adverse/severe: 2026Q1-2027Q2)
+- Segment-level overlay bps by output segment
+- Prior review carry-forward note
 
-### 4.2 Segmentation
-- Credit Risk noted documented segments include **CRE Owner Occupied**.
-- Finance confirmed outputs do not include a separate owner-occupied CRE segment.
-- Action agreed: provide a segment mapping and rationale for any consolidation.
+## 5. Discussion summary
+### 5.1 Forecast and reversion horizon inconsistency
+- Finance referenced an 8-quarter forecast and 4-quarter reversion as "process standard."
+- MRM noted the model card reflects 6-quarter forecast and 2-quarter reversion.
+- No governance approval artifact was available to confirm the approved horizon.
 
-### 4.3 Scenario Narrative Alignment
-- Treasury/ALM raised a concern that the severe scenario narrative described in management commentary does not clearly align with the numeric trough timing.
-- Action agreed: provide the scenario governance deck and narrative used for approval and reconcile narrative statements to numeric paths.
+**Decision:** Record as a gap; require a single approved horizon statement and evidence of approval.
 
-### 4.4 Overlays
-- MRM noted the documented overlay cap is **6.0 bps**; provided overlays are materially higher.
-- Finance indicated overlays reflect "conservatism pending data maturation" but did not provide a quantification memo or exception approvals.
-- Action agreed: develop overlay calculation memos and clarify cap definition and governance escalation requirements.
+### 5.2 Scenario narrative alignment
+- Credit Risk noted the severe scenario "captures a recessionary shock."
+- MRM observed that the numeric severe path indicates peak unemployment in 2026Q3 and persistent CRE price weakness into 2027Q2; narrative evidence tying to these features was not present.
 
-## 5. Decisions
-- **Decision 1:** Proceed with a documentation-led gap assessment package for Q1 2026 readiness.
-- **Decision 2:** Defer any execution-based validation, benchmarking, or re-performance until reserve engine run logs, configuration, and lineage are provided.
+**Decision:** Record as a gap; request narrative memo aligned to the numeric scenario path.
 
-## 6. Action Items
-| ID | Action | Owner | Due Date | Status |
-|---|---|---|---|---|
-| GOV-01 | Provide reserve engine run package (inputs, configuration, run logs, outputs) | Finance / Credit Risk | 2026-03-15 | Open |
-| GOV-02 | Provide data lineage mapping from source to CECL inputs; include GL/balance recon | Data Mgmt | 2026-03-22 | Open |
-| GOV-03 | Confirm approved forecast/reversion horizons and update methodology/model card | Finance / MRM | 2026-03-08 | In progress |
-| GOV-04 | Provide segment mapping (documented → output segments) and justification | Credit Risk | 2026-03-08 | Open |
-| GOV-05 | Provide scenario governance deck and narrative alignment memo | Treasury / ALM | 2026-03-12 | Open |
-| GOV-06 | Provide overlay calculation memos and cap/exception governance evidence | Finance | 2026-03-12 | Open |
+### 5.3 Segmentation reconciliation
+- Documented segments include CRE Owner Occupied.
+- Output segments provided exclude an owner-occupied CRE segment.
+- Data Governance confirmed no mapping table was included in the package.
+
+**Decision:** Record as a gap; request a documented segment mapping and reporting reconciliation.
+
+### 5.4 Overlay cap vs overlay magnitudes
+- Documentation references a 6.0 bps overlay cap.
+- Provided segment overlays range from 12.0 to 18.0 bps.
+- Finance indicated overlays were "temporary" pending enhanced data; no exception memo or approvals were produced.
+
+**Decision:** Record as a gap; request overlay bridge, cap interpretation, and approval evidence.
+
+## 6. Action items
+1. **Horizon governance:** Provide approved forecast/reversion horizon and reversion method description; include committee approval evidence.  
+   - Owner: CECL Program Lead  
+   - Target: 2026-03-15
+2. **Scenario narrative memo:** Provide narrative aligned to baseline/adverse/severe numeric paths and variable definitions.  
+   - Owner: Treasury Representative  
+   - Target: 2026-03-15
+3. **Segment mapping:** Provide mapping between documented segments and reserve output segments, including treatment of CRE Owner Occupied.  
+   - Owner: Data Governance Representative  
+   - Target: 2026-03-22
+4. **Overlay support:** Provide overlay bridge (base vs adjusted), cap policy clarification, and documented approvals/exceptions.  
+   - Owner: Controller  
+   - Target: 2026-03-22
+5. **Execution readiness evidence:** Provide reserve engine runbook/configuration and data lineage artifacts sufficient to plan an execution-based review.  
+   - Owner: CECL Program Lead / IT Data Team  
+   - Target: 2026-04-05
+
+## 7. Close
+The Chair concluded that the package is suitable for a gap assessment upload but not sufficient for an execution-based validation or independent re-performance.

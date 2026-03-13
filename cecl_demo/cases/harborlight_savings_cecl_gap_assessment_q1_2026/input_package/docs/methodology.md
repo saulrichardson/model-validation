@@ -1,76 +1,92 @@
-# CECL Gap Assessment Methodology
+# Harborlight Savings - CECL Readiness Gap Assessment Methodology (Q1 2026)
 
-**Bank:** Harborlight Savings  
-**Engagement:** Q1 2026 CECL Readiness Gap Assessment  
-**Scope:** Consumer and real-estate portfolio reserve process  
-**Workflow:** Documentation-led gap assessment (non-execution)
+**Case slug:** `harborlight_savings_cecl_gap_assessment_q1_2026`  
+**Portfolio:** Q1 2026 CECL Readiness Gap Assessment  
+**Product context:** Consumer and real-estate portfolio reserve process  
+**Workflow:** Gap assessment (documentation-led)
 
-## 1. Objective
-Assess the design and documentation completeness of Harborlight Savings' CECL methodology, including governance, data, segmentation, forecast/reversion approach, scenario framework, overlays, and reporting artifacts. The objective is to identify gaps that prevent a defensible implementation and to define remediation actions and evidence requirements.
+## 1. Purpose and scope
+This methodology defines the documentation-led procedures used to assess Harborlight Savings' readiness for CECL governance, segmentation, forecasting, overlays, reporting, and control evidence. The objective is to identify gaps against internal policy expectations and supervisory "model risk management" documentation norms, without executing or independently recalculating reserve results.
 
-## 2. Review Approach (Documentation-Led)
-The review is performed using artifacts provided by Management (policies, model documentation, sample reports, scenario decks, overlay memos, and reserve bridge narratives). **No independent model execution, reserve engine re-performance, or code review** is performed under this package due to missing runtime evidence and lineage artifacts.
+**In-scope:**
+- Method description and governance artifacts for lifetime loss estimation
+- Portfolio segmentation and mapping to production outputs
+- Reasonable & supportable (R&S) forecast approach, reversion approach, and scenario set documentation
+- Management overlay policy, cap, and bridge support
+- Data lineage narrative and control descriptions (to the extent documented)
 
-### 2.1 Workstreams
-1. **Methodology design & CECL accounting alignment** (ASC 326, reasonable and supportable forecast, reversion, data treatment).
-2. **Segmentation & pooling** (documented segments, output segments, reconciliation to GL/FR Y-9C call-report lines as applicable).
-3. **Scenario framework** (baseline/adverse/severe, scenario selection, narrative alignment, and variable definitions).
-4. **Forecast & reversion mechanics** (term structure, horizon, reversion method).
-5. **Overlay framework** (governance, caps/limits, quantification, traceability to reserve bridge).
-6. **Controls & governance** (model risk governance, approvals, change control, monitoring).
+**Out-of-scope (for this package):**
+- Independent re-performance of CECL reserve calculations
+- Code review, model runtime testing, or reserve engine execution
+- Benchmarking against peer institutions
 
-## 3. Key Methodology Specifications (Per Documentation)
-### 3.1 Forecast and Reversion Horizons
-- **Reasonable & supportable forecast horizon:** **8 quarters**.
-- **Reversion period:** **4 quarters**.
-- **Total modeled horizon:** life-of-loan, with macro-driven path applied through forecast and reversion periods.
+## 2. Review approach
+### 2.1 Documentation-led gap assessment
+Procedures:
+1. **Inventory** provided documents and artifacts, including any "model card" summaries.
+2. **Traceability checks**: confirm internal consistency among methodology narrative, segment definitions, scenario documentation, and reported output segments.
+3. **Reasonableness checks** on scenario narratives vs numeric macro paths and disclosed horizon.
+4. **Overlay assessment**: reconcile overlay policy (cap and governance) to overlay magnitudes implied by any reserve bridge artifacts provided.
+5. **Control readiness**: confirm presence/absence of lineage, reserve engine, and execution evidence needed for an execution-based review.
 
-> Note: This methodology states 8+4 quarters as the implemented horizon in the CECL framework documentation.
+### 2.2 Standards and reference expectations
+- CECL documentation expectations for segmentation rationale, scenario governance, and Q-factor/overlay support.
+- Model governance expectations: independent reviewability, data lineage, change control, and reproducibility.
 
-### 3.2 Segmentation (Documented)
-Documented segments used for CECL estimation and reporting:
+## 3. Key design elements under review (per documentation)
+### 3.1 Segmentation
+**Documented segments (methodology basis):**
 - Residential Mortgage
 - HELOC
 - CRE Investor
 - CRE Owner Occupied
 - Commercial and Industrial
 
-### 3.3 Scenario Set and Variables
-Three scenarios are included:
-- Baseline
-- Adverse
-- Severe
+Expectation: documented segment structure should reconcile to reserve reporting outputs and allow a clear mapping of exposures and reserve allocations.
 
-Variables referenced in the scenario package:
-- Unemployment rate
-- GDP growth
-- House price growth
-- CRE price growth
-- Prime rate
+### 3.2 Forecast and reversion horizon (methodology basis)
+**Documented R&S forecast horizon:** **8 quarters**  
+**Documented reversion:** **4 quarters**  
 
-Scenario paths provided cover **2026Q1-2027Q2** (6 quarters) for each scenario.
+Expectation: horizon definitions should match the model card and any governance approvals; reversion method should be specified (e.g., linear to long-run mean, immediate reversion, or stepwise).
 
-### 3.4 Overlay Policy Constraint (Documented)
-- **Documented overlay cap:** **6.0 bps** (portfolio-level cap as described in the overlay policy section).
+### 3.3 Scenario framework
+Three scenarios are considered for governance documentation:
+- **Baseline** (6 quarters provided)
+- **Adverse** (6 quarters provided)
+- **Severe** (6 quarters provided)
 
-## 4. Testing Procedures and Evidence Standards
-### 4.1 Design Assessment Procedures
-- Trace each major methodological choice (segmentation, horizons, scenarios, reversion) to a controlled document (policy, model methodology, governance minutes).
-- Confirm internal consistency between: model card, methodology paper, scenario narrative/deck, overlay memo, and management reporting.
-- Identify required operational controls for production use (data lineage, model run logs, change control).
+Expectation: the scenario narrative should align to the numeric path and be clearly tied to forecast variables used in estimation.
 
-### 4.2 Execution-Based Procedures (Not Performed)
-The following procedures are **explicitly out of scope** for this package due to missing evidence:
-- Reserve engine re-run / independent calculation
-- Data lineage reconciliation from source systems to model inputs
-- Parameter estimation re-performance
-- End-to-end backtesting in production-equivalent environment
+## 4. Overlay methodology (as documented)
+### 4.1 Overlay governance and cap
+**Documented overlay cap:** **6.0 bps** (portfolio-level cap as described in documentation).
 
-## 5. Deliverables
-- Methodology and model overview summaries
-- Scenario assumptions appendix (numeric paths and narrative observations)
-- Overlay memo (documentation-led critique and required remediation)
-- Prior review note (blocking items and contradictions)
-- Governance minutes (non-execution limitation noted)
-- Evidence request log (open items and due dates)
-- Gap tracker (issues, severity, owners, and remediation plan)
+Expectation: overlay policy should define trigger criteria, measurement approach, approval process, and how overlays are allocated across segments.
+
+### 4.2 Segment overlays (as supplied)
+Supplied overlay bps by output segment:
+- `residential_mortgage`: **12.0 bps**
+- `heloc`: **16.0 bps**
+- `cre_investor`: **18.0 bps**
+- `commercial_and_industrial`: **14.0 bps**
+
+Methodology expectation: overlays applied should reconcile to documented caps and be supported by bridge evidence; exceptions should be documented, approved, and time-bound.
+
+## 5. Execution evidence requirements (to support future execution-based review)
+A full execution-based review would require, at minimum:
+- Reserve engine configuration and runbooks
+- Data lineage from source systems to CECL staging and final reporting
+- Model implementation specs (parameter files, transformations)
+- A reproducible run package (inputs, outputs, logs) for at least one as-of date
+
+**Current limitation:** runtime/engine evidence and lineage evidence are not present in this upload package; therefore, the review is restricted to documentation-led gap assessment.
+
+## 6. Deliverables in this upload package
+- Model overview summary (as represented in the model card and supporting memos)
+- Scenario assumptions memo (numeric paths and narrative alignment checks)
+- Overlay memo (policy vs applied magnitude reconciliation)
+- Prior review note (issues carried forward)
+- Governance minutes (non-execution review limitation and decisions)
+- Evidence request log (open items)
+- Gap tracker (findings, severity, owners, and target dates)

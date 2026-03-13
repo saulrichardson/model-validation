@@ -1,36 +1,27 @@
-# Gap Tracker (Documentation-Led) - Harborlight Savings CECL Readiness
+# Gap Tracker - Harborlight Savings CECL Readiness Gap Assessment (Q1 2026)
 
-**Case:** harborlight_savings_cecl_gap_assessment_q1_2026  
-**Portfolio:** Q1 2026 CECL Readiness Gap Assessment  
-**Prepared by:** MRM (documentation-led)  
-**Last updated:** 2026-03-01
+**Case slug:** `harborlight_savings_cecl_gap_assessment_q1_2026`  
+**Tracking owner:** Model Risk Management  
+**Last updated:** 2026-02-25
 
-## Rating Scale
-- **Severity:** Critical / High / Moderate / Low
-- **Status:** Open / In progress / Closed / Deferred
+> Severity scale: **High** (blocks review or indicates material governance/control deficiency), **Medium** (significant documentation/control weakness), **Low** (clarification or enhancement).
 
-## Gap Register
-| Gap ID | Theme | Gap Description | Evidence / Reference | Impact | Severity | Owner | Target Date | Status | Remediation / Next Step |
+| Gap ID | Category | Finding / Gap Statement | Evidence Observed | Impact | Severity | Owner | Target Date | Status | Link to Evidence Request |
 |---|---|---|---|---|---|---|---|---|---|
-| G-001 | Execution & Controls | Execution-based review is blocked by missing reserve engine artifacts (run logs, configuration, reproducible package). | ER-001; Governance minutes §2 | Cannot validate calculation integrity, repeatability, or QC; limits conclusions to design only. | **Critical** | Finance | 2026-03-15 | Open | Deliver one quarter run package; establish run log retention and approval evidence. |
-| G-002 | Data Lineage | No end-to-end lineage from source systems to CECL inputs (field mapping, transforms, reconciliations). | ER-002 | Material risk of input errors; inability to demonstrate completeness/accuracy controls. | **Critical** | Data Mgmt | 2026-03-22 | Open | Provide lineage mapping + GL/subledger reconciliation by segment and product. |
-| G-003 | Forecast/Reversion Horizon | Contradiction: methodology states **8Q forecast/4Q reversion** while model card states **6Q/2Q**; scenario tables provided cover 6 quarters only. | Methodology §3.1; Model overview §3; Scenario appendix | Inconsistent approved design; may cause implementation variance and audit challenge. | **High** | Finance / MRM | 2026-03-08 | In progress | Confirm approved horizons; update all artifacts and approvals; provide full scenario series if 8Q is required. |
-| G-004 | Scenario Governance | Scenario narrative not fully aligned to numeric severe path (turning points). Approvals for scenario narrative not evidenced. | Scenario appendix §4; ER-006 | Weakens support for "reasonable and supportable" justification and governance. | **High** | Treasury/ALM | 2026-03-12 | Open | Provide approved scenario deck; create narrative-to-numeric mapping (peak/trough timing). |
-| G-005 | Segmentation Reconciliation | Documented segment list includes **CRE Owner Occupied**, but outputs omit `cre_owner_occupied`. | Methodology §3.2; Model overview §1 | Inability to reconcile reserve reporting to documented pooling; potential misstatement of segment reporting. | **High** | Credit Risk | 2026-03-08 | Open | Provide mapping and aggregation rules; update documentation or outputs to align. |
-| G-006 | Overlays - Policy vs Practice | Documented overlay cap **6.0 bps** conflicts with provided overlays **12-18 bps** by segment; exception governance not evidenced. | Overlay memo; ER-008 | High governance and audit risk; potential unsupported management adjustment. | **High** | Finance | 2026-03-12 | Open | Clarify cap definition; document exceptions/approvals; produce calculation memos. |
-| G-007 | Overlays - Quantification Traceability | Overlay calculation steps, basis, and driver linkage are not evidenced; reserve bridge does not show overlay components. | ER-008; ER-009 | Impairs defensibility and repeatability; cannot audit overlay components. | **High** | Finance | 2026-03-19 | Open | Provide overlay component memo and bridge tying modeled ACL → final ACL by segment. |
-| G-008 | Governance Artifacts | Model card approval page, change log, and version control metadata not provided (summary only). | ER-004 | Weakens governance evidence and change control story for regulators/auditors. | **Moderate** | MRM | 2026-03-05 | Partially complete | Provide controlled document with approval signatures, effective date, and change history. |
-| G-009 | Definitions & Inputs | Macro variable definitions (units, frequency, seasonal adjustment, GDP measure) not evidenced. | ER-012 | Risk of misinterpretation and inconsistent implementation. | **Low** | Treasury/ALM | 2026-03-26 | Open | Provide variable definition sheet and source references; tie to scenario governance deck. |
+| GAP-001 | Execution readiness | Execution-based review is blocked by missing reserve engine artifacts and end-to-end data lineage. | No reserve engine runbook/config snapshot; no lineage diagrams; no reproducible run package. | Cannot validate implementation, runtime controls, or numerical accuracy; review limited to documentation-led assessment. | High | CECL Program Lead / IT Data Team | 2026-04-05 | Open | ER-010, ER-011, ER-012 |
+| GAP-002 | Forecast horizon governance | Forecast/reversion horizons are inconsistent across documents (methodology: 8Q/4Q; model card: 6Q/2Q). | Conflicting statements; no approval artifact. | Unclear approved horizon; risk of inconsistent application and audit challenge. | High | CECL Program Lead | 2026-03-15 | Open | ER-001 |
+| GAP-003 | Scenario completeness | Scenario tables provided include 6 quarters only; not reconciled to documented horizon needs and no extension rule documented. | Baseline/adverse/severe numeric tables end at 2027Q2. | Potential mismatch between documented process and implemented forecast horizon; increased model governance risk. | Medium | CECL Program Lead / Treasury | 2026-03-22 | Open | ER-002, ER-004 |
+| GAP-004 | Scenario narrative alignment | Scenario narrative is not fully aligned to the numeric severe scenario path (timing and persistence of stress not explicitly described). | Numeric severe peaks in 2026Q3; CRE price growth remains negative through 2027Q2; narrative memo not provided. | Governance challenge; reduced interpretability and potential audit criticism. | Medium | Treasury | 2026-03-15 | In Progress | ER-003 |
+| GAP-005 | Segmentation reconciliation | Documented segment structure does not reconcile to supplied reserve outputs; CRE Owner Occupied is documented but not present as an output segment. | Documented segments list includes CRE Owner Occupied; output segments list excludes it; no mapping table. | Risk of incomplete reporting, misallocation of overlays, and governance confusion over segment-level results. | High | Data Governance | 2026-03-22 | Open | ER-005, ER-006 |
+| GAP-006 | Overlay cap inconsistency | Overlay documentation references a 6.0 bps cap while provided segment overlays are 12-18 bps, with no exception documentation. | Cap cited as 6.0 bps; overlays provided exceed cap across all output segments. | Potential policy breach or misstatement of cap definition; auditability concern. | High | Controller | 2026-03-22 | Open | ER-007, ER-008, ER-009 |
+| GAP-007 | Overlay transparency | Overlay bridge support (base vs base+overlay) and allocation logic are not provided. | Segment overlay bps provided; no bridge, no quantitative support, no approval trail. | Weakness in explainability and governance; cannot validate reasonableness of overlays. | Medium | Controller | 2026-03-22 | Open | ER-007 |
+| GAP-008 | Reporting definitions | Output segment definitions/report dictionary not provided, limiting traceability to financial reporting. | Output segment names only. | Increased risk of inconsistent interpretation across Finance/Credit; reporting control weakness. | Medium | Finance | 2026-03-29 | Open | ER-013 |
 
-## Expected Findings Mapping (Traceability)
-- **Execution-based review blocked:** Addressed by **G-001** and **G-002**.
-- **Scenario narrative misalignment:** Addressed by **G-004**.
-- **Segment structure not reconciling to outputs:** Addressed by **G-005**.
-- **Overlay documentation understates magnitude:** Addressed by **G-006** and **G-007**.
+## Summary of expected findings (as validated in tracker)
+- Execution-based review is blocked by missing reserve engine and lineage evidence. (GAP-001)
+- Scenario narrative is not fully aligned to the numeric severe scenario path. (GAP-004)
+- Documented segment structure does not reconcile to the supplied reserve outputs. (GAP-005)
+- Overlay documentation understates the magnitude implied by the reserve bridge / provided overlays. (GAP-006, GAP-007)
 
-## Items Deferred Until Runtime Evidence Available
-- End-to-end re-performance testing
-- Sensitivity testing and benchmarking
-- Monitoring/backtesting effectiveness assessment
-
-**Condition to lift deferral:** receipt of ER-001 and ER-002 with a reproducible quarterly run package and lineage reconciliation.
+## Next checkpoint
+- 2026-03-18: evidence review for ER-001 to ER-005; confirm whether gaps can be downgraded or require escalation to CECL Steering Committee.

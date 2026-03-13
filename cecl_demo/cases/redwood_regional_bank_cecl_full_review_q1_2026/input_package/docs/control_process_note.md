@@ -1,60 +1,50 @@
-# Control Process Note - CECL Production, Reproducibility, and Reporting
+# Control Process Note - CECL Reserve Production and Reproducibility (Q1 2026)
 
 ## Purpose
-This note summarizes key controls supporting reproducibility, data lineage, and reporting integrity for Redwood Regional Bank's CECL production process for the Q1 2026 allowance cycle.
+This control note describes Redwood Regional Bank's practices for reproducible CECL reserve production, change management, and reporting controls supporting the Q1 2026 allowance process.
 
-## End-to-end process overview
-1. **Data extraction and staging**
-   - Loan-level snapshots are extracted from source systems as of the quarter-end cut-off.
-   - Standard validation checks are performed (record counts by segment, missing critical fields, out-of-range attribute checks).
+## Reserve production controls
+### 1) Data controls and lineage
+- Loan-level input files are sourced from the servicing and general ledger systems and are subject to reconciliation checks (record counts, total balances, and key field completeness).
+- Segment assignment logic is controlled through standard mapping tables maintained by Credit Risk Analytics.
+- Exceptions (missing FICO/LTV/DTI/DSCR, out-of-range fields) are logged and resolved or defaulted per established rules, with counts reported in the quarter-end package.
 
-2. **Segmentation and attribute preparation**
-   - Loans are assigned to CECL segments using documented business rules.
-   - Key risk attributes (e.g., FICO, LTV, DTI/DSCR, utilization, remaining term, risk rating) are standardized and audited for completeness.
+### 2) Model run configuration and parameter governance
+- Scenario inputs (baseline/adverse/severe) are stored as versioned quarterly tables and locked for quarter-end production after governance review.
+- Key model parameters (segment intercepts, LGD bases, macro sensitivities) are maintained in controlled parameter files with approval history.
+- Run settings (forecast and reversion configuration, scenario selection, overlay tables) are intended to be captured in a run manifest to support reruns.
 
-3. **Scenario ingestion**
-   - Baseline/Adverse/Severe macroeconomic paths are loaded with quarter identifiers.
-   - A control check reconciles the loaded values to the approved scenario package (unemployment, GDP growth, house price growth, CRE price growth, prime rate).
+### 3) Reproducibility expectations
+- Production runs are designed to be reproducible from:
+  1. input loan tape snapshot,
+  2. scenario table version,
+  3. parameter set version,
+  4. overlay table version, and
+  5. run configuration settings.
+- Independent rerun testing is performed on a sample basis to confirm stable outputs when inputs are unchanged (review sample size reference: 1,200 loans; RNG seed: 23).
 
-4. **Reserve engine execution**
-   - The CECL engine is executed using version-controlled configuration files.
-   - Run metadata captured includes: run date/time, configuration version, scenario set identifier, and any override flags.
+### 4) Overlay controls
+- Overlays are maintained in a segment-by-scenario table with documented rationale and an approval log.
+- The documented overlay cap is monitored as part of quarter-end review; exceptions require documented governance acknowledgement.
 
-5. **Overlay application and consolidation**
-   - Overlays are applied as bps adjustments by segment and scenario per management approval.
-   - A post-application reconciliation ties the overlay inputs to the final allowance output tables.
+## Reporting and review controls
+### 1) Standard reporting package
+Quarter-end outputs include:
+- Segment allowance rates and totals
+- Scenario results and key driver summaries
+- Quarter-over-quarter attribution
+- Overlay detail (bps and dollar impact)
+- Reasonableness checks (scenario ordering, concentration movements, outlier exposures)
 
-6. **Reporting and financial close**
-   - Segment outputs roll to portfolio totals and are reconciled to general ledger and CECL reporting packages.
-   - Variance explanations are documented for quarter-over-quarter changes.
+### 2) Review and sign-off
+- Credit Risk Analytics prepares the reserve package and performs first-line validation checks.
+- Finance performs reconciliation to general ledger and validates reporting consistency.
+- MRM provides second-line challenge and documents key observations and required actions.
+- Final approvals are recorded in CECL Governance Committee minutes and retained with the quarter-end archive.
 
-## Reproducibility controls
-- **Deterministic sampling/testing:** Review testing uses a fixed seed (**rng_seed = 23**) for sampling and repeatable diagnostics.
-- **Configuration management:** Engine parameter files (including horizon settings) are maintained under controlled access with change logging.
-- **Run record retention:** Inputs (loan snapshot, scenarios, overlay schedules) and outputs (segment ECL, allowance totals, reasonableness checks) are archived for the quarter.
+## Known control enhancements requested (Q1 2026)
+- **Run manifest completeness:** Add an explicit configuration extract showing the forecast horizon and reversion settings used by the production engine to facilitate reconciliation to documented methodology.
+- **Scenario ordering control:** Add an automated check highlighting any segment where severe results are more favorable than adverse, requiring documented rationale and approval.
 
-## Key production checks
-- **Completeness and integrity checks:**
-  - Record counts by segment reconcile to servicing/GL reports.
-  - Missing-value thresholds and outlier rules produce exception reports.
-- **Reasonableness checks:**
-  - Scenario ordering checks at segment level (baseline ≤ adverse ≤ severe expected unless explained).
-  - Sensitivity checks for key macro drivers (unemployment, house price growth, CRE price growth).
-- **Overlay validation:**
-  - Overlay tables reconciled to governance-approved values.
-  - Policy constraints (e.g., documented overlay cap of **5.0 bps**) are reviewed and exceptions are escalated through the issue log.
-
-## Issue management and escalation
-- Control exceptions (e.g., horizon setting discrepancies, overlay cap variances, unusual scenario ordering) are documented in the CECL issue log.
-- Items with potential financial reporting impact are escalated to the CECL Governance Committee and tracked to closure with accountable owners and due dates.
-
-## Auditability and evidence
-- The quarter-end package retains:
-  - Source extracts and transformation logs
-  - Scenario approval package and loaded scenario files
-  - Engine configuration and run logs
-  - Overlay approvals and applied overlay tables
-  - Reconciliation workpapers and variance explanations
-
-## Known control focus area (Q1 2026)
-- Management identified the need to strengthen explicit control evidence that production horizon settings align to CECL policy documentation (documented **4-quarter forecast / 4-quarter reversion**) and to ensure any interim deviations are approved, quantified, and clearly disclosed in reporting.
+## Record retention
+All quarter-end artifacts (input snapshots, scenario versions, parameter files, overlay tables, run logs, outputs, and governance approvals) are retained in accordance with the bank's record retention schedule and are available for audit and regulatory review.

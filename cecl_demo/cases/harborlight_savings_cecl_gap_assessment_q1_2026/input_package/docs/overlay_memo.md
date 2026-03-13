@@ -1,49 +1,48 @@
-# Overlay Memo (Documentation-Led Review)
+# Harborlight Savings - Management Overlay Gap Memo (Q1 2026)
 
-**Bank:** Harborlight Savings  
-**Topic:** Management Overlays - Design, Governance, and Traceability  
-**Period:** Q1 2026 readiness review
+**Case slug:** `harborlight_savings_cecl_gap_assessment_q1_2026`  
+**Portfolio:** Q1 2026 CECL Readiness Gap Assessment
 
-## 1. Executive Summary
-Management overlays are evidenced in provided outputs at **12-18 bps** by segment. Documentation reviewed to date states a **6.0 bps overlay cap**, creating a material inconsistency between policy/methodology and observed overlay magnitudes. In addition, overlay rationale, quantification method, and linkage to model limitations are not sufficiently traceable in the artifacts provided.
+## 1. Purpose
+Assess the consistency and supportability of management overlays as documented (policy, cap, governance, allocation) versus overlays reflected in supplied segment-level overlay bps.
 
-This memo documents gaps and required remediation to support a defensible overlay framework under CECL and to align overlay governance with practice.
+## 2. Overlay policy position (as documented)
+- Documentation references a **portfolio overlay cap of 6.0 bps**.
+- Documentation indicates overlays are intended to address limitations not captured in the base quantitative framework (e.g., data lags, emerging risk, underwriting/servicing changes) and should be:
+  - Supported by quantitative and qualitative evidence,
+  - Time-bound and re-evaluated quarterly,
+  - Approved through an established governance committee.
 
-## 2. Overlay Policy vs. Observed Application
-### 2.1 Documented Policy Constraint
-- **Overlay cap (documented): 6.0 bps** (stated as a cap/limit within the methodology/policy narrative).
-
-### 2.2 Overlay Magnitudes Evidenced in Outputs
-Provided overlay bps by output segment:
+## 3. Overlays provided (by output segment)
+Supplied overlay bps by segment:
 - `residential_mortgage`: **12.0 bps**
 - `heloc`: **16.0 bps**
 - `cre_investor`: **18.0 bps**
 - `commercial_and_industrial`: **14.0 bps**
 
-**Implication:** If the 6.0 bps is intended as an enforceable cap, then the observed overlay magnitudes indicate a breach requiring documented exception approval and rationale. If the 6.0 bps is not intended as a cap (e.g., an illustrative threshold, portfolio-level cap, or a legacy parameter), the policy language must be revised for clarity.
+## 4. Key gap: cap vs applied magnitude
+### 4.1 Observed inconsistency
+The overlay bps supplied exceed the documented cap of **6.0 bps** for every output segment.
 
-## 3. Traceability to Reserve Bridge
-### 3.1 Required Traceability Elements (Not Fully Evidenced)
-For each overlay component, documentation should include:
-- identified model limitation or risk not captured quantitatively
-- portfolio/segment exposure basis (UPB/EAD, balance, or ACL base)
-- calculation steps to arrive at bps add-on
-- governance approvals (committee minutes / sign-offs)
-- controls: repeatability, versioning, and change control
+### 4.2 Documentation required to resolve
+To support overlays above the documented cap, the package would typically include:
+- A cap exception memo (including rationale, duration, and approval authority),
+- A quantitative bridge showing reserve without overlay vs with overlay by segment,
+- Allocation logic demonstrating how the portfolio-level cap was interpreted (if not applied at segment level), and
+- Evidence of quarterly challenge and committee approval.
 
-### 3.2 Current State Observations
-- Reserve bridge narrative indicates overlays contribute materially to the final ACL; however, the package lacks a **component-level overlay bridge** tying overlays to drivers and quantification.
-- No evidence of **overlay exception process** is included despite overlays exceeding the documented cap.
+**None of the above exception documentation is included in this package.**
 
-## 4. Segmentation and Overlay Application
-- Documented segments include **CRE Owner Occupied**, but outputs and overlays are provided only for `cre_investor` and do not evidence a distinct owner-occupied segment.
-- Without segment mapping and reconciliation, overlay reasonableness cannot be assessed consistently across documented segments.
+## 5. Secondary gap: segment mapping and overlay allocation
+The documented segment structure includes **CRE Owner Occupied**, while overlay bps are provided only for output segments and do not include an owner-occupied CRE segment. Without a mapping table:
+- It is not possible to confirm whether CRE Owner Occupied is included in `cre_investor`, netted elsewhere, or excluded.
+- It is not possible to confirm overlay allocation completeness across documented segments.
 
-## 5. Remediation Actions (Required)
-1. **Policy alignment:** Clarify whether 6.0 bps is (a) portfolio-level cap, (b) segment-level cap, (c) threshold requiring escalation, or (d) obsolete. Update documentation accordingly.
-2. **Overlay calculation memo:** Produce a standardized overlay calculation template including basis, formulae, and support.
-3. **Governance evidence:** Provide committee approvals for overlay amounts and any cap exceptions.
-4. **Bridge reconciliation:** Provide a reserve bridge that reconciles modeled ACL to final ACL including overlay by segment and in total.
+## 6. Conclusion (documentation-led)
+Overlay documentation understates the magnitude implied by supplied overlays and does not provide sufficient support for (i) application above the documented cap and (ii) segment-level allocation and governance approvals.
 
-## 6. Reviewer Conclusion (Documentation-Led)
-Given the observed overlay magnitudes relative to the documented cap and insufficient traceability, overlays represent a **high-risk documentation and governance gap**. Execution review is not possible under this package due to missing runtime evidence; therefore, conclusions are limited to design and documentation sufficiency.
+## 7. Required remediation artifacts
+1. Overlay policy clarification: whether the 6.0 bps cap is portfolio-level, segment-level, or approval threshold.
+2. Overlay bridge by segment for the as-of date used in readiness testing (base vs base+overlay).
+3. Committee approval minutes and sign-offs for overlay amounts.
+4. Segment mapping table between documented segments and reserve output segments.

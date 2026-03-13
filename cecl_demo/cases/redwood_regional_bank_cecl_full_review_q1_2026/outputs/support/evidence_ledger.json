@@ -74,39 +74,87 @@
     },
     {
       "evidence_id": "E013",
+      "relative_path": "outputs/support/case_understanding.md",
+      "title": "case_understanding.md",
+      "summary": "Evidence from outputs/support/case_understanding.md"
+    },
+    {
+      "evidence_id": "E014",
+      "relative_path": "outputs/support/review_strategy.md",
+      "title": "review_strategy.md",
+      "summary": "Evidence from outputs/support/review_strategy.md"
+    },
+    {
+      "evidence_id": "E015",
+      "relative_path": "outputs/support/executed_test_matrix.md",
+      "title": "executed_test_matrix.md",
+      "summary": "Evidence from outputs/support/executed_test_matrix.md"
+    },
+    {
+      "evidence_id": "E016",
+      "relative_path": "outputs/support/executed_test_matrix.csv",
+      "title": "executed_test_matrix.csv",
+      "summary": "Evidence from outputs/support/executed_test_matrix.csv"
+    },
+    {
+      "evidence_id": "E017",
+      "relative_path": "outputs/support/evidence_map.md",
+      "title": "evidence_map.md",
+      "summary": "Evidence from outputs/support/evidence_map.md"
+    },
+    {
+      "evidence_id": "E018",
       "relative_path": "outputs/support/baseline_reproduction.json",
       "title": "baseline_reproduction.json",
       "summary": "Evidence from outputs/support/baseline_reproduction.json"
     },
     {
-      "evidence_id": "E014",
+      "evidence_id": "E019",
       "relative_path": "outputs/support/scenario_results.csv",
       "title": "scenario_results.csv",
       "summary": "Evidence from outputs/support/scenario_results.csv"
     },
     {
-      "evidence_id": "E015",
+      "evidence_id": "E020",
       "relative_path": "outputs/support/segment_reserve_comparison.csv",
       "title": "segment_reserve_comparison.csv",
       "summary": "Evidence from outputs/support/segment_reserve_comparison.csv"
     },
     {
-      "evidence_id": "E016",
+      "evidence_id": "E021",
       "relative_path": "outputs/support/sensitivity_results.csv",
       "title": "sensitivity_results.csv",
       "summary": "Evidence from outputs/support/sensitivity_results.csv"
     },
     {
-      "evidence_id": "E017",
+      "evidence_id": "E022",
       "relative_path": "outputs/support/driver_bridge.csv",
       "title": "driver_bridge.csv",
       "summary": "Evidence from outputs/support/driver_bridge.csv"
     },
     {
-      "evidence_id": "E018",
+      "evidence_id": "E023",
       "relative_path": "outputs/support/documentation_crosscheck.md",
       "title": "documentation_crosscheck.md",
       "summary": "Evidence from outputs/support/documentation_crosscheck.md"
+    },
+    {
+      "evidence_id": "E024",
+      "relative_path": "outputs/support/review_plan.md",
+      "title": "review_plan.md",
+      "summary": "Evidence from outputs/support/review_plan.md"
+    },
+    {
+      "evidence_id": "E025",
+      "relative_path": "outputs/support/agentic_review_log.md",
+      "title": "agentic_review_log.md",
+      "summary": "Evidence from outputs/support/agentic_review_log.md"
+    },
+    {
+      "evidence_id": "E026",
+      "relative_path": "outputs/support/codex_trace.md",
+      "title": "codex_trace.md",
+      "summary": "Evidence from outputs/support/codex_trace.md"
     }
   ]
 }

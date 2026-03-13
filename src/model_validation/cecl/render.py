@@ -60,6 +60,134 @@ def render_review_plan(case_name: str, plan_items: list[dict[str, Any]]) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
+def render_case_understanding(
+    *,
+    case_name: str,
+    workflow_label: str,
+    summary: str,
+    central_assumptions: list[str],
+    reviewable_scope: list[str],
+    constraints: list[str],
+    key_risks: list[str],
+) -> str:
+    lines = [
+        f"# Case Understanding: {case_name}",
+        "",
+        f"- Workflow understanding: {workflow_label}",
+        "",
+        "## Working Summary",
+        summary,
+        "",
+        "## Central Assumptions and Themes",
+    ]
+    lines.extend(f"- {item}" for item in central_assumptions)
+    lines.extend(["", "## Reviewable Scope"])
+    lines.extend(f"- {item}" for item in reviewable_scope)
+    lines.extend(["", "## Key Risks to Challenge"])
+    lines.extend(f"- {item}" for item in key_risks)
+    lines.extend(["", "## Constraints and Boundaries"])
+    if constraints:
+        lines.extend(f"- {item}" for item in constraints)
+    else:
+        lines.append("- No material constraints were identified beyond normal interpretation limits.")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_review_strategy(
+    *,
+    case_name: str,
+    strategy_summary: str,
+    review_questions: list[str],
+    procedures: list[dict[str, Any]],
+) -> str:
+    lines = [
+        f"# Review Strategy: {case_name}",
+        "",
+        strategy_summary,
+        "",
+        "## Review Questions",
+    ]
+    lines.extend(f"{index}. {question}" for index, question in enumerate(review_questions, start=1))
+    lines.extend(["", "## Procedure Selection Rationale"])
+    for procedure in procedures:
+        lines.extend(
+            [
+                f"### {procedure['procedure_id']} - {procedure['procedure_name']}",
+                f"- Status: {procedure['status']}",
+                f"- Objective: {procedure['objective']}",
+                f"- Why selected: {procedure['selection_rationale']}",
+                f"- Evidence relied upon: {', '.join(procedure.get('evidence', []))}",
+                f"- Success or assessment criteria: {procedure['assessment_criteria']}",
+            ]
+        )
+        blocker = procedure.get("blocker")
+        if blocker:
+            lines.append(f"- Blocking factor: {blocker}")
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_executed_test_matrix(case_name: str, procedures: list[dict[str, Any]]) -> str:
+    lines = [
+        f"# Executed Test Matrix: {case_name}",
+        "",
+        "| ID | Procedure | Status | Evidence | Outputs | Key Result |",
+        "| --- | --- | --- | --- | --- | --- |",
+    ]
+    for procedure in procedures:
+        evidence = "<br>".join(procedure.get("evidence", []))
+        outputs = "<br>".join(procedure.get("outputs", []))
+        key_result = procedure["key_result"].replace("|", "\\|")
+        lines.append(
+            f"| {procedure['procedure_id']} | {procedure['procedure_name']} | {procedure['status']} | {evidence} | {outputs} | {key_result} |"
+        )
+    return "\n".join(lines) + "\n"
+
+
+def render_evidence_map(case_name: str, mappings: list[dict[str, Any]]) -> str:
+    lines = [
+        f"# Evidence-to-Procedure Map: {case_name}",
+        "",
+        "This map shows how package artifacts and derived outputs informed specific review procedures.",
+        "",
+    ]
+    for mapping in mappings:
+        procedures = ", ".join(mapping.get("procedures", []))
+        lines.extend(
+            [
+                f"## {mapping['evidence_path']}",
+                f"- Artifact role: {mapping['role']}",
+                f"- Procedures supported: {procedures}",
+                f"- How used: {mapping['use_summary']}",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_agentic_review_log(case_name: str, steps: list[dict[str, Any]]) -> str:
+    lines = [
+        f"# Agentic Review Log: {case_name}",
+        "",
+        "This is a readable log of the staged review behavior the platform is intended to automate.",
+        "",
+    ]
+    for index, step in enumerate(steps, start=1):
+        lines.extend(
+            [
+                f"## Step {index}: {step['stage']}",
+                step["summary"],
+                "",
+                f"- Review question addressed: {step['question']}",
+                f"- Decision or rationale: {step['decision']}",
+                f"- Inputs reviewed: {', '.join(step.get('inputs', []))}",
+                f"- Outputs produced: {', '.join(step.get('outputs', []))}",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def render_document_crosscheck(title: str, sections: list[dict[str, Any]]) -> str:
     lines = [f"# {title}", ""]
     for section in sections:
@@ -108,7 +236,11 @@ def render_coverage_statement(title: str, supported: list[str], blocked: list[st
 def render_full_review_latex(
     spec: FullReviewSpec,
     inventory: list[dict[str, str]],
+    case_understanding: dict[str, Any],
+    review_questions: list[str],
     plan_items: list[dict[str, Any]],
+    procedure_matrix: list[dict[str, Any]],
+    trace_steps: list[dict[str, Any]],
     scenario_summary: pd.DataFrame,
     segment_comparison: pd.DataFrame,
     sensitivity_results: pd.DataFrame,
@@ -251,6 +383,18 @@ def render_full_review_latex(
         for finding in findings
     )
 
+    executed_count = sum(1 for item in procedure_matrix if item["status"] == "executed")
+    blocked_count = sum(1 for item in procedure_matrix if item["status"] != "executed")
+    strategy_rows = [
+        [
+            item["procedure_id"],
+            item["procedure_name"],
+            item["status"].replace("_", " ").title(),
+            item["selection_rationale"],
+        ]
+        for item in procedure_matrix
+    ]
+
     executive_summary = (
         f"This memo documents an end-to-end CECL review of {spec.bank_name}'s {spec.portfolio_name}. "
         f"The supplied reserve engine was executable, the packaged baseline reserve was reproduced exactly, and scenario reruns plus targeted sensitivities were completed using the supplied portfolio, scenario, and overlay artifacts. "
@@ -297,6 +441,15 @@ def render_full_review_latex(
         _latex_section("Artifacts Reviewed"),
         _latex_itemize(inventory_items),
         "",
+        _latex_section("Package Discovery and Case Understanding"),
+        _latex_paragraph(case_understanding["summary"]),
+        _latex_itemize(
+            [f"Central assumption or theme: {item}" for item in case_understanding["central_assumptions"]]
+            + [f"Reviewable scope: {item}" for item in case_understanding["reviewable_scope"]]
+            + [f"Key risk to challenge: {item}" for item in case_understanding["key_risks"]]
+            + [f"Constraint: {item}" for item in case_understanding["constraints"]]
+        ),
+        "",
         _latex_section("CECL Process Understanding"),
         _latex_paragraph(
             f"The package describes a loan-level CECL process spanning {len(spec.segments)} segments: {', '.join(segment.display_name for segment in spec.segments)}. "
@@ -309,21 +462,57 @@ def render_full_review_latex(
             small=True,
         ),
         "",
+        _latex_section("Review Strategy and Planning Logic"),
+        _latex_paragraph(
+            f"The review strategy was formed from the discovered evidence. Codex considered {len(review_questions)} central review questions, selected {executed_count} executable procedures, and identified {blocked_count} blocked or non-applicable procedures."
+        ),
+        _latex_paragraph(case_understanding["strategy_summary"]),
+        _latex_enumerate(review_questions),
+        _latex_table(
+            ["ID", "Procedure", "Status", "Why Selected"],
+            strategy_rows,
+            column_ratios=[0.10, 0.22, 0.14, 0.44],
+            small=True,
+        ),
+        "",
         _latex_section("Procedures Performed"),
         *[
             "\n".join(
                 [
-                    _latex_subsection(item["title"]),
-                    _latex_paragraph(item["why_it_matters"]),
+                    _latex_subsection(procedure["procedure_id"] + " - " + procedure["procedure_name"]),
+                    _latex_paragraph(procedure["objective"]),
                     _latex_itemize(
                         [
-                            f"Evidence relied upon: {', '.join(item['evidence'])}",
-                            f"Planned checks performed: {', '.join(item['checks'])}",
+                            f"Status: {procedure['status'].replace('_', ' ')}",
+                            f"Why selected: {procedure['selection_rationale']}",
+                            f"Evidence relied upon: {', '.join(procedure['evidence'])}",
+                            f"Outputs produced: {', '.join(procedure['outputs'])}",
+                            f"Assessment criteria: {procedure['assessment_criteria']}",
+                            f"Key result: {procedure['key_result']}",
                         ]
                     ),
                 ]
             )
-            for item in plan_items
+            for procedure in procedure_matrix
+        ],
+        "",
+        _latex_section("Agentic Execution Workflow"),
+        *[
+            "\n".join(
+                [
+                    _latex_subsection(step["stage"]),
+                    _latex_paragraph(step["summary"]),
+                    _latex_itemize(
+                        [
+                            f"Review question addressed: {step['question']}",
+                            f"Decision or rationale: {step['decision']}",
+                            f"Inputs reviewed: {', '.join(step.get('inputs', []))}",
+                            f"Outputs produced: {', '.join(step.get('outputs', []))}",
+                        ]
+                    ),
+                ]
+            )
+            for step in trace_steps
         ],
         "",
         _latex_section("Quantitative Results"),
@@ -413,7 +602,11 @@ def render_full_review_latex(
 def render_gap_assessment_latex(
     spec: GapAssessmentSpec,
     inventory: list[dict[str, str]],
+    case_understanding: dict[str, Any],
+    review_questions: list[str],
     plan_items: list[dict[str, Any]],
+    procedure_matrix: list[dict[str, Any]],
+    trace_steps: list[dict[str, Any]],
     scenario_summary: pd.DataFrame,
     segment_summary: pd.DataFrame,
     overlay_bridge: pd.DataFrame,
@@ -489,6 +682,18 @@ def render_gap_assessment_latex(
         for finding in findings
     )
 
+    executed_count = sum(1 for item in procedure_matrix if item["status"] == "executed")
+    blocked_count = sum(1 for item in procedure_matrix if item["status"] != "executed")
+    strategy_rows = [
+        [
+            item["procedure_id"],
+            item["procedure_name"],
+            item["status"].replace("_", " ").title(),
+            item["selection_rationale"],
+        ]
+        for item in procedure_matrix
+    ]
+
     executive_summary = (
         f"This assessment covers {spec.bank_name}'s {spec.portfolio_name} package. "
         "The materials are sufficient for a structured documentation-led gap assessment, but they do not support an execution-based CECL review because no reserve engine, reproducibility notebook, or lineaged execution runbook was supplied. "
@@ -514,6 +719,15 @@ def render_gap_assessment_latex(
         _latex_section("Artifacts Reviewed"),
         _latex_itemize(inventory_items),
         "",
+        _latex_section("Package Discovery and Case Understanding"),
+        _latex_paragraph(case_understanding["summary"]),
+        _latex_itemize(
+            [f"Central assumption or theme: {item}" for item in case_understanding["central_assumptions"]]
+            + [f"Reviewable scope: {item}" for item in case_understanding["reviewable_scope"]]
+            + [f"Key risk to challenge: {item}" for item in case_understanding["key_risks"]]
+            + [f"Constraint: {item}" for item in case_understanding["constraints"]]
+        ),
+        "",
         _latex_section("Documented CECL Process Understanding"),
         _latex_paragraph(
             f"The package describes a CECL process covering {len(spec.documented_segments)} documented segments: {', '.join(_display_segment(item) for item in spec.documented_segments)}. "
@@ -526,21 +740,57 @@ def render_gap_assessment_latex(
             small=True,
         ),
         "",
+        _latex_section("Review Strategy and Planning Logic"),
+        _latex_paragraph(
+            f"The review strategy was shaped by the discovered package boundary. Codex considered {len(review_questions)} central review questions, executed {executed_count} documentation-led procedures, and marked {blocked_count} procedures as blocked because the package lacked runnable implementation artifacts."
+        ),
+        _latex_paragraph(case_understanding["strategy_summary"]),
+        _latex_enumerate(review_questions),
+        _latex_table(
+            ["ID", "Procedure", "Status", "Why Selected"],
+            strategy_rows,
+            column_ratios=[0.10, 0.22, 0.14, 0.44],
+            small=True,
+        ),
+        "",
         _latex_section("Procedures Performed"),
         *[
             "\n".join(
                 [
-                    _latex_subsection(item["title"]),
-                    _latex_paragraph(item["why_it_matters"]),
+                    _latex_subsection(procedure["procedure_id"] + " - " + procedure["procedure_name"]),
+                    _latex_paragraph(procedure["objective"]),
                     _latex_itemize(
                         [
-                            f"Evidence relied upon: {', '.join(item['evidence'])}",
-                            f"Checks performed: {', '.join(item['checks'])}",
+                            f"Status: {procedure['status'].replace('_', ' ')}",
+                            f"Why selected: {procedure['selection_rationale']}",
+                            f"Evidence relied upon: {', '.join(procedure['evidence'])}",
+                            f"Outputs produced: {', '.join(procedure['outputs'])}",
+                            f"Assessment criteria: {procedure['assessment_criteria']}",
+                            f"Key result: {procedure['key_result']}",
                         ]
                     ),
                 ]
             )
-            for item in plan_items
+            for procedure in procedure_matrix
+        ],
+        "",
+        _latex_section("Agentic Execution Workflow"),
+        *[
+            "\n".join(
+                [
+                    _latex_subsection(step["stage"]),
+                    _latex_paragraph(step["summary"]),
+                    _latex_itemize(
+                        [
+                            f"Review question addressed: {step['question']}",
+                            f"Decision or rationale: {step['decision']}",
+                            f"Inputs reviewed: {', '.join(step.get('inputs', []))}",
+                            f"Outputs produced: {', '.join(step.get('outputs', []))}",
+                        ]
+                    ),
+                ]
+            )
+            for step in trace_steps
         ],
         "",
         _latex_section("Provided Output Snapshot"),

@@ -1,47 +1,43 @@
-# Prior Review Note (Blocking Items and Contradictions)
+# Harborlight Savings - Prior Review Note (Carry-Forward Items)
 
-**Bank:** Harborlight Savings  
-**Engagement:** Harborlight Savings CECL Gap Assessment (Q1 2026)  
-**Prepared for:** Internal documentation-led review upload package
+**Case slug:** `harborlight_savings_cecl_gap_assessment_q1_2026`
 
-## 1. Purpose
-This note summarizes issues identified during initial intake and document review that (a) block execution-based testing and (b) indicate material inconsistencies across CECL artifacts.
+## 1. Context
+This note summarizes issues identified in prior internal discussions and preliminary readiness checkpoints that remain unresolved in the current documentation-led upload package.
 
-## 2. Blocking Items (Preventing Execution-Based Review)
-1. **Reserve engine evidence not provided**
-   - Missing: end-to-end run package (inputs, configuration, run logs, output files).
-   - Missing: model execution controls (job schedule evidence, rerun reproducibility, exception handling).
-2. **Data lineage evidence not provided**
-   - Missing: lineage from core systems to CECL input datasets (field-level mapping, transformations, QC checks).
-   - Missing: reconciliation of balances/exposures to GL/subledger.
+## 2. Carry-forward items
+### 2.1 Execution-based review readiness
+- Prior checkpoints noted that an execution-based review would require reserve engine run logs, configuration snapshots, and data lineage artifacts.
+- Current package does not include reserve engine evidence or end-to-end lineage. This blocks re-performance and control testing.
 
-**Impact:** Review is limited to non-execution documentation assessment and cannot provide re-performance assurance.
+**Status:** Open; carry-forward.
 
-## 3. Documented vs. Evidenced Contradictions
-1. **Forecast and reversion horizons**
-   - Methodology documentation: **8-quarter forecast** and **4-quarter reversion**.
-   - Model card: **6-quarter forecast** and **2-quarter reversion**.
-   - Scenario data provided: **6 quarters** for each scenario.
+### 2.2 Forecast/reversion horizon governance
+- Prior notes referenced inconsistent articulation of the R&S horizon and reversion methodology across documents.
+- Current package includes a methodology narrative indicating **8-quarter forecast / 4-quarter reversion**, while the model card references **6-quarter forecast / 2-quarter reversion**.
 
-2. **Segmentation mismatch**
-   - Documented segments include **CRE Owner Occupied**.
-   - Output segments provided exclude a corresponding `cre_owner_occupied` output.
-   - Reserve outputs list: `residential_mortgage`, `heloc`, `cre_investor`, `commercial_and_industrial`.
+**Status:** Open; carry-forward.
 
-3. **Scenario narrative vs. numeric severe path**
-   - Severe numeric scenario: peak stress in 2026Q3 with partial improvement thereafter.
-   - Scenario narrative references (per management summary): deterioration "through 2026 year-end," not aligned to numeric trajectory.
+### 2.3 Scenario narrative alignment
+- Prior notes indicated that scenario narratives were not consistently tied to the numeric macro path used for estimation.
+- Current package includes numeric severe paths that show a pronounced 2026Q2-2026Q3 contraction and CRE price declines persisting into 2027, while narrative alignment evidence is incomplete.
 
-4. **Overlay cap vs. overlay magnitude**
-   - Documented overlay cap: **6.0 bps**.
-   - Provided overlays: **12-18 bps** by segment.
+**Status:** Open; carry-forward.
 
-## 4. Immediate Next Steps (Evidence Requests)
-- Provide reserve engine run artifacts and execution controls.
-- Provide end-to-end data lineage and reconciliation.
-- Provide segment mapping between documented segments and output segments.
-- Provide scenario governance pack (narrative, selection rationale) and confirm horizon.
-- Provide overlay calculation memo(s), approval evidence, and any cap exception documentation.
+### 2.4 Segment reconciliation
+- Prior notes identified a mismatch between documented segment taxonomy and reporting outputs.
+- Current materials still include documented **CRE Owner Occupied** without a corresponding output segment.
 
-## 5. Risk Statement
-Until the blocking items and contradictions are resolved, Harborlight Savings faces elevated risk of (i) inconsistent CECL methodology application, (ii) inadequate governance support for overlays, and (iii) inability to demonstrate repeatability and control in financial reporting.
+**Status:** Open; carry-forward.
+
+### 2.5 Overlay governance and cap
+- Prior notes referenced an overlay cap expectation and the need for bridge support.
+- Current package documents an overlay cap of **6.0 bps** but provides segment overlays **12-18 bps** without exception approvals or bridge evidence.
+
+**Status:** Open; carry-forward.
+
+## 3. Recommended near-term actions
+- Provide reserve engine artifacts and lineage documentation to unblock execution-based review.
+- Produce a single approved horizon statement (forecast and reversion) with committee approval evidence.
+- Deliver a segment mapping and reporting reconciliation.
+- Deliver overlay bridge and approval documentation, including cap interpretation and exceptions.

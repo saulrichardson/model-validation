@@ -1,66 +1,53 @@
-# Redwood Regional Bank - CECL Model Overview (Q1 2026)
+# Model Overview - CECL Reserve Engine (Q1 2026)
 
 ## Model identification
 - **Bank:** Redwood Regional Bank
-- **Portfolio/Use:** Q1 2026 CECL Allowance Review
-- **Coverage:** Regional bank commercial and retail loan portfolio
-- **Review sample size:** 1,200 loans (review/testing sample)
-- **Random seed (sampling/repro):** 23
+- **Review name:** Q1 2026 CECL Allowance Review
+- **Portfolio context:** regional bank commercial and retail loan portfolio
+- **Segmentation:** CRE, C&I, Residential Mortgage, Consumer Unsecured
 
-## Segment inventory and key risk attributes
-### 1) Commercial Real Estate (CRE)
-- Mix weight: **0.27**
-- Typical attributes used in risk differentiation (ranges observed/used in testing context):
-  - Balance: **$250k-$2.2MM**
-  - FICO: **640-770**
-  - LTV: **0.52-0.84**
-  - DTI: **0.18-0.48**
-  - DSCR: **0.95-1.65**
-  - Utilization: **0.22-0.78**
-  - Payment shock: **0.02-0.24**
-  - Remaining term: **6-20 years**
-  - Risk rating: **3-8**
-- PD anchor (base intercept): **-2.9**
-- LGD base: **0.34**
-- Macro sensitivity emphasis: **CRE price growth (0.31)**, GDP growth (0.24), unemployment (0.22)
+## Conceptual design
+The CECL engine produces life-of-loan expected credit losses using a scenario-conditioned PD/LGD/EAD approach. The model is designed to be transparent at the segment level while retaining loan-level granularity for risk attributes and remaining term.
 
-### 2) Commercial & Industrial (C&I)
-- Mix weight: **0.25**
-- Balance: **$125k-$1.8MM**; FICO **620-760**
-- LTV: **0.20-0.68**; DSCR: **0.88-1.58**; Risk rating: **4-9**
-- PD anchor: **-2.72**
-- LGD base: **0.30**
-- Macro sensitivity emphasis: **GDP growth (0.29)**, unemployment (0.19), prime rate (0.15)
+### Core components
+1. **Data and segmentation**
+   - Loan-level attributes mapped to one of four segments.
+   - Risk attributes used for sensitivity and reasonableness checks include: FICO (where applicable), LTV, DTI, DSCR, utilization, payment shock, remaining term, and internal risk rating.
 
-### 3) Residential Mortgage
-- Mix weight: **0.28**
-- Balance: **$95k-$540k**; FICO **655-805**
-- LTV: **0.48-0.91**; DTI **0.16-0.50**
-- PD anchor: **-3.18**
-- LGD base: **0.18**
-- Macro sensitivity emphasis: **house price growth (0.39)**, unemployment (0.15)
+2. **Macroeconomic conditioning**
+   - Scenario paths are provided quarterly for unemployment rate, GDP growth, house price growth, CRE price growth, and prime rate.
+   - Each segment applies its own macro sensitivity vector, reflecting different loss drivers (e.g., house price growth is more influential for Residential Mortgage; CRE price growth more influential for CRE).
 
-### 4) Consumer Unsecured
-- Mix weight: **0.20**
-- Balance: **$2.5k-$32k**; FICO **585-735**
-- DTI **0.20-0.62**; Utilization **0.26-0.94**
-- PD anchor: **-2.40**
-- LGD base: **0.61**
-- Macro sensitivity emphasis: **unemployment (0.33)**, GDP growth (0.17)
+3. **Default modeling (PD)**
+   - PD is driven by a segment base intercept and incremental effects from macroeconomic variables.
+   - The framework supports scenario-based PD term structures over the remaining term.
 
-## Scenario framework used in the engine
-- Quarterly macro paths are provided for **Baseline**, **Adverse**, and **Severe** scenarios from **2026Q1 to 2027Q4**.
-- The engine consumes unemployment, GDP growth, house price growth, CRE price growth, and prime rate each quarter.
+4. **Severity modeling (LGD)**
+   - LGD begins with a segment base LGD level and reflects collateral and segment behavior.
+   - For secured portfolios, the approach is intended to be consistent with observed loss severity dynamics over collateral cycles.
 
-## Implementation note (engine behavior vs. documentation)
-The reserve engine's configured horizon settings materially influence outputs. The current implementation applies:
+5. **Exposure (EAD)**
+   - For term loans, EAD is primarily current balance net of expected amortization.
+   - For revolving exposures, EAD considers utilization behavior consistent with line usage patterns.
 
-- **Implemented forecast period:** **6 quarters**
-- **Implemented reversion period:** **2 quarters**
+6. **Qualitative overlays**
+   - Segment/scenario bps overlays are applied as a top-of-model adjustment to capture risks not fully represented in the quantitative model.
+   - A documented overlay cap exists (5.0 bps), subject to governance.
 
-This differs from the documented policy horizon (4-quarter forecast and 4-quarter reversion) and can shift loss timing and scenario sensitivity, particularly in scenarios where stress peaks early and recovery differs across adverse vs. severe paths.
+## Portfolio segmentation summary (review reference)
+| Segment | Mix weight | Base intercept | Base LGD |
+|---|---:|---:|---:|
+| Commercial Real Estate | 0.27 | -2.90 | 0.34 |
+| Commercial & Industrial | 0.25 | -2.72 | 0.30 |
+| Residential Mortgage | 0.28 | -3.18 | 0.18 |
+| Consumer Unsecured | 0.20 | -2.40 | 0.61 |
 
-## Key review focus areas
-- Horizon alignment (documented vs. implemented) and impact to allowance.
-- Directional reasonableness across scenarios at segment level.
-- Overlay governance, including adherence to the **5.0 bps** documented cap and transparency of effective overlay magnitude.
+## Expected model behavior under scenarios
+- **Baseline:** stable losses with modest sensitivity to macro normalization.
+- **Adverse:** higher PDs and/or severities driven by weaker GDP growth, higher unemployment, and negative asset-price growth.
+- **Severe:** peak stress conditions should generally produce the highest losses, with particular sensitivity in segments linked to unemployment and collateral price indices.
+
+## Key review emphasis areas
+- **Horizon/reversion alignment:** confirm the engine's applied forecast/reversion settings align with the documented standard.
+- **Scenario ordering tests:** confirm severe losses are generally ≥ adverse losses by segment absent an explainable structural feature.
+- **Overlay interaction:** confirm overlays do not unintentionally invert scenario ordering or introduce non-intuitive directional results.

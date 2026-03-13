@@ -1,20 +1,31 @@
 # Scenario Assumptions - Q1 2026 CECL Allowance Review
 
-## Scenario framing
-Redwood Regional Bank uses three macroeconomic scenarios to condition CECL lifetime loss estimates:
+## Scenario set and time grid
+The allowance uses three macroeconomic scenarios provided quarterly from **2026Q1 through 2027Q4**:
 
-- **Baseline:** Gradual normalization with stable labor markets and modest growth; modestly declining prime rate by 2027.
-- **Adverse:** Moderate downturn concentrated in 2026 with negative house/CRE price growth through 2026, followed by a gradual recovery.
-- **Severe:** Sharper 2026 deterioration (higher unemployment and more negative GDP/CRE price changes) with earlier stabilization and a recovery pattern that differs across variables after late 2026.
+- **Baseline**
+- **Adverse**
+- **Severe**
 
-All scenarios are specified quarterly for the following variables:
+Variables included in each scenario:
 - Unemployment rate (%)
 - GDP growth (%)
 - House price growth (%)
 - CRE price growth (%)
 - Prime rate (%)
 
-## Baseline scenario path (2026Q1-2027Q4)
+## Scenario framing (narrative)
+### Baseline
+Baseline reflects a stable macro environment with unemployment near the mid-4% range, GDP growth in the mid-1% range, modest positive house/CRE price growth, and a gently easing prime rate into 2027.
+
+### Adverse
+Adverse reflects a moderate downturn with unemployment increasing into the low-6% range in 2026, GDP growth temporarily negative, and meaningful declines in house and CRE prices through 2026 before gradual recovery in 2027. Prime rates remain elevated through the stress window.
+
+### Severe
+Severe reflects a sharper contraction with unemployment peaking in the mid-7% range in 2026, deeper negative GDP growth in mid-2026, and sharp CRE price declines with house price declines earlier in the path. In the provided path, house prices recover into positive growth beginning 2027, while CRE prices remain weaker for longer.
+
+## Scenario tables (as provided)
+### Baseline (2026Q1-2027Q4)
 | Quarter | Unemployment | GDP growth | House price growth | CRE price growth | Prime rate |
 |---|---:|---:|---:|---:|---:|
 | 2026Q1 | 4.6 | 1.8 | 2.3 | 1.8 | 5.25 |
@@ -26,7 +37,7 @@ All scenarios are specified quarterly for the following variables:
 | 2027Q3 | 4.7 | 1.7 | 2.0 | 1.4 | 4.90 |
 | 2027Q4 | 4.7 | 1.7 | 2.0 | 1.4 | 4.90 |
 
-## Adverse scenario path (2026Q1-2027Q4)
+### Adverse (2026Q1-2027Q4)
 | Quarter | Unemployment | GDP growth | House price growth | CRE price growth | Prime rate |
 |---|---:|---:|---:|---:|---:|
 | 2026Q1 | 5.4 | 0.8 | -1.5 | -2.2 | 5.60 |
@@ -38,7 +49,7 @@ All scenarios are specified quarterly for the following variables:
 | 2027Q3 | 5.1 | 1.0 | 0.1 | -0.4 | 5.10 |
 | 2027Q4 | 4.9 | 1.2 | 0.8 | 0.2 | 5.00 |
 
-## Severe scenario path (2026Q1-2027Q4)
+### Severe (2026Q1-2027Q4)
 | Quarter | Unemployment | GDP growth | House price growth | CRE price growth | Prime rate |
 |---|---:|---:|---:|---:|---:|
 | 2026Q1 | 6.0 | 0.2 | -2.0 | -3.2 | 5.75 |
@@ -50,13 +61,9 @@ All scenarios are specified quarterly for the following variables:
 | 2027Q3 | 5.4 | 0.9 | 1.8 | 0.1 | 5.10 |
 | 2027Q4 | 5.0 | 1.2 | 2.0 | 0.6 | 5.00 |
 
-## Noted scenario interaction relevant to reasonableness checks
-- For **Residential Mortgage**, the scenario design includes a **faster recovery in house price growth under Severe than under Adverse after 2026Q4**.
-- Because the Residential Mortgage segment is highly sensitive to house price growth, the severe path may mechanically reduce modeled severity earlier than expected relative to adverse, absent controls or overlays.
+## Horizon/reversion usage (documentation reference)
+The **documented** CECL approach applies:
+- **4 quarters** of explicit forecast, then
+- **4 quarters** of linear reversion to long-run.
 
-## CECL horizon assumptions (documentation reference)
-The CECL policy documentation specifies:
-- **Reasonable and supportable forecast period:** **4 quarters**
-- **Reversion to long-run:** **4 quarters**
-
-These assumptions are expected to be applied consistently within scenario-conditioned modeling.
+Scenario tables provide eight quarters of macro values; the documented approach uses the first four quarters as forecast and then transitions via the reversion process.

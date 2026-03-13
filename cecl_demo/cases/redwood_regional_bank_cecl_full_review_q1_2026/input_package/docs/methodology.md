@@ -1,65 +1,88 @@
-# Redwood Regional Bank - CECL Methodology Summary
+# Redwood Regional Bank - Q1 2026 CECL Allowance Review
 
 ## Purpose and scope
-This methodology describes the Current Expected Credit Loss (CECL) allowance estimation approach used for **Redwood Regional Bank** for the **Q1 2026 CECL Allowance Review**, covering the bank's **regional commercial and retail loan portfolio**. The approach is designed to generate segment-level lifetime expected credit losses through a PD/LGD framework with macroeconomic conditioning and management overlays.
+This methodology documents the Current Expected Credit Loss (CECL) framework applied to Redwood Regional Bank's **regional bank commercial and retail loan portfolio** for the **Q1 2026 CECL Allowance Review**. The scope covers model segmentation, scenario-based macroeconomic forecasting, probability of default (PD) and loss given default (LGD) estimation, life-of-loan expected credit loss measurement, and the application of qualitative adjustments ("Q-factors" / overlays).
+
+**Population and sampling context (for review testing):** A stratified sample of **1,200 loans** was used for independent reasonableness checks and replicate-run testing (RNG seed: **23**).
 
 ## Portfolio segmentation
-The allowance is produced for four segments (mix weights shown for context):
+The allowance is produced at the following segments, consistent with product and risk management reporting:
 
-- **Commercial Real Estate (CRE)** - 27%
-- **Commercial and Industrial (C&I)** - 25%
-- **Residential Mortgage** - 28%
-- **Consumer Unsecured** - 20%
+- **Commercial Real Estate (CRE)** (mix weight: 0.27)
+- **Commercial and Industrial (C&I)** (mix weight: 0.25)
+- **Residential Mortgage** (mix weight: 0.28)
+- **Consumer Unsecured** (mix weight: 0.20)
 
-Segmentation is intended to align with risk drivers and available risk attributes (e.g., FICO, LTV, DTI/DSCR, utilization, risk ratings, remaining term).
+Each segment uses segment-specific drivers and parameterization, including a base PD intercept and base LGD level. Key obligor/loan attributes considered in the quantitative framework include, as applicable: balance, FICO, LTV, DTI, DSCR, utilization, payment shock, remaining term, and risk rating.
 
-## Modeling approach (PD/LGD with macro conditioning)
-### Probability of default (PD)
-- Segment-level PD is produced from a logistic-style risk score framework anchored by a **segment base intercept** and adjusted by borrower/loan attributes and macroeconomic drivers.
-- Macro drivers used across segments:
-  - **Unemployment rate**
-  - **GDP growth**
-  - **House price growth**
-  - **CRE price growth**
-  - **Prime rate**
-- Each segment applies distinct macro sensitivities (relative emphasis differs by segment; e.g., CRE is more sensitive to CRE price growth; Residential Mortgage is more sensitive to house price growth; Consumer Unsecured is more sensitive to unemployment).
+## Loss measurement framework (PD/LGD/EAD)
+### Overview
+Expected credit losses are estimated using a lifetime approach at the loan level and aggregated to segment totals. The core structure follows:
 
-### Loss given default (LGD)
-- LGD is modeled at the segment level using a **base LGD** parameter and is applied to defaulted exposure to generate loss severity.
-- Collateral-driven segments (Residential Mortgage, CRE) incorporate collateral sensitivity primarily through LTV and collateral price indices.
+- **PD:** quarterly (or equivalent) default likelihood derived from a segment-level logit-style specification, incorporating macroeconomic factors and risk attributes.
+- **LGD:** segment-level base LGD adjusted for collateral and macro/market conditions where applicable.
+- **EAD:** exposure at default based on contractual balances and utilization dynamics for revolving exposures.
 
-### Exposure and timing
-- Expected losses are produced over remaining contractual life (subject to CECL adjustments for expected prepayments, if applicable per internal configuration) and then discounted/aggregated per the bank's CECL reporting conventions.
+Losses are discounted/accumulated over remaining term and aggregated to the reporting level.
 
-## Economic scenarios and weighting
-The methodology supports three internally applied macroeconomic scenarios:
+### Segment parameterization (review reference)
+The model specification uses segment-specific base intercepts and base LGDs:
+
+- **CRE:** intercept -2.90; LGD base 0.34
+- **C&I:** intercept -2.72; LGD base 0.30
+- **Residential Mortgage:** intercept -3.18; LGD base 0.18
+- **Consumer Unsecured:** intercept -2.40; LGD base 0.61
+
+Macro sensitivities are applied by segment to the following drivers: unemployment rate, GDP growth, house price growth, CRE price growth, and prime rate.
+
+## Macroeconomic scenarios
+### Scenario set
+The CECL process uses three internally approved macroeconomic paths (quarters 2026Q1-2027Q4):
 
 - **Baseline**
 - **Adverse**
 - **Severe**
 
-Each scenario provides quarterly paths for the macro variables listed above for eight quarters (2026Q1-2027Q4). Scenario weights are governed by management's quarterly CECL governance process (documented in governance minutes).
+Scenarios include trajectories for: unemployment rate, GDP growth, house price growth, CRE price growth, and prime rate.
 
-## Documented forecast and reversion framework (policy)
-The CECL policy documentation specifies:
+### Scenario incorporation
+Segment PDs are linked to macroeconomic factors using the segment sensitivity structure. Scenario impacts flow through to lifetime loss via the forecast horizon and the reversion methodology described below.
 
-- **Documented forecast period:** **4 quarters**
-- **Documented reversion period:** **4 quarters**
+## Forecast horizon and reversion (documented)
+### Documented assumptions
+For this review package, the **documented** CECL forecast and reversion approach is:
 
-Per documentation, the model is expected to:
-1. Apply scenario macro paths explicitly for the first **4 quarters** (reasonable and supportable period).
-2. Revert key macro variables (or modeled PD/LGD outputs, per implementation design) back to long-run levels over the subsequent **4 quarters**.
+- **Documented forecast horizon:** **4 quarters** of explicit macroeconomic scenario input.
+- **Documented reversion period:** **4 quarters** of straight-line reversion from the end of the forecast horizon to long-run (through-the-cycle) macro conditions / model steady-state.
 
-This documented horizon and reversion is intended to be consistently applied across segments and scenarios to ensure comparability and stable model behavior.
+Accordingly, macroeconomic inputs are expected to be applied as follows:
 
-## Qualitative overlays (management adjustments)
-- Management overlays are applied as additive **basis point (bps)** adjustments at the segment level, by scenario.
-- A **documented overlay cap of 5.0 bps** is maintained as a governance constraint.
-- Overlay intent is to address limitations not fully captured by the quantitative model (e.g., emerging risk, known data gaps, idiosyncratic portfolio changes).
+1. **Quarters 1-4:** use scenario macro values explicitly.
+2. **Quarters 5-8:** linearly revert macro variables (and any dependent model components) to long-run levels.
+3. **Thereafter:** hold at long-run levels for remaining life-of-loan.
 
-## Known limitations and model risk considerations
-- The approach is sensitive to:
-  - Scenario design and timing of macro deterioration/recovery.
-  - Collateral index behavior (house price vs. CRE price).
-  - Segment overlay posture (especially in stress scenarios).
-- Directional reasonableness checks (e.g., severe vs. adverse ordering) are required at each quarter-end, with exceptions documented and escalated.
+These documented assumptions are intended to support consistent period-over-period comparisons and alignment with governance-approved modeling standards.
+
+## Qualitative adjustments (overlays)
+Qualitative overlays are applied as **basis point (bps) adjustments** by scenario and segment to address limitations not fully captured by the quantitative framework (e.g., model uncertainty, idiosyncratic portfolio risks, operational factors, emerging risk not yet present in historical data).
+
+A governance cap is documented as:
+
+- **Documented overlay cap:** **5.0 bps**
+
+Overlay schedules are maintained for baseline/adverse/severe and applied at segment level.
+
+## Model outputs and reporting
+Primary outputs include:
+
+- Segment-level and total allowance amount
+- Allowance rate (bps) by segment
+- Scenario-specified losses and sensitivities
+- Key drivers and change analysis versus prior quarter
+
+## Known methodological focus areas for Q1 2026 review
+This review is explicitly designed to validate:
+
+- Alignment between **documented** horizon/reversion assumptions and the reserve engine implementation.
+- Directional reasonableness of scenario ordering at the segment level, particularly where macro paths and overlays interact.
+- Clarity and proportionality of qualitative overlay communication relative to effect.
