@@ -18,27 +18,38 @@ type Mode = {
   outputs: string[];
 };
 
+type Stage = {
+  label: string;
+  title: string;
+  copy: string;
+};
+
+type ArchitectureCard = {
+  title: string;
+  copy: string;
+};
+
 const benefits: Benefit[] = [
   {
-    title: "Resolve the right review path from the package",
+    title: "A constrained agent loop",
     copy:
-      "The platform assembles code, containers, documents, data, and vendor artifacts into a structured evidence view.",
+      "The review engine works through fixed stages for discovery, resolution, execution, and reporting instead of relying on an open-ended chat flow.",
     inverted: true,
   },
   {
-    title: "Execute validation work in one environment",
+    title: "Skill-grounded planning",
     copy:
-      "Runtime checks, conceptual review, baseline comparison, and reason-code assessment operate within a single review system.",
+      "Each stage loads its own review instructions and module rules so the plan comes from the evidence package, not from a generic workflow template.",
   },
   {
-    title: "Make coverage and gaps explicit",
+    title: "Tool-backed execution",
     copy:
-      "The platform makes clear what the evidence supports, where the review remains partial, and what still requires additional artifacts.",
+      "Runtime reruns, documentation cross-checks, data profiling, and comparison work happen through deterministic tools and isolated review steps.",
   },
   {
-    title: "Produce review-grade work product",
+    title: "Deliverables with support behind them",
     copy:
-      "Validation memos, findings, coverage summaries, and gap reports are produced as structured outputs for decision-making teams.",
+      "The platform assembles the stakeholder memo together with a support pack of evidence maps, findings, coverage, provenance, and trace artifacts.",
   },
 ];
 
@@ -93,59 +104,71 @@ const modes: Mode[] = [
   },
 ];
 
-const operatingCards = [
+const operatingStages: Stage[] = [
   {
-    label: "Package intake",
-    title: "Accept model packages as they arrive",
+    label: "Case intake",
+    title: "The upload becomes a case, not just a folder",
     copy:
-      "Mixed bank and vendor artifacts are ingested without requiring teams to fully normalize the package before review can begin.",
+      "A bank or vendor package is materialized into a review workspace with input artifacts, outputs, and a structured case record.",
   },
   {
-    label: "Evidence mapping",
-    title: "Construct the evidence view",
+    label: "Discovery",
+    title: "Codex scans the package into evidence",
     copy:
-      "Assets are typed, linked to model scope, and assessed for whether they support runtime, conceptual, or comparative review.",
+      "Artifacts are inventoried, typed, excerpted, and converted into a normalized evidence view with capability hints and gap signals.",
   },
   {
-    label: "Review resolution",
-    title: "Select the applicable review path",
+    label: "Resolution",
+    title: "Skills and module rules determine the plan",
     copy:
-      "The control layer determines which review modules can be credibly supported by the package provided.",
-  },
-];
-
-const architectureMarkers = [
-  {
-    title: "Application layer",
-    copy:
-      "Interfaces for bank teams, model risk groups, and engineering teams to submit packages and work through outputs.",
+      "The agent loads stage-specific skills and a module catalog, then marks what is executable, partial, or blocked before review work begins.",
   },
   {
-    title: "Control plane",
-    copy: "Artifact intake, evidence graphing, review resolution, and coverage accounting.",
-  },
-  {
-    title: "Execution plane",
+    label: "Execution",
+    title: "Tools run the work and the opinion is assembled",
     copy:
-      "Isolated services that run runtime, data, document, benchmark, and reason-code review modules.",
+      "Deterministic review procedures, trace files, and support artifacts accumulate into coverage, findings, and a defensible validation deliverable.",
   },
 ];
 
-const securityCards = [
+const architectureCards: ArchitectureCard[] = [
   {
-    title: "Isolated execution",
+    title: "Case workspace",
     copy:
-      "Runtime review and model reproduction operate in controlled environments rather than pushing bank artifacts through a generic orchestration layer.",
+      "Every run has a persistent case record, a local workspace, and separate input and output boundaries. That gives the agent stable operating context from the first scan through the final memo.",
   },
   {
-    title: "Deployment flexibility",
+    title: "Skill registry",
     copy:
-      "The architecture can be deployed to fit institutional control boundaries while preserving a consistent review model.",
+      "Discovery, playbook resolution, execution, and reporting each load explicit skill files. The agent is flexible because the stage behavior is encoded, not because the loop is unconstrained.",
   },
   {
-    title: "Evidence traceability",
+    title: "Tool bridge",
     copy:
-      "Findings, coverage, and output documents remain tied to artifacts and review modules rather than informal operator notes.",
+      "Execution routes through a Python bridge into deterministic review tools for reruns, comparisons, profiling, and document analysis. Optional sidecar analysis stays outside the core control loop.",
+  },
+  {
+    title: "Support pack",
+    copy:
+      "The system writes the review plan, evidence map, findings register, coverage statement, artifact provenance, and trace alongside the stakeholder-facing opinion.",
+  },
+];
+
+const assuranceCards = [
+  {
+    title: "Frontier capability with hard edges",
+    copy:
+      "The agent can interpret mixed packages, form a plan, and adapt the review path, but it does so inside explicit stages, skills, and tools.",
+  },
+  {
+    title: "Previous deliverables stay in play",
+    copy:
+      "Prior outputs, baseline files, previous memos, and support artifacts can remain part of the case and inform what the next review cycle can support.",
+  },
+  {
+    title: "The output is more than a memo",
+    copy:
+      "Banks get a review opinion, while model risk teams get the support record that explains how the system reached it and where coverage stopped.",
   },
 ];
 
@@ -168,6 +191,15 @@ const footerColumns = [
   },
 ];
 
+const supportArtifacts = [
+  "Review plan",
+  "Evidence map",
+  "Findings register",
+  "Coverage statement",
+  "Artifact provenance",
+  "Codex trace",
+];
+
 function ProductCanvas() {
   return (
     <div className="product-canvas">
@@ -188,30 +220,30 @@ function ProductCanvas() {
         </aside>
 
         <div className="product-canvas__graph">
-          <div className="product-canvas__node product-canvas__node--large">Evidence graph</div>
-          <div className="product-canvas__node">Workflow resolver</div>
-          <div className="product-canvas__node">Coverage ledger</div>
-          <div className="product-canvas__node">Runtime review</div>
-          <div className="product-canvas__node">Doc analysis</div>
-          <div className="product-canvas__node">Benchmark checks</div>
+          <div className="product-canvas__node product-canvas__node--large">Case record</div>
+          <div className="product-canvas__node">Discovery skill</div>
+          <div className="product-canvas__node">Playbook resolver</div>
+          <div className="product-canvas__node">Execution skill</div>
+          <div className="product-canvas__node">Evidence ledger</div>
+          <div className="product-canvas__node">Support pack</div>
         </div>
 
         <aside className="product-canvas__inspector">
           <div className="product-canvas__sidebar-label">Opinion</div>
           <div className="product-canvas__stat">
-            <span>Coverage</span>
-            <strong>74%</strong>
+            <span>Stages</span>
+            <strong>04</strong>
           </div>
           <div className="product-canvas__stat">
-            <span>Findings</span>
-            <strong>05</strong>
+            <span>Outputs</span>
+            <strong>02</strong>
           </div>
           <div className="product-canvas__memo">
-            Validation memo
+            Stakeholder memo
             <br />
-            Coverage summary
+            Support artifacts
             <br />
-            Gap report
+            Trace files
           </div>
         </aside>
       </div>
@@ -252,6 +284,106 @@ function ModeVisual({ mode }: { mode: Mode }) {
   );
 }
 
+function ArchitectureMap() {
+  return (
+    <div className="agent-system">
+      <div className="agent-system__board">
+        <section className="agent-system__column">
+          <p className="agent-system__label">Bank package</p>
+          <h5>Upload whatever exists</h5>
+          <div className="agent-system__stack">
+            <div className="agent-system__chip">code</div>
+            <div className="agent-system__chip">containers</div>
+            <div className="agent-system__chip">docs</div>
+            <div className="agent-system__chip">sample data</div>
+            <div className="agent-system__chip">vendor artifacts</div>
+            <div className="agent-system__chip">prior memos</div>
+          </div>
+        </section>
+
+        <section className="agent-system__column agent-system__column--core">
+          <p className="agent-system__label">Codex review engine</p>
+          <h5>Scan, plan, execute, synthesize</h5>
+          <div className="agent-system__sequence">
+            <div className="agent-system__step">
+              <strong>1. Create case</strong>
+              <span>Workspace, input boundary, output boundary, case record</span>
+            </div>
+            <div className="agent-system__step">
+              <strong>2. Discovery</strong>
+              <span>Artifact inventory, evidence typing, capability hints, gap signals</span>
+            </div>
+            <div className="agent-system__step">
+              <strong>3. Resolve</strong>
+              <span>Module states, supported workflow, executable scope</span>
+            </div>
+            <div className="agent-system__step">
+              <strong>4. Execute and report</strong>
+              <span>Tool calls, findings, coverage, stakeholder memo, support pack</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="agent-system__column">
+          <p className="agent-system__label">Skills and tools</p>
+          <h5>Ground the reasoning</h5>
+          <div className="agent-system__stack">
+            <div className="agent-system__mini">
+              <strong>Stage skills</strong>
+              <span>Discovery, playbook, execution, report</span>
+            </div>
+            <div className="agent-system__mini">
+              <strong>Module catalog</strong>
+              <span>Executable, partial, blocked review paths</span>
+            </div>
+            <div className="agent-system__mini">
+              <strong>Bridge tools</strong>
+              <span>Runtime, data, document, benchmark, comparison work</span>
+            </div>
+            <div className="agent-system__mini">
+              <strong>Optional sidecar</strong>
+              <span>Large-document analysis outside the core engine</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="agent-system__column">
+          <p className="agent-system__label">Deliverables</p>
+          <h5>Issue the opinion with support behind it</h5>
+          <div className="agent-system__stack">
+            <div className="agent-system__chip agent-system__chip--output">Validation memo</div>
+            <div className="agent-system__chip agent-system__chip--output">Findings register</div>
+            <div className="agent-system__chip agent-system__chip--output">Coverage statement</div>
+            <div className="agent-system__chip agent-system__chip--output">Evidence map</div>
+            <div className="agent-system__chip agent-system__chip--output">Artifact provenance</div>
+            <div className="agent-system__chip agent-system__chip--output">Trace files</div>
+          </div>
+        </section>
+      </div>
+
+      <div className="agent-system__support">
+        <div className="agent-system__support-copy">
+          <p className="agent-system__label">Support record</p>
+          <h5>The agent keeps a working memory that survives the review</h5>
+          <span>
+            Case records, evidence ledgers, prior deliverables, planned procedures, tool outputs,
+            and stage traces stay attached to the review so the system can justify both what it did
+            and what it could not do.
+          </span>
+        </div>
+
+        <div className="agent-system__support-chips">
+          {supportArtifacts.map((item) => (
+            <div className="agent-system__support-chip" key={item}>
+              {item}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [activeMode, setActiveMode] = useState<Mode>(modes[0]);
 
@@ -262,7 +394,7 @@ export default function Home() {
           Read the latest platform thesis on turning fragmented model packages into review-grade
           validation output.
         </p>
-        <a href="#operating-model">Learn more</a>
+        <a href="#architecture">See the architecture</a>
       </div>
 
       <header className="site-header">
@@ -274,6 +406,7 @@ export default function Home() {
         <nav className="site-header__nav" aria-label="Primary">
           <a href="#platform">Platform</a>
           <a href="/demo">Demo</a>
+          <a href="#architecture">Architecture</a>
         </nav>
 
         <a className="site-header__cta" href="#contact">
@@ -290,7 +423,10 @@ export default function Home() {
           <span>From model package</span>
           <span>to validation opinion</span>
         </h1>
-        <p className="hero__tagline">Thoughtful design. Review-grade impact.</p>
+        <p className="hero__tagline">
+          Bank artifacts go in. A staged review engine determines the defensible workflow, executes
+          it, and returns the opinion with its support record.
+        </p>
       </section>
 
       <section className="platform-intro" id="platform">
@@ -298,16 +434,16 @@ export default function Home() {
           <p className="platform-intro__eyebrow">With</p>
           <h2>The Review Engine</h2>
           <p>
-            A validation platform designed to bridge the gap between fragmented model packages and
-            secure, reliable review execution. Rather than requiring clean inputs or forcing one
-            workflow on every model, the platform discovers the evidence that is actually present,
-            resolves the applicable review path, and produces output teams can stand behind.
+            This is not a workflow form wrapped around a language model. It is a case-driven
+            system that scans a bank package, resolves what the evidence supports, executes the
+            review work through constrained tools, and assembles both the memo and the support
+            pack behind it.
           </p>
         </div>
 
         <div className="platform-intro__visual">
           <ProductCanvas />
-          <p className="platform-intro__caption">The review workspace</p>
+          <p className="platform-intro__caption">Package to case to opinion</p>
         </div>
       </section>
 
@@ -326,38 +462,29 @@ export default function Home() {
 
       <section className="editorial-section">
         <div className="editorial-section__copy">
-          <h4>Purpose-built interfaces for enterprise-grade validation execution</h4>
+          <h4>An operating loop designed for messy bank packages</h4>
           <p>
-            Whether the package comes from model risk, a bank engineering team, or a vendor
-            handoff, the platform abstracts away package complexity without flattening the review
-            itself. The review stays dynamic because the evidence stays dynamic.
+            The system starts with real package conditions: mixed artifacts, incomplete evidence,
+            prior deliverables, and uncertain runtime support. The review stays adaptive because
+            the evidence stays explicit.
           </p>
         </div>
 
         <div className="editorial-section__diagram editorial-section__diagram--wide">
           <div className="rail-card">
-            <div className="rail-card__group">
-              <span>Package boundary</span>
-              <strong>Upload and classify</strong>
-            </div>
-            <div className="rail-card__group">
-              <span>Control layer</span>
-              <strong>Map evidence and resolve review path</strong>
-            </div>
-            <div className="rail-card__group">
-              <span>Execution layer</span>
-              <strong>Run runtime, data, and document modules</strong>
-            </div>
-            <div className="rail-card__group">
-              <span>Output</span>
-              <strong>Issue memo, findings, and coverage</strong>
-            </div>
+            {operatingStages.map((stage) => (
+              <div className="rail-card__group" key={stage.title}>
+                <span>{stage.label}</span>
+                <strong>{stage.title}</strong>
+                <p>{stage.copy}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="tabbed-section">
-        <h4>Explore distinct review paths resolved by the platform</h4>
+        <h4>One engine. Different review paths.</h4>
 
         <div className="tabbed-section__controls" role="tablist" aria-label="Review modes">
           {modes.map((mode) => (
@@ -380,87 +507,51 @@ export default function Home() {
           <div className="tabbed-section__panel-copy">
             <h5>{activeMode.headline}</h5>
             <p>
-              The same platform produces a different review path because the evidence package
-              changes. That is the core operating principle behind the system.
+              The planning layer changes because the package changes. That is the central product
+              thesis in this repo and the reason the same engine can handle both rich and partial
+              validation cases.
             </p>
           </div>
 
           <div className="tabbed-section__panel-visual">
             <ModeVisual mode={activeMode} />
-            <p>Switch review modes to see how the platform adapts the path to the evidence.</p>
+            <p>Switch cases to see how artifacts, modules, and outputs reconfigure.</p>
           </div>
         </div>
       </section>
 
-      <section className="section-heading" id="operating-model">
-        <h4>The operating model designed for institutions with real package complexity</h4>
+      <section className="section-heading" id="architecture">
+        <h4>The frontier piece is not free-form generation. It is constrained review execution.</h4>
         <p>
-          No matter where the artifacts originate, the platform is designed to preserve
-          provenance, resolve the review mode, and produce structured outputs that can be used in
-          real validation processes.
+          The architecture turns a mixed upload into a review by combining case state, stage
+          skills, deterministic tools, prior deliverables, and a support record that survives the
+          run. That is what makes the agent both adaptive and legible.
         </p>
       </section>
 
-      <section className="operating-model">
-        {operatingCards.map((card) => (
-          <article className="operating-card" key={card.title}>
-            <p>{card.label}</p>
+      <section className="architecture-diagram">
+        <ArchitectureMap />
+      </section>
+
+      <section className="architecture-details">
+        {architectureCards.map((card) => (
+          <article className="architecture-detail" key={card.title}>
             <h5>{card.title}</h5>
-            <span>{card.copy}</span>
+            <p>{card.copy}</p>
           </article>
         ))}
       </section>
 
-      <section className="section-heading" id="architecture">
-        <h4>Architecture designed for durable review infrastructure, not generic orchestration</h4>
+      <section className="section-heading" id="operating-model">
+        <h4>Why this behaves like review infrastructure, not a chat session</h4>
         <p>
-          The control plane determines what can be reviewed. The execution plane runs the modules.
-          The output layer assembles the result into formal validation work product.
-        </p>
-      </section>
-
-      <section className="architecture-stage">
-        <div className="architecture-stage__figure">
-          <div className="architecture-stage__base">
-            <div className="architecture-stage__layer architecture-stage__layer--top">
-              Application layer
-            </div>
-            <div className="architecture-stage__layer architecture-stage__layer--mid">
-              Control plane
-            </div>
-            <div className="architecture-stage__layer architecture-stage__layer--mid">
-              Execution plane
-            </div>
-            <div className="architecture-stage__layer architecture-stage__layer--bottom">
-              Output layer
-            </div>
-          </div>
-        </div>
-
-        <div className="architecture-stage__markers">
-          {architectureMarkers.map((marker) => (
-            <article className="architecture-marker" key={marker.title}>
-              <div className="architecture-marker__dot" />
-              <div>
-                <h5>{marker.title}</h5>
-                <p>{marker.copy}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-heading">
-        <h4>The platform prioritizes enterprise control boundaries and traceable execution</h4>
-        <p>
-          Adoption should not require sacrificing how artifacts are handled, how execution occurs,
-          or how outputs are traced back to evidence. The platform is designed with those control
-          requirements in mind from the start.
+          The system can do frontier-style planning and adaptation, but the work is bounded by
+          case state, stage rules, tool calls, and output obligations. That is the operating model.
         </p>
       </section>
 
       <section className="security-grid">
-        {securityCards.map((card) => (
+        {assuranceCards.map((card) => (
           <article className="security-card" key={card.title}>
             <div className="security-card__icon" />
             <h6>{card.title}</h6>
@@ -471,8 +562,8 @@ export default function Home() {
 
       <section className="cta-banner" id="contact">
         <div className="cta-banner__spark" />
-        <h2>Looking for a validation platform built for secure, durable review execution?</h2>
-        <a href="#top">Explore the platform</a>
+        <h2>Looking for validation infrastructure that can actually run the review?</h2>
+        <a href="/demo">Explore the demo</a>
       </section>
 
       <footer className="site-footer">

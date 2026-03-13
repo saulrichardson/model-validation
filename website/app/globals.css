@@ -183,9 +183,11 @@ select {
 }
 
 .hero__tagline {
-  margin: 18px 0 0;
+  max-width: 62ch;
+  margin: 18px auto 0;
   color: var(--ink-soft);
   font-size: 1rem;
+  line-height: 1.7;
 }
 
 .platform-intro {
@@ -418,6 +420,8 @@ select {
 .tabbed-section__summary,
 .tabbed-section__panel-copy p,
 .section-heading p,
+.rail-card__group p,
+.architecture-detail p,
 .operating-card span,
 .architecture-marker p,
 .security-card p,
@@ -431,6 +435,8 @@ select {
 .editorial-section,
 .tabbed-section,
 .section-heading,
+.architecture-diagram,
+.architecture-details,
 .architecture-stage,
 .cta-banner,
 .site-footer {
@@ -493,6 +499,10 @@ select {
   font-size: 1.35rem;
   font-weight: 500;
   line-height: 1.1;
+}
+
+.rail-card__group p {
+  margin-top: 18px;
 }
 
 .tabbed-section__controls {
@@ -614,6 +624,145 @@ select {
   font-weight: 400;
   line-height: 0.96;
   letter-spacing: -0.04em;
+}
+
+.architecture-diagram {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #ffffff;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.agent-system {
+  display: grid;
+  gap: 0;
+}
+
+.agent-system__board {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.95fr 1.15fr 1fr 0.95fr;
+  gap: 0;
+}
+
+.agent-system__board::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 1px;
+  background: var(--line);
+}
+
+.agent-system__column {
+  position: relative;
+  min-height: 460px;
+  padding: 24px 22px;
+  border-right: 1px solid var(--line);
+}
+
+.agent-system__column:last-child {
+  border-right: 0;
+}
+
+.agent-system__column--core {
+  background:
+    linear-gradient(180deg, rgba(142, 99, 255, 0.08), rgba(142, 99, 255, 0.02));
+}
+
+.agent-system__label {
+  margin: 0 0 14px;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.agent-system__column h5,
+.agent-system__support h5,
+.architecture-detail h5 {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.agent-system__stack,
+.agent-system__sequence,
+.agent-system__support-chips {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.agent-system__chip,
+.agent-system__step,
+.agent-system__mini,
+.agent-system__support-chip {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.agent-system__chip,
+.agent-system__support-chip {
+  padding: 12px 14px;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.agent-system__chip--output,
+.agent-system__support-chip {
+  background: #faf8ff;
+  border-color: #d6ccef;
+}
+
+.agent-system__step,
+.agent-system__mini {
+  padding: 14px;
+}
+
+.agent-system__step strong,
+.agent-system__mini strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.agent-system__step span,
+.agent-system__mini span,
+.agent-system__support span {
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.agent-system__support {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 24px;
+  padding: 24px 22px;
+  border-top: 1px solid var(--line);
+  background: #fcfcfa;
+}
+
+.architecture-details,
+.operating-model {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.architecture-detail {
+  min-height: 230px;
+  padding: 22px;
+  border-top: 1px solid var(--line);
+}
+
+.architecture-detail p {
+  margin-top: 14px;
 }
 
 .architecture-stage {
@@ -961,6 +1110,9 @@ select {
   .product-canvas__frame,
   .editorial-section,
   .tabbed-section__panel,
+  .agent-system__board,
+  .agent-system__support,
+  .architecture-details,
   .architecture-stage__markers,
   .demo-stage,
   .site-footer,
@@ -975,8 +1127,23 @@ select {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .operating-model {
-    grid-template-columns: 1fr;
+  .agent-system__board::before {
+    display: none;
+  }
+
+  .agent-system__column {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .agent-system__column:last-child {
+    border-bottom: 0;
+  }
+
+  .operating-model,
+  .architecture-details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .rail-card {
@@ -1047,11 +1214,16 @@ select {
   .product-canvas__graph,
   .mode-visual,
   .benefit-grid,
+  .architecture-details,
   .security-grid,
   .demo-status-grid,
   .demo-checklist,
   .rail-card {
     grid-template-columns: 1fr;
+  }
+
+  .agent-system__support {
+    padding: 20px 18px;
   }
 
   .tabbed-section__controls {

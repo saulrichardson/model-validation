@@ -10,6 +10,7 @@ export default function DemoPage() {
         <nav className="site-header__nav" aria-label="Primary">
           <a href="/">Platform</a>
           <a href="/demo">Demo</a>
+          <a href="/#architecture">Architecture</a>
         </nav>
 
         <a className="site-header__cta" href="/#contact">
