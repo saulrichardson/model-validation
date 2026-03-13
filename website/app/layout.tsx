@@ -1,30 +1,24 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
+import { Bodoni_Moda, Inter } from "next/font/google";
 
 import "./globals.css";
 
-const display = Space_Grotesk({
+const display = Bodoni_Moda({
   subsets: ["latin"],
   variable: "--font-display",
-  weight: ["500", "700"],
+  weight: ["400", "500"],
 });
 
-const plex = IBM_Plex_Sans({
+const body = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-body",
 });
 
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
-});
-
 export const metadata: Metadata = {
   title: "Agentic Model Validation",
   description:
-    "Banks upload code, containers, docs, data, or vendor artifacts. The platform discovers what is there, runs the applicable validation workflow, and produces a defensible review.",
+    "Validation infrastructure for banks that turns messy model packages into defensible review output.",
 };
 
 export default function RootLayout({
@@ -34,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${plex.variable} ${mono.variable}`}>{children}</body>
+      <body className={`${display.variable} ${body.variable}`}>{children}</body>
     </html>
   );
 }
