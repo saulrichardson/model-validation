@@ -2,159 +2,363 @@
   "evidence": [
     {
       "evidence_id": "E001",
-      "relative_path": "model/cecl_engine.py",
-      "title": "cecl_engine.py",
-      "summary": "Evidence from model/cecl_engine.py"
+      "relative_path": "data/data_dictionary.csv",
+      "title": "data_dictionary.csv",
+      "summary": "[BANK INPUT] Evidence from data/data_dictionary.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "data"
     },
     {
       "evidence_id": "E002",
       "relative_path": "data/loan_level_snapshot.csv",
       "title": "loan_level_snapshot.csv",
-      "summary": "Evidence from data/loan_level_snapshot.csv"
+      "summary": "[BANK INPUT] Evidence from data/loan_level_snapshot.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "data"
     },
     {
       "evidence_id": "E003",
-      "relative_path": "data/data_dictionary.csv",
-      "title": "data_dictionary.csv",
-      "summary": "Evidence from data/data_dictionary.csv"
+      "relative_path": "data/overlay_schedule.csv",
+      "title": "overlay_schedule.csv",
+      "summary": "[BANK INPUT] Evidence from data/overlay_schedule.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "data"
     },
     {
       "evidence_id": "E004",
-      "relative_path": "data/overlay_schedule.csv",
-      "title": "overlay_schedule.csv",
-      "summary": "Evidence from data/overlay_schedule.csv"
+      "relative_path": "docs/control_process_note.md",
+      "title": "control_process_note.md",
+      "summary": "[BANK INPUT] Evidence from docs/control_process_note.md",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "docs"
     },
     {
       "evidence_id": "E005",
-      "relative_path": "scenarios/baseline.csv",
-      "title": "baseline.csv",
-      "summary": "Evidence from scenarios/baseline.csv"
+      "relative_path": "docs/governance_minutes.md",
+      "title": "governance_minutes.md",
+      "summary": "[BANK INPUT] Evidence from docs/governance_minutes.md",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "docs"
     },
     {
       "evidence_id": "E006",
-      "relative_path": "scenarios/adverse.csv",
-      "title": "adverse.csv",
-      "summary": "Evidence from scenarios/adverse.csv"
+      "relative_path": "docs/methodology.md",
+      "title": "methodology.md",
+      "summary": "[BANK INPUT] Evidence from docs/methodology.md",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "docs"
     },
     {
       "evidence_id": "E007",
-      "relative_path": "scenarios/severe.csv",
-      "title": "severe.csv",
-      "summary": "Evidence from scenarios/severe.csv"
+      "relative_path": "docs/model_overview.md",
+      "title": "model_overview.md",
+      "summary": "[BANK INPUT] Evidence from docs/model_overview.md",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "docs"
     },
     {
       "evidence_id": "E008",
-      "relative_path": "docs/methodology.md",
-      "title": "methodology.md",
-      "summary": "Evidence from docs/methodology.md"
+      "relative_path": "docs/overlay_memo.md",
+      "title": "overlay_memo.md",
+      "summary": "[BANK INPUT] Evidence from docs/overlay_memo.md",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "docs"
     },
     {
       "evidence_id": "E009",
-      "relative_path": "docs/model_overview.md",
-      "title": "model_overview.md",
-      "summary": "Evidence from docs/model_overview.md"
+      "relative_path": "docs/prior_review_note.md",
+      "title": "prior_review_note.md",
+      "summary": "[BANK INPUT] Evidence from docs/prior_review_note.md",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "docs"
     },
     {
       "evidence_id": "E010",
       "relative_path": "docs/scenario_assumptions.md",
       "title": "scenario_assumptions.md",
-      "summary": "Evidence from docs/scenario_assumptions.md"
+      "summary": "[BANK INPUT] Evidence from docs/scenario_assumptions.md",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "docs"
     },
     {
       "evidence_id": "E011",
-      "relative_path": "docs/overlay_memo.md",
-      "title": "overlay_memo.md",
-      "summary": "Evidence from docs/overlay_memo.md"
+      "relative_path": "model/cecl_engine.py",
+      "title": "cecl_engine.py",
+      "summary": "[BANK INPUT] Evidence from model/cecl_engine.py",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "model"
     },
     {
       "evidence_id": "E012",
       "relative_path": "outputs/prior_baseline_reserve.csv",
       "title": "prior_baseline_reserve.csv",
-      "summary": "Evidence from outputs/prior_baseline_reserve.csv"
+      "summary": "[BANK INPUT] Evidence from outputs/prior_baseline_reserve.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E013",
-      "relative_path": "outputs/support/case_understanding.md",
-      "title": "case_understanding.md",
-      "summary": "Evidence from outputs/support/case_understanding.md"
+      "relative_path": "outputs/prior_scenario_summary.csv",
+      "title": "prior_scenario_summary.csv",
+      "summary": "[BANK INPUT] Evidence from outputs/prior_scenario_summary.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E014",
-      "relative_path": "outputs/support/review_strategy.md",
-      "title": "review_strategy.md",
-      "summary": "Evidence from outputs/support/review_strategy.md"
+      "relative_path": "outputs/prior_segment_reserves.csv",
+      "title": "prior_segment_reserves.csv",
+      "summary": "[BANK INPUT] Evidence from outputs/prior_segment_reserves.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E015",
-      "relative_path": "outputs/support/executed_test_matrix.md",
-      "title": "executed_test_matrix.md",
-      "summary": "Evidence from outputs/support/executed_test_matrix.md"
+      "relative_path": "scenarios/adverse.csv",
+      "title": "adverse.csv",
+      "summary": "[BANK INPUT] Evidence from scenarios/adverse.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "scenarios"
     },
     {
       "evidence_id": "E016",
-      "relative_path": "outputs/support/executed_test_matrix.csv",
-      "title": "executed_test_matrix.csv",
-      "summary": "Evidence from outputs/support/executed_test_matrix.csv"
+      "relative_path": "scenarios/baseline.csv",
+      "title": "baseline.csv",
+      "summary": "[BANK INPUT] Evidence from scenarios/baseline.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "scenarios"
     },
     {
       "evidence_id": "E017",
-      "relative_path": "outputs/support/evidence_map.md",
-      "title": "evidence_map.md",
-      "summary": "Evidence from outputs/support/evidence_map.md"
+      "relative_path": "scenarios/severe.csv",
+      "title": "severe.csv",
+      "summary": "[BANK INPUT] Evidence from scenarios/severe.csv",
+      "origin": "bank_uploaded_input",
+      "provenance_label": "[BANK INPUT]",
+      "area": "scenarios"
     },
     {
       "evidence_id": "E018",
-      "relative_path": "outputs/support/baseline_reproduction.json",
-      "title": "baseline_reproduction.json",
-      "summary": "Evidence from outputs/support/baseline_reproduction.json"
+      "relative_path": "outputs/support/discovery_summary.json",
+      "title": "discovery_summary.json",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/discovery_summary.json",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E019",
-      "relative_path": "outputs/support/scenario_results.csv",
-      "title": "scenario_results.csv",
-      "summary": "Evidence from outputs/support/scenario_results.csv"
+      "relative_path": "outputs/support/discovery_summary.md",
+      "title": "discovery_summary.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/discovery_summary.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E020",
-      "relative_path": "outputs/support/segment_reserve_comparison.csv",
-      "title": "segment_reserve_comparison.csv",
-      "summary": "Evidence from outputs/support/segment_reserve_comparison.csv"
+      "relative_path": "outputs/support/case_understanding.md",
+      "title": "case_understanding.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/case_understanding.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E021",
-      "relative_path": "outputs/support/sensitivity_results.csv",
-      "title": "sensitivity_results.csv",
-      "summary": "Evidence from outputs/support/sensitivity_results.csv"
+      "relative_path": "outputs/support/review_plan.md",
+      "title": "review_plan.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/review_plan.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E022",
-      "relative_path": "outputs/support/driver_bridge.csv",
-      "title": "driver_bridge.csv",
-      "summary": "Evidence from outputs/support/driver_bridge.csv"
+      "relative_path": "outputs/support/review_strategy.md",
+      "title": "review_strategy.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/review_strategy.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E023",
-      "relative_path": "outputs/support/documentation_crosscheck.md",
-      "title": "documentation_crosscheck.md",
-      "summary": "Evidence from outputs/support/documentation_crosscheck.md"
+      "relative_path": "outputs/support/executed_test_matrix.md",
+      "title": "executed_test_matrix.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/executed_test_matrix.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E024",
-      "relative_path": "outputs/support/review_plan.md",
-      "title": "review_plan.md",
-      "summary": "Evidence from outputs/support/review_plan.md"
+      "relative_path": "outputs/support/executed_test_matrix.csv",
+      "title": "executed_test_matrix.csv",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/executed_test_matrix.csv",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E025",
-      "relative_path": "outputs/support/agentic_review_log.md",
-      "title": "agentic_review_log.md",
-      "summary": "Evidence from outputs/support/agentic_review_log.md"
+      "relative_path": "outputs/support/evidence_map.md",
+      "title": "evidence_map.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/evidence_map.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     },
     {
       "evidence_id": "E026",
+      "relative_path": "outputs/support/agentic_review_log.md",
+      "title": "agentic_review_log.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/agentic_review_log.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E027",
+      "relative_path": "outputs/support/procedure_run_log.md",
+      "title": "procedure_run_log.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/procedure_run_log.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E028",
+      "relative_path": "outputs/support/procedure_run_log.csv",
+      "title": "procedure_run_log.csv",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/procedure_run_log.csv",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E029",
+      "relative_path": "outputs/support/evidence_excerpts.md",
+      "title": "evidence_excerpts.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/evidence_excerpts.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E030",
+      "relative_path": "outputs/support/baseline_reproduction.json",
+      "title": "baseline_reproduction.json",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/baseline_reproduction.json",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E031",
+      "relative_path": "outputs/support/scenario_results.csv",
+      "title": "scenario_results.csv",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/scenario_results.csv",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E032",
+      "relative_path": "outputs/support/segment_reserve_comparison.csv",
+      "title": "segment_reserve_comparison.csv",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/segment_reserve_comparison.csv",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E033",
+      "relative_path": "outputs/support/sensitivity_results.csv",
+      "title": "sensitivity_results.csv",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/sensitivity_results.csv",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E034",
+      "relative_path": "outputs/support/driver_bridge.csv",
+      "title": "driver_bridge.csv",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/driver_bridge.csv",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E035",
+      "relative_path": "outputs/support/documentation_crosscheck.md",
+      "title": "documentation_crosscheck.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/documentation_crosscheck.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E036",
+      "relative_path": "outputs/support/findings_register.json",
+      "title": "findings_register.json",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/findings_register.json",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E037",
+      "relative_path": "outputs/support/analysis_summary.json",
+      "title": "analysis_summary.json",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/analysis_summary.json",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E038",
+      "relative_path": "outputs/support/evidence_ledger.json",
+      "title": "evidence_ledger.json",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/evidence_ledger.json",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E039",
+      "relative_path": "outputs/support/coverage_statement.md",
+      "title": "coverage_statement.md",
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/coverage_statement.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
+    },
+    {
+      "evidence_id": "E040",
       "relative_path": "outputs/support/codex_trace.md",
       "title": "codex_trace.md",
-      "summary": "Evidence from outputs/support/codex_trace.md"
+      "summary": "[CODEX OUTPUT] Evidence from outputs/support/codex_trace.md",
+      "origin": "codex_generated_review_artifact",
+      "provenance_label": "[CODEX OUTPUT]",
+      "area": "outputs"
     }
   ]
 }

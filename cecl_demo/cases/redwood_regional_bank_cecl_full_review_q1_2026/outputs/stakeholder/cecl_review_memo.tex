@@ -4,6 +4,7 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{enumitem}
+\usepackage{fancyvrb}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -24,21 +25,128 @@ This review assessed the supplied CECL package for internal coherence, quantitat
 \item Blocked work: none within the scope of the supplied package.
 \item Coverage note: conclusions are grounded in the supplied engine, portfolio, scenario files, overlays, and supporting documentation.
 \end{itemize}
-\section*{Artifacts Reviewed}
+\section*{Bank-Uploaded Input Package}
 \begin{itemize}
-\item model/cecl\_engine.py (code)
+\item data/data\_dictionary.csv (dataset)
 \item data/loan\_level\_snapshot.csv (dataset)
-\item data/data\_dictionary.csv (document)
-\item data/overlay\_schedule.csv (config)
-\item scenarios/baseline.csv (scenario)
-\item scenarios/adverse.csv (scenario)
-\item scenarios/severe.csv (scenario)
+\item data/overlay\_schedule.csv (dataset)
+\item docs/control\_process\_note.md (document)
+\item docs/governance\_minutes.md (document)
 \item docs/methodology.md (document)
 \item docs/model\_overview.md (document)
-\item docs/scenario\_assumptions.md (document)
 \item docs/overlay\_memo.md (document)
-\item outputs/prior\_baseline\_reserve.csv (metrics)
+\item docs/prior\_review\_note.md (document)
+\item docs/scenario\_assumptions.md (document)
+\item model/cecl\_engine.py (code)
+\item outputs/prior\_baseline\_reserve.csv (packaged output table)
+\item outputs/prior\_scenario\_summary.csv (packaged output table)
+\item outputs/prior\_segment\_reserves.csv (packaged output table)
+\item scenarios/adverse.csv (scenario table)
+\item scenarios/baseline.csv (scenario table)
+\item scenarios/severe.csv (scenario table)
 \end{itemize}
+\section*{Artifact Provenance and Review Record}
+This report uses explicit provenance markers so a reviewer can distinguish what the bank supplied from what Codex produced during the review. [BANK INPUT] indicates a file contained in the uploaded package under input\_package/. [CODEX OUTPUT] indicates a review artifact created during discovery, planning, execution, or report rendering.
+\subsection*{Bank-Uploaded Artifacts}
+\begin{itemize}
+\item \textbf{E001 [BANK INPUT]} \texttt{data/data\_dictionary.csv} -- dataset; CSV artifact with 13 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E002 [BANK INPUT]} \texttt{data/loan\_level\_snapshot.csv} -- dataset; CSV artifact with 1200 data row(s); Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Baseline reproduction: Confirm that the packaged baseline reserve can be reproduced from the supplied engine and portfolio inputs.
+\item \textbf{E003 [BANK INPUT]} \texttt{data/overlay\_schedule.csv} -- dataset; CSV artifact with 12 data row(s); Overlay magnitude sensitivity: Assess the reserve effect of removing or amplifying qualitative overlays.
+\item \textbf{E004 [BANK INPUT]} \texttt{docs/control\_process\_note.md} -- document; Text artifact with 3 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E005 [BANK INPUT]} \texttt{docs/governance\_minutes.md} -- document; Text artifact with 3 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E006 [BANK INPUT]} \texttt{docs/methodology.md} -- document; Text artifact with 20 line(s); Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Forecast horizon sensitivity: Assess reserve sensitivity to changing the reasonable-and-supportable forecast horizon.; Reversion speed sensitivity: Assess how severe-scenario reserve responds to longer reversion periods.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs.
+\item \textbf{E007 [BANK INPUT]} \texttt{docs/model\_overview.md} -- document; Text artifact with 7 line(s); Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs.
+\item \textbf{E008 [BANK INPUT]} \texttt{docs/overlay\_memo.md} -- document; Text artifact with 3 line(s); Segment-level reasonableness review: Test whether scenario ordering remains directionally sensible at the segment level.; Overlay magnitude sensitivity: Assess the reserve effect of removing or amplifying qualitative overlays.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs.
+\item \textbf{E009 [BANK INPUT]} \texttt{docs/prior\_review\_note.md} -- document; Text artifact with 3 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E010 [BANK INPUT]} \texttt{docs/scenario\_assumptions.md} -- document; Text artifact with 5 line(s); Segment-level reasonableness review: Test whether scenario ordering remains directionally sensible at the segment level.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs.
+\item \textbf{E011 [BANK INPUT]} \texttt{model/cecl\_engine.py} -- code; Text artifact with 177 line(s); Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Baseline reproduction: Confirm that the packaged baseline reserve can be reproduced from the supplied engine and portfolio inputs.; Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs.
+\item \textbf{E012 [BANK INPUT]} \texttt{outputs/prior\_baseline\_reserve.csv} -- packaged output table; CSV artifact with 1200 data row(s); Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Baseline reproduction: Confirm that the packaged baseline reserve can be reproduced from the supplied engine and portfolio inputs.
+\item \textbf{E013 [BANK INPUT]} \texttt{outputs/prior\_scenario\_summary.csv} -- packaged output table; CSV artifact with 3 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E014 [BANK INPUT]} \texttt{outputs/prior\_segment\_reserves.csv} -- packaged output table; CSV artifact with 12 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E015 [BANK INPUT]} \texttt{scenarios/adverse.csv} -- scenario table; CSV artifact with 8 data row(s); Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.
+\item \textbf{E016 [BANK INPUT]} \texttt{scenarios/baseline.csv} -- scenario table; CSV artifact with 8 data row(s); Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.; Reserve driver bridge: Identify which macro and overlay drivers explain the majority of severe-versus-baseline reserve movement.
+\item \textbf{E017 [BANK INPUT]} \texttt{scenarios/severe.csv} -- scenario table; CSV artifact with 8 data row(s); Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.; Macro severity sensitivity: Test whether reserve responds proportionally to macro severity scaling.; Reserve driver bridge: Identify which macro and overlay drivers explain the majority of severe-versus-baseline reserve movement.
+\end{itemize}
+\subsection*{Codex-Generated Review Artifacts}
+\begin{itemize}
+\item \textbf{E018 [CODEX OUTPUT]} \texttt{outputs/support/discovery\_summary.json} -- json artifact; Text artifact with 81 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E019 [CODEX OUTPUT]} \texttt{outputs/support/discovery\_summary.md} -- document; Text artifact with 31 line(s); Summarizes what Codex identified in the uploaded package during discovery.
+\item \textbf{E020 [CODEX OUTPUT]} \texttt{outputs/support/case\_understanding.md} -- document; Text artifact with 25 line(s); Records Codex's synthesized view of the CECL process, assumptions, and constraints.
+\item \textbf{E021 [CODEX OUTPUT]} \texttt{outputs/support/review\_plan.md} -- document; Text artifact with 27 line(s); Captures the planned review procedures before detailed execution.
+\item \textbf{E022 [CODEX OUTPUT]} \texttt{outputs/support/review\_strategy.md} -- document; Text artifact with 81 line(s); Explains why specific procedures were selected from the discovered evidence.
+\item \textbf{E023 [CODEX OUTPUT]} \texttt{outputs/support/executed\_test\_matrix.md} -- document; Text artifact with 14 line(s); Registers which procedures were executed, blocked, and what each procedure concluded.
+\item \textbf{E024 [CODEX OUTPUT]} \texttt{outputs/support/executed\_test\_matrix.csv} -- generated review table; CSV artifact with 10 data row(s); Machine-readable form of the executed procedure register.
+\item \textbf{E025 [CODEX OUTPUT]} \texttt{outputs/support/evidence\_map.md} -- document; Text artifact with 73 line(s); Maps uploaded and derived artifacts to the procedures they supported.
+\item \textbf{E026 [CODEX OUTPUT]} \texttt{outputs/support/agentic\_review\_log.md} -- document; Text artifact with 43 line(s); Readable stage-level summary of the intended Codex review flow.
+\item \textbf{E027 [CODEX OUTPUT]} \texttt{outputs/support/procedure\_run\_log.md} -- document; Text artifact with 99 line(s); Chronological log of granular review actions and outputs.
+\item \textbf{E028 [CODEX OUTPUT]} \texttt{outputs/support/procedure\_run\_log.csv} -- generated review table; CSV artifact with 12 data row(s); Machine-readable chronology of granular review actions.
+\item \textbf{E029 [CODEX OUTPUT]} \texttt{outputs/support/evidence\_excerpts.md} -- document; Text artifact with 190 line(s); Collects raw excerpts from uploaded materials and review outputs used in the writeup.
+\item \textbf{E030 [CODEX OUTPUT]} \texttt{outputs/support/baseline\_reproduction.json} -- json artifact; Text artifact with 37 line(s); Stores baseline reproduction metrics used in the full-review conclusion.
+\item \textbf{E031 [CODEX OUTPUT]} \texttt{outputs/support/scenario\_results.csv} -- generated review table; CSV artifact with 3 data row(s); Stores Codex-produced portfolio scenario rerun results.
+\item \textbf{E032 [CODEX OUTPUT]} \texttt{outputs/support/segment\_reserve\_comparison.csv} -- generated review table; CSV artifact with 4 data row(s); Segment-level reasonableness review: Test whether scenario ordering remains directionally sensible at the segment level.
+\item \textbf{E033 [CODEX OUTPUT]} \texttt{outputs/support/sensitivity\_results.csv} -- generated review table; CSV artifact with 12 data row(s); Forecast horizon sensitivity: Assess reserve sensitivity to changing the reasonable-and-supportable forecast horizon.; Reversion speed sensitivity: Assess how severe-scenario reserve responds to longer reversion periods.; Macro severity sensitivity: Test whether reserve responds proportionally to macro severity scaling.; Overlay magnitude sensitivity: Assess the reserve effect of removing or amplifying qualitative overlays.
+\item \textbf{E034 [CODEX OUTPUT]} \texttt{outputs/support/driver\_bridge.csv} -- generated review table; CSV artifact with 6 data row(s); Reserve driver bridge: Identify which macro and overlay drivers explain the majority of severe-versus-baseline reserve movement.
+\item \textbf{E035 [CODEX OUTPUT]} \texttt{outputs/support/documentation\_crosscheck.md} -- document; Text artifact with 25 line(s); Stores documentation-versus-implementation and output cross-check observations.
+\item \textbf{E036 [CODEX OUTPUT]} \texttt{outputs/support/findings\_register.json} -- json artifact; Text artifact with 44 line(s); Registers findings, severity, and supporting evidence references.
+\item \textbf{E037 [CODEX OUTPUT]} \texttt{outputs/support/analysis\_summary.json} -- json artifact; Text artifact with 7 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E038 [CODEX OUTPUT]} \texttt{outputs/support/evidence\_ledger.json} -- json artifact; Text artifact with 364 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E039 [CODEX OUTPUT]} \texttt{outputs/support/coverage\_statement.md} -- document; Text artifact with 13 line(s); States supported versus blocked review coverage.
+\item \textbf{E040 [CODEX OUTPUT]} \texttt{outputs/support/codex\_trace.md} -- document; Text artifact with 33 line(s); Readable execution trace of discovery, planning, execution, and synthesis.
+\end{itemize}
+\subsection*{Uploaded Package Tree}
+\begin{Verbatim}[fontsize=\small]
+input_package/
+  data/
+    data_dictionary.csv
+    loan_level_snapshot.csv
+    overlay_schedule.csv
+  docs/
+    control_process_note.md
+    governance_minutes.md
+    methodology.md
+    model_overview.md
+    overlay_memo.md
+    prior_review_note.md
+    scenario_assumptions.md
+  model/
+    cecl_engine.py
+  outputs/
+    prior_baseline_reserve.csv
+    prior_scenario_summary.csv
+    prior_segment_reserves.csv
+  scenarios/
+    adverse.csv
+    baseline.csv
+    severe.csv
+\end{Verbatim}
+\subsection*{Codex Output Tree}
+\begin{Verbatim}[fontsize=\small]
+outputs/
+  support/
+    agentic_review_log.md
+    analysis_summary.json
+    baseline_reproduction.json
+    case_understanding.md
+    codex_trace.md
+    coverage_statement.md
+    discovery_summary.json
+    discovery_summary.md
+    documentation_crosscheck.md
+    driver_bridge.csv
+    evidence_excerpts.md
+    evidence_ledger.json
+    evidence_map.md
+    executed_test_matrix.csv
+    executed_test_matrix.md
+    findings_register.json
+    procedure_run_log.csv
+    procedure_run_log.md
+    review_plan.md
+    review_strategy.md
+    scenario_results.csv
+    segment_reserve_comparison.csv
+    sensitivity_results.csv
+\end{Verbatim}
 \section*{Package Discovery and Case Understanding}
 The discovered package is best understood as a model-driven CECL review case for Redwood Regional Bank's Q1 2026 CECL Allowance Review. It includes executable reserve logic, loan-level portfolio data, scenario definitions, prior baseline outputs, and enough supporting documentation to support both quantitative reruns and documentation challenge.
 \begin{itemize}
@@ -100,106 +208,291 @@ FR-10 & Methodology and documentation alignment review & Executed & The package 
 \end{tabularx}
 \normalsize
 \end{center}
+\section*{Selected Raw Evidence Excerpts}
+The excerpts below are short verbatim snippets from bank-uploaded materials and Codex-generated outputs that support the main findings and illustrate the review lineage.
+\subsection*{[BANK INPUT] docs/methodology.md}
+Documented CECL forecast and reversion assumptions cited in the horizon mismatch finding.
+\begin{Verbatim}[fontsize=\small]
+# CECL Methodology
+
+## Objective
+Review the Q1 2026 CECL Allowance Review CECL reserve process for Redwood Regional Bank. The documented methodology states a 4-quarter reasonable-and-supportable forecast period followed by 4 quarters of straight-line reversion to long-run loss behavior.
+
+## Segments
+- Commercial Real Estate
+- Commercial and Industrial
+- Residential Mortgage
+- Consumer Unsecured
+
+## Key Drivers
+- Unemployment rate
+- GDP growth
+- House price growth
+- CRE price growth
+- Prime rate
+
+## Overlay Treatment
+Qualitative overlays are documented as targeted adjustments capped at 5.0 bps and are not expected to change scenario ordering at segment level.
+\end{Verbatim}
+\subsection*{[BANK INPUT] model/cecl\_engine.py}
+Implemented reserve-engine constants and overlay schedule that Codex compared to the methodology and overlay memo.
+\begin{Verbatim}[fontsize=\small]
+"cre_price_growth": 0.0,
+      "prime_rate": 0.11
+    }
+  }
+}
+OVERLAYS = {
+  "baseline": {
+    "commercial_real_estate": 2.0,
+    "commercial_and_industrial": 2.0,
+    "residential_mortgage": 1.0,
+    "consumer_unsecured": 3.0
+  },
+  "adverse": {
+    "commercial_real_estate": 5.0,
+    "commercial_and_industrial": 4.0,
+    "residential_mortgage": 2.0,
+    "consumer_unsecured": 6.0
+  },
+  "severe": {
+    "commercial_real_estate": 8.0,
+    "commercial_and_industrial": 7.0,
+    "residential_mortgage": -9.0,
+    "consumer_unsecured": 9.0
+  }
+}
+FORECAST_QUARTERS = 6
+REVERSION_QUARTERS = 2
+
+
+def build_projection(frame: pd.DataFrame) -> pd.DataFrame:
+    long_run = {
+        "unemployment_rate": 4.7,
+        "gdp_growth": 1.7,
+        "house_price_growth": 1.9,
+        "cre_price_growth": 1.4,
+        "prime_rate": 5.0,
+    }
+    forecast = frame.iloc[:FORECAST_QUARTERS].copy()
+    last = forecast.iloc[-1].copy()
+    reversion_rows = []
+    for step in range(1, REVERSION_QUARTERS + 1):
+        weight = step / REVERSION_QUARTERS
+        row = {"quarter": f"reversion_{step}"}
+        for key, long_run_value in long_run.items():
+            row[key] = round(float(last[key]) + (long_run_value - float(last[key])) * weight, 4)
+        reversion_rows.append(row)
+\end{Verbatim}
+\subsection*{[BANK INPUT] docs/overlay\_memo.md}
+Documented overlay cap and severe overlay posture used in the overlay-governance challenge.
+\begin{Verbatim}[fontsize=\small]
+# Overlay Memo
+
+Management overlays are described as targeted and modest, capped at 5.0 bps by segment-scenario combination. The documented intent is to preserve scenario ordering while capturing qualitative risks not fully represented in the core reserve engine.
+\end{Verbatim}
+\subsection*{[BANK INPUT] scenarios/adverse.csv + scenarios/severe.csv}
+Numeric adverse and severe scenario paths that Codex compared for directional severity and segment reasonableness.
+\begin{Verbatim}[fontsize=\small]
+[adverse.csv]
+quarter,unemployment_rate,gdp_growth,house_price_growth,cre_price_growth,prime_rate
+2026Q1,5.4,0.8,-1.5,-2.2,5.6
+2026Q2,5.9,0.3,-3.2,-4.1,5.75
+2026Q3,6.3,-0.4,-4.8,-5.6,5.75
+2026Q4,6.1,-0.1,-4.4,-4.7,5.55
+2027Q1,5.8,0.2,-2.8,-3.1,5.4
+2027Q2,5.5,0.6,-1.3,-1.5,5.25
+2027Q3,5.1,1.0,0.1,-0.4,5.1
+2027Q4,4.9,1.2,0.8,0.2,5.0
+
+[severe.csv]
+quarter,unemployment_rate,gdp_growth,house_price_growth,cre_price_growth,prime_rate
+2026Q1,6.0,0.2,-2.0,-3.2,5.75
+2026Q2,6.9,-0.8,-4.4,-6.6,6.0
+2026Q3,7.6,-1.6,-5.8,-8.0,6.05
+2026Q4,7.2,-0.9,-2.9,-5.1,5.85
+2027Q1,6.6,-0.2,0.4,-2.6,5.55
+2027Q2,6.0,0.4,1.6,-1.0,5.3
+2027Q3,5.4,0.9,1.8,0.1,5.1
+2027Q4,5.0,1.2,2.0,0.6,5.0
+\end{Verbatim}
+\subsection*{[CODEX OUTPUT] outputs/support/baseline\_reproduction.json}
+Codex-generated reproduction record showing the packaged baseline reserve and the rerun reserve matched exactly.
+\begin{Verbatim}[fontsize=\small]
+{
+  "packaged_total_reserve": 4876841.47,
+  "rerun_total_reserve": 4876841.47,
+  "absolute_delta": 0.0,
+  "pct_delta": 0.0,
+  "max_loan_level_abs_delta": 0.0,
+  "segment_deltas": [
+    {
+      "segment_id": "commercial_and_industrial",
+      "reserve_amount_packaged": 1977246.19,
+      "reserve_amount_rerun": 1977246.19,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    },
+    {
+      "segment_id": "commercial_real_estate",
+      "reserve_amount_packaged": 2545519.51,
+      "reserve_amount_rerun": 2545519.51,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    },
+    {
+      "segment_id": "consumer_unsecured",
+      "reserve_amount_packaged": 100355.66,
+      "reserve_amount_rerun": 100355.66,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    },
+    {
+      "segment_id": "residential_mortgage",
+      "reserve_amount_packaged": 253720.11,
+      "reserve_amount_rerun": 253720.11,
+      "delta": 0.0,
+      "pct_delta": 0.0
+    }
+  ]
+}
+\end{Verbatim}
+\subsection*{[CODEX OUTPUT] outputs/support/segment\_reserve\_comparison.csv}
+Codex-generated segment comparison highlighting the Residential Mortgage severe-versus-adverse anomaly.
+\begin{Verbatim}[fontsize=\small]
+segment_id,adverse,baseline,severe,adverse_minus_baseline,severe_minus_adverse
+commercial_and_industrial,2712808.82,1977246.19,3148323.76,735562.63,435514.94
+commercial_real_estate,3972723.25,2545519.51,4787769.99,1427203.74,815046.74
+consumer_unsecured,118790.69,100355.66,133898.81,18435.03,15108.12
+residential_mortgage,327699.21,253720.11,217710.91,73979.1,-109988.3
+\end{Verbatim}
+\subsection*{[CODEX OUTPUT] outputs/support/sensitivity\_results.csv}
+Codex-generated sensitivity results used to challenge forecast horizon, reversion, macro severity, and overlay magnitude assumptions.
+\begin{Verbatim}[fontsize=\small]
+test_type,setting,scenario_name,reserve_amount
+forecast_horizon,4,baseline,4877986.54
+forecast_horizon,6,baseline,4876841.47
+forecast_horizon,8,baseline,4876841.47
+reversion_speed,2,severe,8287703.47
+reversion_speed,4,severe,8384330.79
+reversion_speed,6,severe,8472904.31
+macro_severity_scale,0.75,severe,7126890.49
+macro_severity_scale,1.0,severe,8287703.47
+macro_severity_scale,1.25,severe,9803105.55
+overlay_multiplier,0.0,severe,7850916.88
+overlay_multiplier,1.0,severe,8287703.47
+overlay_multiplier,1.5,severe,8506096.88
+\end{Verbatim}
 \section*{Procedures Performed}
 \subsection*{FR-01 - Package inventory and case classification}
 Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.
 \begin{itemize}
-\item Status: executed
-\item Why selected: Runnable code, scenario tables, loan-level data, prior outputs, and methodology documents were all present.
-\item Evidence relied upon: model/cecl\_engine.py, data/loan\_level\_snapshot.csv, scenarios/baseline.csv, outputs/prior\_baseline\_reserve.csv, docs/methodology.md
-\item Outputs produced: discovery\_summary.md, evidence\_ledger.json
-\item Assessment criteria: Review should only proceed as execution-based if engine, data, scenarios, and prior outputs are all available.
-\item Key result: Package classified as model-driven CECL review with no material execution blockers.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} Runnable code, scenario tables, loan-level data, prior outputs, and methodology documents were all present.
+\item \textbf{Bank-input evidence relied upon:} \texttt{model/cecl\_engine.py}, \texttt{data/loan\_level\_snapshot.csv}, \texttt{scenarios/baseline.csv}, \texttt{outputs/prior\_baseline\_reserve.csv}, \texttt{docs/methodology.md}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{discovery\_summary.md}, \texttt{evidence\_ledger.json}
+\item \textbf{Assessment criteria:} Review should only proceed as execution-based if engine, data, scenarios, and prior outputs are all available.
+\item \textbf{Key result:} Package classified as model-driven CECL review with no material execution blockers.
 \end{itemize}
 \subsection*{FR-02 - Baseline reproduction}
 Confirm that the packaged baseline reserve can be reproduced from the supplied engine and portfolio inputs.
 \begin{itemize}
-\item Status: executed
-\item Why selected: A packaged prior baseline reserve was supplied alongside the runnable engine and source portfolio.
-\item Evidence relied upon: model/cecl\_engine.py, data/loan\_level\_snapshot.csv, outputs/prior\_baseline\_reserve.csv
-\item Outputs produced: baseline\_reproduction.json
-\item Assessment criteria: Total reserve and segment reserve should reconcile within tolerance; large deltas would undermine confidence in package integrity.
-\item Key result: Baseline rerun matched packaged reserve exactly at 4876841.47 with 0.000\% delta.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} A packaged prior baseline reserve was supplied alongside the runnable engine and source portfolio.
+\item \textbf{Bank-input evidence relied upon:} \texttt{model/cecl\_engine.py}, \texttt{data/loan\_level\_snapshot.csv}, \texttt{outputs/prior\_baseline\_reserve.csv}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{baseline\_reproduction.json}
+\item \textbf{Assessment criteria:} Total reserve and segment reserve should reconcile within tolerance; large deltas would undermine confidence in package integrity.
+\item \textbf{Key result:} Baseline rerun matched packaged reserve exactly at 4876841.47 with 0.000\% delta.
 \end{itemize}
 \subsection*{FR-03 - Portfolio-level scenario reruns}
 Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.
 \begin{itemize}
-\item Status: executed
-\item Why selected: The package included three explicit scenario files and a model designed to consume them.
-\item Evidence relied upon: scenarios/baseline.csv, scenarios/adverse.csv, scenarios/severe.csv, model/cecl\_engine.py
-\item Outputs produced: scenario\_results.csv
-\item Assessment criteria: Portfolio reserve should generally increase with scenario severity absent a documented exception.
-\item Key result: Portfolio reserve increased from 4876841.47 to 7132021.97 to 8287703.47.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} The package included three explicit scenario files and a model designed to consume them.
+\item \textbf{Bank-input evidence relied upon:} \texttt{scenarios/baseline.csv}, \texttt{scenarios/adverse.csv}, \texttt{scenarios/severe.csv}, \texttt{model/cecl\_engine.py}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{scenario\_results.csv}
+\item \textbf{Assessment criteria:} Portfolio reserve should generally increase with scenario severity absent a documented exception.
+\item \textbf{Key result:} Portfolio reserve increased from 4876841.47 to 7132021.97 to 8287703.47.
 \end{itemize}
 \subsection*{FR-04 - Segment-level reasonableness review}
 Test whether scenario ordering remains directionally sensible at the segment level.
 \begin{itemize}
-\item Status: executed
-\item Why selected: CECL governance depends on segment-level reserve understanding, not just portfolio totals.
-\item Evidence relied upon: outputs/support/segment\_reserve\_comparison.csv, docs/scenario\_assumptions.md, docs/overlay\_memo.md
-\item Outputs produced: segment\_reserve\_comparison.csv
-\item Assessment criteria: Segment movements should generally align to scenario severity or be explicitly supported by documented assumptions.
-\item Key result: Residential Mortgage severe reserve was 217710.91, below adverse reserve 327699.21, creating a documented challenge item.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} CECL governance depends on segment-level reserve understanding, not just portfolio totals.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/scenario\_assumptions.md}, \texttt{docs/overlay\_memo.md}
+\item \textbf{Codex-generated evidence relied upon:} \texttt{outputs/support/segment\_reserve\_comparison.csv}
+\item \textbf{Codex-generated outputs produced:} \texttt{segment\_reserve\_comparison.csv}
+\item \textbf{Assessment criteria:} Segment movements should generally align to scenario severity or be explicitly supported by documented assumptions.
+\item \textbf{Key result:} Residential Mortgage severe reserve was 217710.91, below adverse reserve 327699.21, creating a documented challenge item.
 \end{itemize}
 \subsection*{FR-05 - Forecast horizon sensitivity}
 Assess reserve sensitivity to changing the reasonable-and-supportable forecast horizon.
 \begin{itemize}
-\item Status: executed
-\item Why selected: The methodology makes forecast horizon a named governance assumption.
-\item Evidence relied upon: docs/methodology.md, outputs/support/sensitivity\_results.csv
-\item Outputs produced: sensitivity\_results.csv
-\item Assessment criteria: Reserve movement should be understandable and documented; mismatch to stated policy must be surfaced.
-\item Key result: Moving from 6 to 4 forecast quarters changed baseline reserve only modestly, but it directly exposed a documented-versus-implemented policy mismatch.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} The methodology makes forecast horizon a named governance assumption.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/methodology.md}
+\item \textbf{Codex-generated evidence relied upon:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Codex-generated outputs produced:} \texttt{sensitivity\_results.csv}
+\item \textbf{Assessment criteria:} Reserve movement should be understandable and documented; mismatch to stated policy must be surfaced.
+\item \textbf{Key result:} Moving from 6 to 4 forecast quarters changed baseline reserve only modestly, but it directly exposed a documented-versus-implemented policy mismatch.
 \end{itemize}
 \subsection*{FR-06 - Reversion speed sensitivity}
 Assess how severe-scenario reserve responds to longer reversion periods.
 \begin{itemize}
-\item Status: executed
-\item Why selected: Reversion mechanics are central to CECL governance and are explicitly documented in the package.
-\item Evidence relied upon: docs/methodology.md, outputs/support/sensitivity\_results.csv
-\item Outputs produced: sensitivity\_results.csv
-\item Assessment criteria: Reserve should move directionally as reversion assumptions are extended or shortened.
-\item Key result: Extending severe-scenario reversion from 2 to 6 quarters increased reserve materially, confirming reversion is a meaningful reserve lever.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} Reversion mechanics are central to CECL governance and are explicitly documented in the package.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/methodology.md}
+\item \textbf{Codex-generated evidence relied upon:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Codex-generated outputs produced:} \texttt{sensitivity\_results.csv}
+\item \textbf{Assessment criteria:} Reserve should move directionally as reversion assumptions are extended or shortened.
+\item \textbf{Key result:} Extending severe-scenario reversion from 2 to 6 quarters increased reserve materially, confirming reversion is a meaningful reserve lever.
 \end{itemize}
 \subsection*{FR-07 - Macro severity sensitivity}
 Test whether reserve responds proportionally to macro severity scaling.
 \begin{itemize}
-\item Status: executed
-\item Why selected: Scenario severity and directional reasonableness are core to CECL challenge work.
-\item Evidence relied upon: scenarios/severe.csv, outputs/support/sensitivity\_results.csv
-\item Outputs produced: sensitivity\_results.csv
-\item Assessment criteria: Scaling macro severity upward should generally increase reserve; weaker response would require explanation.
-\item Key result: Scaling severe stress from 1.00x to 1.25x materially increased reserve, supporting macro sensitivity monotonicity at portfolio level.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} Scenario severity and directional reasonableness are core to CECL challenge work.
+\item \textbf{Bank-input evidence relied upon:} \texttt{scenarios/severe.csv}
+\item \textbf{Codex-generated evidence relied upon:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Codex-generated outputs produced:} \texttt{sensitivity\_results.csv}
+\item \textbf{Assessment criteria:} Scaling macro severity upward should generally increase reserve; weaker response would require explanation.
+\item \textbf{Key result:} Scaling severe stress from 1.00x to 1.25x materially increased reserve, supporting macro sensitivity monotonicity at portfolio level.
 \end{itemize}
 \subsection*{FR-08 - Overlay magnitude sensitivity}
 Assess the reserve effect of removing or amplifying qualitative overlays.
 \begin{itemize}
-\item Status: executed
-\item Why selected: The package included a scenario-by-segment overlay schedule and an overlay governance memo.
-\item Evidence relied upon: data/overlay\_schedule.csv, docs/overlay\_memo.md, outputs/support/sensitivity\_results.csv
-\item Outputs produced: sensitivity\_results.csv
-\item Assessment criteria: Overlay effect should be quantitatively explainable and consistent with governance statements.
-\item Key result: Removing severe overlays reduced reserve materially, confirming overlay posture is consequential and governance-relevant.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} The package included a scenario-by-segment overlay schedule and an overlay governance memo.
+\item \textbf{Bank-input evidence relied upon:} \texttt{data/overlay\_schedule.csv}, \texttt{docs/overlay\_memo.md}
+\item \textbf{Codex-generated evidence relied upon:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Codex-generated outputs produced:} \texttt{sensitivity\_results.csv}
+\item \textbf{Assessment criteria:} Overlay effect should be quantitatively explainable and consistent with governance statements.
+\item \textbf{Key result:} Removing severe overlays reduced reserve materially, confirming overlay posture is consequential and governance-relevant.
 \end{itemize}
 \subsection*{FR-09 - Reserve driver bridge}
 Identify which macro and overlay drivers explain the majority of severe-versus-baseline reserve movement.
 \begin{itemize}
-\item Status: executed
-\item Why selected: A driver bridge makes the review more interpretable and supports reasonableness challenge.
-\item Evidence relied upon: outputs/support/driver\_bridge.csv, scenarios/baseline.csv, scenarios/severe.csv
-\item Outputs produced: driver\_bridge.csv
-\item Assessment criteria: Major reserve movement should be attributable to understandable drivers rather than unexplained residual behavior.
-\item Key result: CRE price growth was the largest modeled standalone driver of severe-versus-baseline reserve change.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} A driver bridge makes the review more interpretable and supports reasonableness challenge.
+\item \textbf{Bank-input evidence relied upon:} \texttt{scenarios/baseline.csv}, \texttt{scenarios/severe.csv}
+\item \textbf{Codex-generated evidence relied upon:} \texttt{outputs/support/driver\_bridge.csv}
+\item \textbf{Codex-generated outputs produced:} \texttt{driver\_bridge.csv}
+\item \textbf{Assessment criteria:} Major reserve movement should be attributable to understandable drivers rather than unexplained residual behavior.
+\item \textbf{Key result:} CRE price growth was the largest modeled standalone driver of severe-versus-baseline reserve change.
 \end{itemize}
 \subsection*{FR-10 - Methodology and documentation alignment review}
 Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs.
 \begin{itemize}
-\item Status: executed
-\item Why selected: The package contained enough documentation to support direct cross-checking against the model and results.
-\item Evidence relied upon: docs/methodology.md, docs/model\_overview.md, docs/scenario\_assumptions.md, docs/overlay\_memo.md, model/cecl\_engine.py
-\item Outputs produced: documentation\_crosscheck.md, findings\_register.json
-\item Assessment criteria: Documented horizon, reversion, scenario logic, and overlay posture should match the implemented process or be clearly qualified.
-\item Key result: Cross-checking identified a forecast/reversion mismatch, overlay cap mismatch, and a severe-scenario segment anomaly requiring remediation.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} The package contained enough documentation to support direct cross-checking against the model and results.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/methodology.md}, \texttt{docs/model\_overview.md}, \texttt{docs/scenario\_assumptions.md}, \texttt{docs/overlay\_memo.md}, \texttt{model/cecl\_engine.py}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{documentation\_crosscheck.md}, \texttt{findings\_register.json}
+\item \textbf{Assessment criteria:} Documented horizon, reversion, scenario logic, and overlay posture should match the implemented process or be clearly qualified.
+\item \textbf{Key result:} Cross-checking identified a forecast/reversion mismatch, overlay cap mismatch, and a severe-scenario segment anomaly requiring remediation.
 \end{itemize}
 \section*{Agentic Execution Workflow}
 \subsection*{Discovery}
@@ -241,6 +534,116 @@ The final stage combined discovery, planning, quantitative results, and document
 \item Decision or rationale: Issue a substantive review with explicit remediation for documentation mismatch, overlay governance, and the residential mortgage severe-scenario anomaly.
 \item Inputs reviewed: findings\_register.json, executed\_test\_matrix.md, coverage\_statement.md, agentic\_review\_log.md
 \item Outputs produced: cecl\_review\_memo.tex, cecl\_review\_memo.pdf
+\end{itemize}
+\section*{Chronological Procedure and Output Log}
+This section records the more granular action sequence for the review, including the specific bank inputs examined, the Codex-generated outputs created, and the observed result at each step.
+\subsection*{EVT-01 - Inventory uploaded package}
+\begin{itemize}
+\item \textbf{Phase:} discovery
+\item \textbf{Related procedure:} FR-01
+\item \textbf{Action:} Enumerated the input package and confirmed presence of reserve engine, loan-level data, scenarios, prior outputs, and CECL methodology documents.
+\item \textbf{Inputs:} \texttt{input\_package/model/cecl\_engine.py}, \texttt{input\_package/data/loan\_level\_snapshot.csv}, \texttt{input\_package/scenarios/*.csv}, \texttt{input\_package/docs/*.md}
+\item \textbf{Outputs:} \texttt{outputs/support/discovery\_summary.md}, \texttt{outputs/support/evidence\_ledger.json}
+\item \textbf{Result:} Case classified as execution-capable CECL review with no material runtime blockers.
+\end{itemize}
+\subsection*{EVT-02 - Select review lanes}
+\begin{itemize}
+\item \textbf{Phase:} planning
+\item \textbf{Related procedure:} FR-01
+\item \textbf{Action:} Chose baseline reproduction, scenario reruns, sensitivity testing, reserve bridge, and documentation challenge as the primary review lanes.
+\item \textbf{Inputs:} \texttt{outputs/support/discovery\_summary.md}, \texttt{input\_package/docs/methodology.md}, \texttt{input\_package/docs/overlay\_memo.md}
+\item \textbf{Outputs:} \texttt{outputs/support/review\_plan.md}, \texttt{outputs/support/review\_strategy.md}
+\item \textbf{Result:} Ten executable procedures selected; none blocked.
+\end{itemize}
+\subsection*{EVT-03 - Reproduce packaged baseline reserve}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-02
+\item \textbf{Action:} Reran the packaged engine under the baseline scenario and reconciled the reproduced reserve to the supplied baseline reserve file.
+\item \textbf{Inputs:} \texttt{input\_package/model/cecl\_engine.py}, \texttt{input\_package/data/loan\_level\_snapshot.csv}, \texttt{input\_package/scenarios/baseline.csv}, \texttt{input\_package/outputs/prior\_baseline\_reserve.csv}
+\item \textbf{Outputs:} \texttt{outputs/support/baseline\_reproduction.json}
+\item \textbf{Result:} Packaged reserve 4876841.47; rerun reserve 4876841.47; absolute delta 0.00.
+\end{itemize}
+\subsection*{EVT-04 - Run baseline, adverse, and severe scenarios}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-03
+\item \textbf{Action:} Executed the reserve engine across the three supplied scenario paths and aggregated total reserve results.
+\item \textbf{Inputs:} \texttt{input\_package/model/cecl\_engine.py}, \texttt{input\_package/data/loan\_level\_snapshot.csv}, \texttt{input\_package/scenarios/baseline.csv}, \texttt{input\_package/scenarios/adverse.csv}, \texttt{input\_package/scenarios/severe.csv}
+\item \textbf{Outputs:} \texttt{outputs/support/scenario\_results.csv}
+\item \textbf{Result:} Portfolio reserve moved from 4876841.47 to 7132021.97 to 8287703.47.
+\end{itemize}
+\subsection*{EVT-05 - Check segment-level scenario ordering}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-04
+\item \textbf{Action:} Compared segment reserve amounts across baseline, adverse, and severe scenarios to test directional reasonableness by segment.
+\item \textbf{Inputs:} \texttt{outputs/support/scenario\_results.csv}, \texttt{input\_package/docs/scenario\_assumptions.md}, \texttt{input\_package/docs/overlay\_memo.md}
+\item \textbf{Outputs:} \texttt{outputs/support/segment\_reserve\_comparison.csv}
+\item \textbf{Result:} Residential Mortgage reserve fell from 327699.21 in adverse to 217710.91 in severe.
+\end{itemize}
+\subsection*{EVT-06 - Run forecast-horizon sensitivity}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-05
+\item \textbf{Action:} Tested baseline reserve under alternate forecast horizons to challenge the documented 4-quarter assumption versus the 6-quarter implementation.
+\item \textbf{Inputs:} \texttt{input\_package/docs/methodology.md}, \texttt{input\_package/model/cecl\_engine.py}
+\item \textbf{Outputs:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Result:} Changing the baseline forecast horizon from 6 quarters to 4 quarters changed reserve modestly, but confirmed a policy-versus-implementation mismatch.
+\end{itemize}
+\subsection*{EVT-07 - Run reversion-speed sensitivity}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-06
+\item \textbf{Action:} Re-estimated severe-scenario reserve using longer reversion periods to test sensitivity to the reversion assumption.
+\item \textbf{Inputs:} \texttt{input\_package/docs/methodology.md}, \texttt{input\_package/model/cecl\_engine.py}
+\item \textbf{Outputs:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Result:} Extending severe reversion from 2 to 6 quarters increased reserve from 8287703.47 to 8472904.31.
+\end{itemize}
+\subsection*{EVT-08 - Run macro-severity scaling sensitivity}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-07
+\item \textbf{Action:} Scaled severe macro stress to test whether reserve responds monotonically to harsher macro conditions.
+\item \textbf{Inputs:} \texttt{input\_package/scenarios/severe.csv}, \texttt{input\_package/model/cecl\_engine.py}
+\item \textbf{Outputs:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Result:} Increasing severe macro scaling from 1.00x to 1.25x increased reserve from 8287703.47 to 9803105.55.
+\end{itemize}
+\subsection*{EVT-09 - Run overlay-magnitude sensitivity}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-08
+\item \textbf{Action:} Removed and amplified overlays to measure how much of the severe reserve outcome is attributable to overlay posture.
+\item \textbf{Inputs:} \texttt{input\_package/data/overlay\_schedule.csv}, \texttt{input\_package/docs/overlay\_memo.md}
+\item \textbf{Outputs:} \texttt{outputs/support/sensitivity\_results.csv}
+\item \textbf{Result:} Removing severe overlays reduced reserve from 8287703.47 to 7850916.88; amplifying to 1.50x raised reserve to 8506096.88.
+\end{itemize}
+\subsection*{EVT-10 - Build reserve-driver bridge}
+\begin{itemize}
+\item \textbf{Phase:} execution
+\item \textbf{Related procedure:} FR-09
+\item \textbf{Action:} Constructed a simple driver bridge to attribute severe-versus-baseline reserve movement to major macro and overlay factors.
+\item \textbf{Inputs:} \texttt{input\_package/scenarios/baseline.csv}, \texttt{input\_package/scenarios/severe.csv}, \texttt{input\_package/model/cecl\_engine.py}
+\item \textbf{Outputs:} \texttt{outputs/support/driver\_bridge.csv}
+\item \textbf{Result:} CRE price growth was the largest standalone driver, contributing 1108566.01 of severe-versus-baseline reserve change.
+\end{itemize}
+\subsection*{EVT-11 - Cross-check methodology against implementation}
+\begin{itemize}
+\item \textbf{Phase:} documentation\_challenge
+\item \textbf{Related procedure:} FR-10
+\item \textbf{Action:} Compared documented forecast, reversion, scenario, and overlay assumptions to the implemented engine constants and quantitative outputs.
+\item \textbf{Inputs:} \texttt{input\_package/docs/methodology.md}, \texttt{input\_package/docs/model\_overview.md}, \texttt{input\_package/docs/overlay\_memo.md}, \texttt{input\_package/model/cecl\_engine.py}, \texttt{outputs/support/segment\_reserve\_comparison.csv}
+\item \textbf{Outputs:} \texttt{outputs/support/documentation\_crosscheck.md}, \texttt{outputs/support/findings\_register.json}
+\item \textbf{Result:} Recorded horizon/reversion mismatch, overlay-cap mismatch, and severe Residential Mortgage anomaly as formal findings.
+\end{itemize}
+\subsection*{EVT-12 - Assemble internal review pack}
+\begin{itemize}
+\item \textbf{Phase:} synthesis
+\item \textbf{Related procedure:} FR-10
+\item \textbf{Action:} Combined discovery, planning, quantitative outputs, documentation challenge, and evidence mapping into the final internal-review report pack.
+\item \textbf{Inputs:} \texttt{outputs/support/review\_strategy.md}, \texttt{outputs/support/procedure\_run\_log.md}, \texttt{outputs/support/findings\_register.json}, \texttt{outputs/support/evidence\_map.md}
+\item \textbf{Outputs:} \texttt{outputs/stakeholder/cecl\_review\_memo.tex}, \texttt{outputs/stakeholder/cecl\_review\_memo.pdf}
+\item \textbf{Result:} Produced a comprehensive internal CECL review memo with explicit provenance, raw evidence excerpts, and procedure-level detail.
 \end{itemize}
 \section*{Quantitative Results}
 \subsection*{Baseline Reproduction}

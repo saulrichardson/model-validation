@@ -3,32 +3,24 @@
   "workflow": "model_driven_review_memo",
   "artifact_inventory": [
     {
-      "path": "model/cecl_engine.py",
-      "kind": "code"
+      "path": "data/data_dictionary.csv",
+      "kind": "dataset"
     },
     {
       "path": "data/loan_level_snapshot.csv",
       "kind": "dataset"
     },
     {
-      "path": "data/data_dictionary.csv",
+      "path": "data/overlay_schedule.csv",
+      "kind": "dataset"
+    },
+    {
+      "path": "docs/control_process_note.md",
       "kind": "document"
     },
     {
-      "path": "data/overlay_schedule.csv",
-      "kind": "config"
-    },
-    {
-      "path": "scenarios/baseline.csv",
-      "kind": "scenario"
-    },
-    {
-      "path": "scenarios/adverse.csv",
-      "kind": "scenario"
-    },
-    {
-      "path": "scenarios/severe.csv",
-      "kind": "scenario"
+      "path": "docs/governance_minutes.md",
+      "kind": "document"
     },
     {
       "path": "docs/methodology.md",
@@ -39,16 +31,44 @@
       "kind": "document"
     },
     {
-      "path": "docs/scenario_assumptions.md",
-      "kind": "document"
-    },
-    {
       "path": "docs/overlay_memo.md",
       "kind": "document"
     },
     {
+      "path": "docs/prior_review_note.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/scenario_assumptions.md",
+      "kind": "document"
+    },
+    {
+      "path": "model/cecl_engine.py",
+      "kind": "code"
+    },
+    {
       "path": "outputs/prior_baseline_reserve.csv",
-      "kind": "metrics"
+      "kind": "packaged output table"
+    },
+    {
+      "path": "outputs/prior_scenario_summary.csv",
+      "kind": "packaged output table"
+    },
+    {
+      "path": "outputs/prior_segment_reserves.csv",
+      "kind": "packaged output table"
+    },
+    {
+      "path": "scenarios/adverse.csv",
+      "kind": "scenario table"
+    },
+    {
+      "path": "scenarios/baseline.csv",
+      "kind": "scenario table"
+    },
+    {
+      "path": "scenarios/severe.csv",
+      "kind": "scenario table"
     }
   ],
   "runnable": true,

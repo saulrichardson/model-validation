@@ -4,19 +4,22 @@
 - Context: consumer and real-estate portfolio reserve process
 
 ## Package Inventory
-- `docs/methodology.md` (document)
-- `docs/model_overview.md` (document)
-- `docs/scenario_assumptions.md` (document)
-- `docs/overlay_memo.md` (document)
-- `docs/prior_review_note.md` (document)
+- `data/data_dictionary.csv` (dataset)
+- `data/sample_rollforward.csv` (dataset)
 - `docs/evidence_request_log.md` (document)
 - `docs/gap_tracker.md` (document)
-- `data/data_dictionary.csv` (document)
-- `scenarios/baseline.csv` (scenario)
-- `scenarios/adverse.csv` (scenario)
-- `scenarios/severe.csv` (scenario)
-- `outputs/provided_reserve_summary.csv` (metrics)
-- `outputs/provided_segment_reserves.csv` (metrics)
+- `docs/governance_minutes.md` (document)
+- `docs/methodology.md` (document)
+- `docs/model_overview.md` (document)
+- `docs/overlay_memo.md` (document)
+- `docs/prior_review_note.md` (document)
+- `docs/scenario_assumptions.md` (document)
+- `outputs/provided_overlay_bridge.csv` (packaged output table)
+- `outputs/provided_reserve_summary.csv` (packaged output table)
+- `outputs/provided_segment_reserves.csv` (packaged output table)
+- `scenarios/adverse.csv` (scenario table)
+- `scenarios/baseline.csv` (scenario table)
+- `scenarios/severe.csv` (scenario table)
 
 ## Key Observations
 - Scenario tables, prior reserve outputs, and rich narrative materials are present.

@@ -3,15 +3,31 @@
   "workflow": "documentation_led_gap_assessment",
   "artifact_inventory": [
     {
+      "path": "data/data_dictionary.csv",
+      "kind": "dataset"
+    },
+    {
+      "path": "data/sample_rollforward.csv",
+      "kind": "dataset"
+    },
+    {
+      "path": "docs/evidence_request_log.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/gap_tracker.md",
+      "kind": "document"
+    },
+    {
+      "path": "docs/governance_minutes.md",
+      "kind": "document"
+    },
+    {
       "path": "docs/methodology.md",
       "kind": "document"
     },
     {
       "path": "docs/model_overview.md",
-      "kind": "document"
-    },
-    {
-      "path": "docs/scenario_assumptions.md",
       "kind": "document"
     },
     {
@@ -23,36 +39,32 @@
       "kind": "document"
     },
     {
-      "path": "docs/evidence_request_log.md",
+      "path": "docs/scenario_assumptions.md",
       "kind": "document"
     },
     {
-      "path": "docs/gap_tracker.md",
-      "kind": "document"
-    },
-    {
-      "path": "data/data_dictionary.csv",
-      "kind": "document"
-    },
-    {
-      "path": "scenarios/baseline.csv",
-      "kind": "scenario"
-    },
-    {
-      "path": "scenarios/adverse.csv",
-      "kind": "scenario"
-    },
-    {
-      "path": "scenarios/severe.csv",
-      "kind": "scenario"
+      "path": "outputs/provided_overlay_bridge.csv",
+      "kind": "packaged output table"
     },
     {
       "path": "outputs/provided_reserve_summary.csv",
-      "kind": "metrics"
+      "kind": "packaged output table"
     },
     {
       "path": "outputs/provided_segment_reserves.csv",
-      "kind": "metrics"
+      "kind": "packaged output table"
+    },
+    {
+      "path": "scenarios/adverse.csv",
+      "kind": "scenario table"
+    },
+    {
+      "path": "scenarios/baseline.csv",
+      "kind": "scenario table"
+    },
+    {
+      "path": "scenarios/severe.csv",
+      "kind": "scenario table"
     }
   ],
   "runnable": false,

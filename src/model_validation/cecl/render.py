@@ -188,6 +188,105 @@ def render_agentic_review_log(case_name: str, steps: list[dict[str, Any]]) -> st
     return "\n".join(lines).rstrip() + "\n"
 
 
+def render_artifact_provenance(
+    *,
+    case_name: str,
+    uploaded_artifacts: list[dict[str, Any]],
+    generated_artifacts: list[dict[str, Any]],
+    input_tree: str,
+    generated_tree: str,
+) -> str:
+    lines = [
+        f"# Artifact Provenance: {case_name}",
+        "",
+        "Conventions:",
+        "- `[BANK INPUT]` means a file that was part of the pseudo-bank upload package.",
+        "- `[CODEX OUTPUT]` means a file generated during the review workflow or final report rendering.",
+        "",
+        "## Bank-Uploaded Input Package",
+    ]
+    for artifact in uploaded_artifacts:
+        lines.extend(
+            [
+                f"- {artifact['label']} `{artifact['relative_path']}`",
+                f"  - Kind: {artifact['kind_label']}",
+                f"  - Detail: {artifact['detail']}",
+                f"  - Review use: {artifact['use_summary']}",
+            ]
+        )
+    lines.extend(["", "## Codex-Generated Review Record"])
+    for artifact in generated_artifacts:
+        lines.extend(
+            [
+                f"- {artifact['label']} `{artifact['relative_path']}`",
+                f"  - Kind: {artifact['kind_label']}",
+                f"  - Detail: {artifact['detail']}",
+                f"  - Purpose: {artifact['use_summary']}",
+            ]
+        )
+    lines.extend(
+        [
+            "",
+            "## Uploaded Package Tree",
+            "```text",
+            input_tree.rstrip(),
+            "```",
+            "",
+            "## Codex Output Tree",
+            "```text",
+            generated_tree.rstrip(),
+            "```",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def render_procedure_run_log(case_name: str, events: list[dict[str, Any]]) -> str:
+    lines = [
+        f"# Procedure Run Log: {case_name}",
+        "",
+        "This log records the granular review actions that the platform is intended to automate.",
+        "",
+    ]
+    for event in events:
+        lines.extend(
+            [
+                f"## {event['event_id']} - {event['title']}",
+                f"- Phase: {event['phase']}",
+                f"- Related procedure: {event['procedure_id']}",
+                f"- Action: {event['action']}",
+                f"- Inputs: {', '.join(event.get('inputs', []))}",
+                f"- Outputs: {', '.join(event.get('outputs', []))}",
+                f"- Result: {event['result']}",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def render_evidence_excerpts(case_name: str, excerpts: list[dict[str, Any]]) -> str:
+    lines = [
+        f"# Evidence Excerpts: {case_name}",
+        "",
+        "The excerpts below are short raw snippets from uploaded materials or generated review artifacts.",
+        "",
+    ]
+    for excerpt in excerpts:
+        lines.extend(
+            [
+                f"## {excerpt['label']} `{excerpt['relative_path']}`",
+                excerpt["purpose"],
+                "",
+                "```text",
+                excerpt["content"].rstrip(),
+                "```",
+                "",
+            ]
+        )
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def render_document_crosscheck(title: str, sections: list[dict[str, Any]]) -> str:
     lines = [f"# {title}", ""]
     for section in sections:
@@ -236,6 +335,12 @@ def render_coverage_statement(title: str, supported: list[str], blocked: list[st
 def render_full_review_latex(
     spec: FullReviewSpec,
     inventory: list[dict[str, str]],
+    uploaded_artifacts: list[dict[str, Any]],
+    generated_artifacts: list[dict[str, Any]],
+    input_tree: str,
+    generated_tree: str,
+    evidence_excerpts: list[dict[str, Any]],
+    procedure_run_log: list[dict[str, Any]],
     case_understanding: dict[str, Any],
     review_questions: list[str],
     plan_items: list[dict[str, Any]],
@@ -371,10 +476,9 @@ def render_full_review_latex(
         ],
     ]
 
-    inventory_items = [
-        f"{item['path']} ({item['kind']})"
-        for item in inventory
-    ]
+    inventory_items = [f"{item['path']} ({item['kind']})" for item in inventory]
+    uploaded_artifact_items = [_latex_artifact_entry(item) for item in uploaded_artifacts]
+    generated_artifact_items = [_latex_artifact_entry(item) for item in generated_artifacts]
     findings_sections = "\n".join(
         _latex_finding_detail(
             finding,
@@ -382,6 +486,8 @@ def render_full_review_latex(
         )
         for finding in findings
     )
+    evidence_excerpt_sections = "\n".join(_latex_evidence_excerpt(excerpt) for excerpt in evidence_excerpts)
+    procedure_log_sections = "\n".join(_latex_log_event(event) for event in procedure_run_log)
 
     executed_count = sum(1 for item in procedure_matrix if item["status"] == "executed")
     blocked_count = sum(1 for item in procedure_matrix if item["status"] != "executed")
@@ -438,8 +544,25 @@ def render_full_review_latex(
             ]
         ),
         "",
-        _latex_section("Artifacts Reviewed"),
+        _latex_section("Bank-Uploaded Input Package"),
         _latex_itemize(inventory_items),
+        "",
+        _latex_section("Artifact Provenance and Review Record"),
+        _latex_paragraph(
+            "This report uses explicit provenance markers so a reviewer can distinguish what the bank supplied from what Codex produced during the review. "
+            "[BANK INPUT] indicates a file contained in the uploaded package under input_package/. [CODEX OUTPUT] indicates a review artifact created during discovery, planning, execution, or report rendering."
+        ),
+        _latex_subsection("Bank-Uploaded Artifacts"),
+        _latex_itemize_raw(uploaded_artifact_items),
+        "",
+        _latex_subsection("Codex-Generated Review Artifacts"),
+        _latex_itemize_raw(generated_artifact_items),
+        "",
+        _latex_subsection("Uploaded Package Tree"),
+        _latex_verbatim_block(input_tree),
+        "",
+        _latex_subsection("Codex Output Tree"),
+        _latex_verbatim_block(generated_tree),
         "",
         _latex_section("Package Discovery and Case Understanding"),
         _latex_paragraph(case_understanding["summary"]),
@@ -475,26 +598,14 @@ def render_full_review_latex(
             small=True,
         ),
         "",
+        _latex_section("Selected Raw Evidence Excerpts"),
+        _latex_paragraph(
+            "The excerpts below are short verbatim snippets from bank-uploaded materials and Codex-generated outputs that support the main findings and illustrate the review lineage."
+        ),
+        evidence_excerpt_sections,
+        "",
         _latex_section("Procedures Performed"),
-        *[
-            "\n".join(
-                [
-                    _latex_subsection(procedure["procedure_id"] + " - " + procedure["procedure_name"]),
-                    _latex_paragraph(procedure["objective"]),
-                    _latex_itemize(
-                        [
-                            f"Status: {procedure['status'].replace('_', ' ')}",
-                            f"Why selected: {procedure['selection_rationale']}",
-                            f"Evidence relied upon: {', '.join(procedure['evidence'])}",
-                            f"Outputs produced: {', '.join(procedure['outputs'])}",
-                            f"Assessment criteria: {procedure['assessment_criteria']}",
-                            f"Key result: {procedure['key_result']}",
-                        ]
-                    ),
-                ]
-            )
-            for procedure in procedure_matrix
-        ],
+        *[_latex_procedure_detail(procedure) for procedure in procedure_matrix],
         "",
         _latex_section("Agentic Execution Workflow"),
         *[
@@ -514,6 +625,12 @@ def render_full_review_latex(
             )
             for step in trace_steps
         ],
+        "",
+        _latex_section("Chronological Procedure and Output Log"),
+        _latex_paragraph(
+            "This section records the more granular action sequence for the review, including the specific bank inputs examined, the Codex-generated outputs created, and the observed result at each step."
+        ),
+        procedure_log_sections,
         "",
         _latex_section("Quantitative Results"),
         _latex_subsection("Baseline Reproduction"),
@@ -602,6 +719,12 @@ def render_full_review_latex(
 def render_gap_assessment_latex(
     spec: GapAssessmentSpec,
     inventory: list[dict[str, str]],
+    uploaded_artifacts: list[dict[str, Any]],
+    generated_artifacts: list[dict[str, Any]],
+    input_tree: str,
+    generated_tree: str,
+    evidence_excerpts: list[dict[str, Any]],
+    procedure_run_log: list[dict[str, Any]],
     case_understanding: dict[str, Any],
     review_questions: list[str],
     plan_items: list[dict[str, Any]],
@@ -672,7 +795,11 @@ def render_gap_assessment_latex(
     ]
 
     inventory_items = [f"{item['path']} ({item['kind']})" for item in inventory]
+    uploaded_artifact_items = [_latex_artifact_entry(item) for item in uploaded_artifacts]
+    generated_artifact_items = [_latex_artifact_entry(item) for item in generated_artifacts]
     mismatch_text = ", ".join(str(item["quarter"]) for item in scenario_mismatch_quarters) or "none"
+    evidence_excerpt_sections = "\n".join(_latex_evidence_excerpt(excerpt) for excerpt in evidence_excerpts)
+    procedure_log_sections = "\n".join(_latex_log_event(event) for event in procedure_run_log)
 
     findings_sections = "\n".join(
         _latex_finding_detail(
@@ -716,8 +843,25 @@ def render_gap_assessment_latex(
             ]
         ),
         "",
-        _latex_section("Artifacts Reviewed"),
+        _latex_section("Bank-Uploaded Input Package"),
         _latex_itemize(inventory_items),
+        "",
+        _latex_section("Artifact Provenance and Review Record"),
+        _latex_paragraph(
+            "This report uses explicit provenance markers so a reviewer can distinguish what the bank supplied from what Codex produced during the review. "
+            "[BANK INPUT] indicates a file contained in the uploaded package under input_package/. [CODEX OUTPUT] indicates a review artifact created during discovery, planning, gap assessment, or report rendering."
+        ),
+        _latex_subsection("Bank-Uploaded Artifacts"),
+        _latex_itemize_raw(uploaded_artifact_items),
+        "",
+        _latex_subsection("Codex-Generated Review Artifacts"),
+        _latex_itemize_raw(generated_artifact_items),
+        "",
+        _latex_subsection("Uploaded Package Tree"),
+        _latex_verbatim_block(input_tree),
+        "",
+        _latex_subsection("Codex Output Tree"),
+        _latex_verbatim_block(generated_tree),
         "",
         _latex_section("Package Discovery and Case Understanding"),
         _latex_paragraph(case_understanding["summary"]),
@@ -753,26 +897,14 @@ def render_gap_assessment_latex(
             small=True,
         ),
         "",
+        _latex_section("Selected Raw Evidence Excerpts"),
+        _latex_paragraph(
+            "The excerpts below are short verbatim snippets from bank-uploaded materials and Codex-generated outputs that support the current gap assessment and coverage boundary."
+        ),
+        evidence_excerpt_sections,
+        "",
         _latex_section("Procedures Performed"),
-        *[
-            "\n".join(
-                [
-                    _latex_subsection(procedure["procedure_id"] + " - " + procedure["procedure_name"]),
-                    _latex_paragraph(procedure["objective"]),
-                    _latex_itemize(
-                        [
-                            f"Status: {procedure['status'].replace('_', ' ')}",
-                            f"Why selected: {procedure['selection_rationale']}",
-                            f"Evidence relied upon: {', '.join(procedure['evidence'])}",
-                            f"Outputs produced: {', '.join(procedure['outputs'])}",
-                            f"Assessment criteria: {procedure['assessment_criteria']}",
-                            f"Key result: {procedure['key_result']}",
-                        ]
-                    ),
-                ]
-            )
-            for procedure in procedure_matrix
-        ],
+        *[_latex_procedure_detail(procedure) for procedure in procedure_matrix],
         "",
         _latex_section("Agentic Execution Workflow"),
         *[
@@ -792,6 +924,12 @@ def render_gap_assessment_latex(
             )
             for step in trace_steps
         ],
+        "",
+        _latex_section("Chronological Procedure and Output Log"),
+        _latex_paragraph(
+            "This section records the more granular action sequence for the gap assessment, including both executed documentation-led checks and explicitly blocked runtime procedures."
+        ),
+        procedure_log_sections,
         "",
         _latex_section("Provided Output Snapshot"),
         _latex_paragraph(
@@ -880,6 +1018,7 @@ def _wrap_latex_document(*, title: str, body: str) -> str:
             "\\usepackage{array}",
             "\\usepackage{tabularx}",
             "\\usepackage{enumitem}",
+            "\\usepackage{fancyvrb}",
             "\\usepackage[T1]{fontenc}",
             "\\usepackage[utf8]{inputenc}",
             "\\usepackage{lmodern}",
@@ -934,6 +1073,13 @@ def _latex_itemize(items: list[str]) -> str:
     return "\n".join(lines)
 
 
+def _latex_itemize_raw(items: list[str]) -> str:
+    lines = ["\\begin{itemize}"]
+    lines.extend(f"\\item {item}" for item in items)
+    lines.append("\\end{itemize}")
+    return "\n".join(lines)
+
+
 def _latex_enumerate(items: list[str]) -> str:
     lines = ["\\begin{enumerate}"]
     lines.extend(f"\\item {_latex_escape(item)}" for item in items)
@@ -943,6 +1089,16 @@ def _latex_enumerate(items: list[str]) -> str:
 
 def _latex_paragraph(text: str) -> str:
     return _latex_escape(text)
+
+
+def _latex_verbatim_block(text: str) -> str:
+    return "\n".join(
+        [
+            "\\begin{Verbatim}[fontsize=\\small]",
+            text.rstrip(),
+            "\\end{Verbatim}",
+        ]
+    )
 
 
 def _finding_sentence(finding: dict[str, Any]) -> str:
@@ -1037,6 +1193,84 @@ def _latex_finding_detail(finding: dict[str, Any], recommendation: str) -> str:
             f"\\textbf{{Observation:}} {_latex_escape(str(finding['summary']))}\\\\",
             f"\\textbf{{Evidence:}} {_latex_escape(evidence)}\\\\",
             f"\\textbf{{Recommended response:}} {_latex_escape(recommendation)}",
+        ]
+    )
+
+
+def _latex_artifact_entry(artifact: dict[str, Any]) -> str:
+    return (
+        f"\\textbf{{{_latex_escape(str(artifact['label']))}}} "
+        f"\\texttt{{{_latex_escape(str(artifact['relative_path']))}}} -- "
+        f"{_latex_escape(str(artifact['kind_label']))}; "
+        f"{_latex_escape(str(artifact['detail']))}; "
+        f"{_latex_escape(str(artifact['use_summary']))}"
+    )
+
+
+def _split_procedure_evidence(procedure: dict[str, Any]) -> tuple[list[str], list[str]]:
+    bank_inputs: list[str] = []
+    codex_outputs: list[str] = []
+    for path in procedure.get("evidence", []):
+        if str(path).startswith("outputs/support/") or str(path).startswith("outputs/stakeholder/"):
+            codex_outputs.append(str(path))
+        else:
+            bank_inputs.append(str(path))
+    return bank_inputs, codex_outputs
+
+
+def _latex_path_list(paths: list[str]) -> str:
+    if not paths:
+        return "\\textit{None}"
+    return ", ".join(f"\\texttt{{{_latex_escape(path)}}}" for path in paths)
+
+
+def _latex_procedure_detail(procedure: dict[str, Any]) -> str:
+    bank_inputs, derived_outputs = _split_procedure_evidence(procedure)
+    lines = [
+        _latex_subsection(procedure["procedure_id"] + " - " + procedure["procedure_name"]),
+        _latex_paragraph(procedure["objective"]),
+        _latex_itemize_raw(
+            [
+                f"\\textbf{{Status:}} {_latex_escape(procedure['status'].replace('_', ' '))}",
+                f"\\textbf{{Why selected:}} {_latex_escape(procedure['selection_rationale'])}",
+                f"\\textbf{{Bank-input evidence relied upon:}} {_latex_path_list(bank_inputs)}",
+                f"\\textbf{{Codex-generated evidence relied upon:}} {_latex_path_list(derived_outputs)}",
+                f"\\textbf{{Codex-generated outputs produced:}} {_latex_path_list(list(procedure['outputs']))}",
+                f"\\textbf{{Assessment criteria:}} {_latex_escape(procedure['assessment_criteria'])}",
+                f"\\textbf{{Key result:}} {_latex_escape(procedure['key_result'])}",
+            ]
+        ),
+    ]
+    blocker = procedure.get("blocker")
+    if blocker:
+        lines.append(_latex_itemize_raw([f"\\textbf{{Blocking factor:}} {_latex_escape(str(blocker))}"]))
+    return "\n".join(lines)
+
+
+def _latex_log_event(event: dict[str, Any]) -> str:
+    return "\n".join(
+        [
+            _latex_subsection(f"{event['event_id']} - {event['title']}"),
+            _latex_itemize_raw(
+                [
+                    f"\\textbf{{Phase:}} {_latex_escape(event['phase'])}",
+                    f"\\textbf{{Related procedure:}} {_latex_escape(event['procedure_id'])}",
+                    f"\\textbf{{Action:}} {_latex_escape(event['action'])}",
+                    f"\\textbf{{Inputs:}} {_latex_path_list(list(event.get('inputs', [])))}",
+                    f"\\textbf{{Outputs:}} {_latex_path_list(list(event.get('outputs', [])))}",
+                    f"\\textbf{{Result:}} {_latex_escape(event['result'])}",
+                ]
+            ),
+        ]
+    )
+
+
+def _latex_evidence_excerpt(excerpt: dict[str, Any]) -> str:
+    return "\n".join(
+        [
+            _latex_subsection(f"{excerpt['label']} {excerpt['relative_path']}"),
+            _latex_paragraph(excerpt["purpose"]),
+            _latex_verbatim_block(excerpt["content"]),
         ]
     )
 

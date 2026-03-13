@@ -15,8 +15,6 @@ from ..settings import Settings, get_settings
 from .analysis import (
     build_data_dictionary,
     build_evidence_ledger,
-    build_full_review_inventory,
-    build_gap_inventory,
     generate_gap_assessment_provided_outputs,
     generate_portfolio,
     nested_json_safe,
@@ -29,15 +27,18 @@ from .authoring import CeclAuthoringClient
 from .render import (
     compile_latex,
     render_agentic_review_log,
+    render_artifact_provenance,
     render_case_understanding,
     render_codex_trace,
     render_coverage_statement,
     render_discovery_summary,
     render_document_crosscheck,
+    render_evidence_excerpts,
     render_evidence_map,
     render_executed_test_matrix,
     render_full_review_latex,
     render_gap_assessment_latex,
+    render_procedure_run_log,
     render_review_plan,
     render_review_strategy,
 )
@@ -145,28 +146,38 @@ def _build_full_review_case(
     _write_text(input_dir / "docs" / "control_process_note.md", documents.control_process_note_md)
     _write_text(input_dir / "model" / "cecl_engine.py", _render_engine_script(spec))
 
-    inventory = build_full_review_inventory()
+    inventory = _build_input_inventory(input_dir)
     case_understanding = _full_review_case_understanding(spec)
     review_questions = _full_review_review_questions(spec)
     procedure_matrix = _full_review_procedure_matrix(spec, analysis)
     evidence_map = _build_evidence_map(procedure_matrix)
     trace_steps = _full_review_trace_steps(spec)
-    evidence_paths = [item["path"] for item in inventory] + [
+    planned_support_paths = [
+        "outputs/support/discovery_summary.json",
+        "outputs/support/discovery_summary.md",
         "outputs/support/case_understanding.md",
+        "outputs/support/review_plan.md",
         "outputs/support/review_strategy.md",
         "outputs/support/executed_test_matrix.md",
         "outputs/support/executed_test_matrix.csv",
         "outputs/support/evidence_map.md",
+        "outputs/support/agentic_review_log.md",
+        "outputs/support/procedure_run_log.md",
+        "outputs/support/procedure_run_log.csv",
+        "outputs/support/evidence_excerpts.md",
         "outputs/support/baseline_reproduction.json",
         "outputs/support/scenario_results.csv",
         "outputs/support/segment_reserve_comparison.csv",
         "outputs/support/sensitivity_results.csv",
         "outputs/support/driver_bridge.csv",
         "outputs/support/documentation_crosscheck.md",
-        "outputs/support/review_plan.md",
-        "outputs/support/agentic_review_log.md",
+        "outputs/support/findings_register.json",
+        "outputs/support/analysis_summary.json",
+        "outputs/support/evidence_ledger.json",
+        "outputs/support/coverage_statement.md",
         "outputs/support/codex_trace.md",
     ]
+    evidence_paths = [item["path"] for item in inventory] + planned_support_paths
     evidence_ledger = build_evidence_ledger(evidence_paths)
 
     discovery_payload = {
@@ -363,9 +374,55 @@ def _build_full_review_case(
         ),
     )
 
+    procedure_run_log = _full_review_procedure_run_log(spec, analysis)
+    _write_text(
+        support_dir / "procedure_run_log.md",
+        render_procedure_run_log(spec.portfolio_name, procedure_run_log),
+    )
+    write_csv(support_dir / "procedure_run_log.csv", pd.DataFrame(procedure_run_log))
+
+    evidence_excerpts = _full_review_evidence_excerpts(case_dir, spec, analysis)
+    _write_text(
+        support_dir / "evidence_excerpts.md",
+        render_evidence_excerpts(spec.portfolio_name, evidence_excerpts),
+    )
+
+    uploaded_artifacts, generated_artifacts, input_tree, generated_tree = _build_artifact_manifest(
+        case_dir=case_dir,
+        uploaded_inventory=inventory,
+        generated_relative_paths=planned_support_paths,
+        evidence_ledger=evidence_ledger,
+        evidence_map=evidence_map,
+    )
+    _write_text(
+        support_dir / "artifact_provenance.md",
+        render_artifact_provenance(
+            case_name=spec.portfolio_name,
+            uploaded_artifacts=uploaded_artifacts,
+            generated_artifacts=generated_artifacts,
+            input_tree=input_tree,
+            generated_tree=generated_tree,
+        ),
+    )
+    _write_json(
+        support_dir / "artifact_provenance.json",
+        {
+            "uploaded_artifacts": uploaded_artifacts,
+            "generated_artifacts": generated_artifacts,
+            "input_tree": input_tree,
+            "generated_tree": generated_tree,
+        },
+    )
+
     latex = render_full_review_latex(
         spec,
         inventory,
+        uploaded_artifacts,
+        generated_artifacts,
+        input_tree,
+        generated_tree,
+        evidence_excerpts,
+        procedure_run_log,
         case_understanding,
         review_questions,
         plan_items,
@@ -441,25 +498,37 @@ def _build_gap_assessment_case(
     _write_text(input_dir / "docs" / "evidence_request_log.md", documents.evidence_request_log_md)
     _write_text(input_dir / "docs" / "gap_tracker.md", documents.gap_tracker_md)
 
-    inventory = build_gap_inventory()
+    inventory = _build_input_inventory(input_dir)
     case_understanding = _gap_assessment_case_understanding(spec)
     review_questions = _gap_assessment_review_questions(spec)
     procedure_matrix = _gap_assessment_procedure_matrix(spec, analysis)
     evidence_map = _build_evidence_map(procedure_matrix)
     trace_steps = _gap_assessment_trace_steps(spec)
-    evidence_paths = [item["path"] for item in inventory] + [
+    planned_support_paths = [
+        "outputs/support/discovery_summary.json",
+        "outputs/support/discovery_summary.md",
         "outputs/support/case_understanding.md",
+        "outputs/support/review_plan.md",
         "outputs/support/review_strategy.md",
         "outputs/support/executed_test_matrix.md",
         "outputs/support/executed_test_matrix.csv",
         "outputs/support/evidence_map.md",
+        "outputs/support/agentic_review_log.md",
+        "outputs/support/procedure_run_log.md",
+        "outputs/support/procedure_run_log.csv",
+        "outputs/support/evidence_excerpts.md",
         "outputs/support/documentation_crosscheck.md",
         "outputs/support/findings_register.json",
+        "outputs/support/analysis_summary.json",
+        "outputs/support/evidence_ledger.json",
         "outputs/support/coverage_statement.md",
-        "outputs/support/review_plan.md",
-        "outputs/support/agentic_review_log.md",
+        "outputs/support/evidence_request_list.md",
+        "outputs/support/provided_reserve_summary.csv",
+        "outputs/support/provided_segment_reserves.csv",
+        "outputs/support/provided_overlay_bridge.csv",
         "outputs/support/codex_trace.md",
     ]
+    evidence_paths = [item["path"] for item in inventory] + planned_support_paths
     evidence_ledger = build_evidence_ledger(evidence_paths)
 
     discovery_payload = {
@@ -647,9 +716,55 @@ def _build_gap_assessment_case(
         ),
     )
 
+    procedure_run_log = _gap_assessment_procedure_run_log(spec, analysis)
+    _write_text(
+        support_dir / "procedure_run_log.md",
+        render_procedure_run_log(spec.portfolio_name, procedure_run_log),
+    )
+    write_csv(support_dir / "procedure_run_log.csv", pd.DataFrame(procedure_run_log))
+
+    evidence_excerpts = _gap_assessment_evidence_excerpts(case_dir, spec)
+    _write_text(
+        support_dir / "evidence_excerpts.md",
+        render_evidence_excerpts(spec.portfolio_name, evidence_excerpts),
+    )
+
+    uploaded_artifacts, generated_artifacts, input_tree, generated_tree = _build_artifact_manifest(
+        case_dir=case_dir,
+        uploaded_inventory=inventory,
+        generated_relative_paths=planned_support_paths,
+        evidence_ledger=evidence_ledger,
+        evidence_map=evidence_map,
+    )
+    _write_text(
+        support_dir / "artifact_provenance.md",
+        render_artifact_provenance(
+            case_name=spec.portfolio_name,
+            uploaded_artifacts=uploaded_artifacts,
+            generated_artifacts=generated_artifacts,
+            input_tree=input_tree,
+            generated_tree=generated_tree,
+        ),
+    )
+    _write_json(
+        support_dir / "artifact_provenance.json",
+        {
+            "uploaded_artifacts": uploaded_artifacts,
+            "generated_artifacts": generated_artifacts,
+            "input_tree": input_tree,
+            "generated_tree": generated_tree,
+        },
+    )
+
     latex = render_gap_assessment_latex(
         spec,
         inventory,
+        uploaded_artifacts,
+        generated_artifacts,
+        input_tree,
+        generated_tree,
+        evidence_excerpts,
+        procedure_run_log,
         case_understanding,
         review_questions,
         plan_items,
@@ -1353,6 +1468,550 @@ def _build_evidence_map(procedures: list[dict[str, Any]]) -> list[dict[str, Any]
             "use_summary": "; ".join(entry["use_summary"]),
         }
         for path, entry in sorted(mapping.items())
+    ]
+
+
+def _build_input_inventory(input_dir: Path) -> list[dict[str, str]]:
+    inventory: list[dict[str, str]] = []
+    for path in sorted(input_dir.rglob("*")):
+        if not path.is_file():
+            continue
+        relative_path = str(path.relative_to(input_dir))
+        inventory.append({"path": relative_path, "kind": _artifact_kind_label(relative_path)})
+    return inventory
+
+
+def _artifact_kind_label(relative_path: str) -> str:
+    parts = Path(relative_path).parts
+    suffix = Path(relative_path).suffix.lower()
+    if parts and parts[0] == "model":
+        return "code"
+    if suffix == ".csv":
+        if parts and parts[0] == "scenarios":
+            return "scenario table"
+        if parts[:2] == ("outputs", "support"):
+            return "generated review table"
+        if parts and parts[0] == "outputs":
+            return "packaged output table"
+        return "dataset"
+    if suffix == ".md":
+        return "document"
+    if suffix == ".json":
+        return "json artifact"
+    if suffix == ".tex":
+        return "latex report source"
+    if suffix == ".pdf":
+        return "pdf report"
+    return "artifact"
+
+
+def _artifact_detail(path: Path, relative_path: str) -> str:
+    suffix = path.suffix.lower()
+    if not path.exists():
+        return "planned artifact"
+    if suffix == ".csv":
+        try:
+            with path.open(encoding="utf-8") as handle:
+                row_count = max(sum(1 for _ in handle) - 1, 0)
+            return f"CSV artifact with {row_count} data row(s)"
+        except UnicodeDecodeError:
+            return "CSV artifact"
+    if suffix in {".md", ".py", ".json", ".tex"}:
+        try:
+            line_count = len(path.read_text(encoding="utf-8").splitlines())
+            return f"Text artifact with {line_count} line(s)"
+        except UnicodeDecodeError:
+            return "Text artifact"
+    if suffix == ".pdf":
+        return "Compiled PDF deliverable"
+    return f"Artifact at {relative_path}"
+
+
+def _evidence_id_by_path(evidence_ledger: list[dict[str, Any]]) -> dict[str, str]:
+    return {
+        str(item["relative_path"]): str(item["evidence_id"])
+        for item in evidence_ledger
+    }
+
+
+def _artifact_use_summary(relative_path: str, evidence_map: list[dict[str, Any]]) -> str:
+    for mapping in evidence_map:
+        if mapping["evidence_path"] == relative_path:
+            return str(mapping["use_summary"])
+    generated_defaults = {
+        "outputs/support/discovery_summary.md": "Summarizes what Codex identified in the uploaded package during discovery.",
+        "outputs/support/case_understanding.md": "Records Codex's synthesized view of the CECL process, assumptions, and constraints.",
+        "outputs/support/review_plan.md": "Captures the planned review procedures before detailed execution.",
+        "outputs/support/review_strategy.md": "Explains why specific procedures were selected from the discovered evidence.",
+        "outputs/support/executed_test_matrix.md": "Registers which procedures were executed, blocked, and what each procedure concluded.",
+        "outputs/support/executed_test_matrix.csv": "Machine-readable form of the executed procedure register.",
+        "outputs/support/procedure_run_log.md": "Chronological log of granular review actions and outputs.",
+        "outputs/support/procedure_run_log.csv": "Machine-readable chronology of granular review actions.",
+        "outputs/support/evidence_map.md": "Maps uploaded and derived artifacts to the procedures they supported.",
+        "outputs/support/artifact_provenance.md": "Separates bank-uploaded inputs from Codex-generated review artifacts.",
+        "outputs/support/artifact_provenance.json": "Machine-readable provenance register for uploaded and generated artifacts.",
+        "outputs/support/evidence_excerpts.md": "Collects raw excerpts from uploaded materials and review outputs used in the writeup.",
+        "outputs/support/agentic_review_log.md": "Readable stage-level summary of the intended Codex review flow.",
+        "outputs/support/codex_trace.md": "Readable execution trace of discovery, planning, execution, and synthesis.",
+        "outputs/support/baseline_reproduction.json": "Stores baseline reproduction metrics used in the full-review conclusion.",
+        "outputs/support/scenario_results.csv": "Stores Codex-produced portfolio scenario rerun results.",
+        "outputs/support/segment_reserve_comparison.csv": "Stores segment-level reserve comparison across scenarios.",
+        "outputs/support/sensitivity_results.csv": "Stores sensitivity test outputs for horizon, reversion, severity, and overlay assumptions.",
+        "outputs/support/driver_bridge.csv": "Stores the reserve-driver bridge used for reasonableness interpretation.",
+        "outputs/support/documentation_crosscheck.md": "Stores documentation-versus-implementation and output cross-check observations.",
+        "outputs/support/findings_register.json": "Registers findings, severity, and supporting evidence references.",
+        "outputs/support/coverage_statement.md": "States supported versus blocked review coverage.",
+    }
+    return generated_defaults.get(
+        relative_path,
+        "Generated as part of the Codex review record for this case.",
+    )
+
+
+def _build_artifact_manifest(
+    *,
+    case_dir: Path,
+    uploaded_inventory: list[dict[str, str]],
+    generated_relative_paths: list[str],
+    evidence_ledger: list[dict[str, Any]],
+    evidence_map: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], str, str]:
+    evidence_ids = _evidence_id_by_path(evidence_ledger)
+    uploaded_artifacts: list[dict[str, Any]] = []
+    for item in uploaded_inventory:
+        relative_path = str(item["path"])
+        path = case_dir / "input_package" / relative_path
+        uploaded_artifacts.append(
+            {
+                "artifact_id": evidence_ids.get(relative_path, ""),
+                "label": f"{evidence_ids.get(relative_path, 'E???')} [BANK INPUT]",
+                "relative_path": relative_path,
+                "kind_label": item["kind"],
+                "detail": _artifact_detail(path, relative_path),
+                "use_summary": _artifact_use_summary(relative_path, evidence_map),
+            }
+        )
+
+    generated_artifacts: list[dict[str, Any]] = []
+    for relative_path in generated_relative_paths:
+        path = case_dir / relative_path
+        generated_artifacts.append(
+            {
+                "artifact_id": evidence_ids.get(relative_path, ""),
+                "label": f"{evidence_ids.get(relative_path, 'E???')} [CODEX OUTPUT]",
+                "relative_path": relative_path,
+                "kind_label": _artifact_kind_label(relative_path),
+                "detail": _artifact_detail(path, relative_path),
+                "use_summary": _artifact_use_summary(relative_path, evidence_map),
+            }
+        )
+
+    input_tree = _render_tree("input_package", [item["path"] for item in uploaded_inventory])
+    generated_tree = _render_tree("outputs", [path.removeprefix("outputs/") for path in generated_relative_paths if path.startswith("outputs/")])
+    return uploaded_artifacts, generated_artifacts, input_tree, generated_tree
+
+
+def _render_tree(root_name: str, relative_paths: list[str]) -> str:
+    lines = [f"{root_name}/"]
+    seen_dirs: set[tuple[str, ...]] = set()
+    for relative_path in sorted(relative_paths):
+        parts = Path(relative_path).parts
+        for depth in range(1, len(parts)):
+            directory = parts[:depth]
+            if directory in seen_dirs:
+                continue
+            lines.append(f"{'  ' * depth}{directory[-1]}/")
+            seen_dirs.add(directory)
+        lines.append(f"{'  ' * len(parts)}{parts[-1]}")
+    return "\n".join(lines)
+
+
+def _full_review_evidence_excerpts(case_dir: Path, spec: FullReviewSpec, analysis: dict[str, Any]) -> list[dict[str, str]]:
+    return [
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "docs/methodology.md",
+            "purpose": "Documented CECL forecast and reversion assumptions cited in the horizon mismatch finding.",
+            "content": _extract_block(
+                case_dir / "input_package" / "docs" / "methodology.md",
+                "## Forecast horizon and reversion (documented)",
+                "## Qualitative adjustments (overlays)",
+            ),
+        },
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "model/cecl_engine.py",
+            "purpose": "Implemented reserve-engine constants and overlay schedule that Codex compared to the methodology and overlay memo.",
+            "content": _extract_window(
+                case_dir / "input_package" / "model" / "cecl_engine.py",
+                "FORECAST_QUARTERS = 6",
+                before=25,
+                after=20,
+            ),
+        },
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "docs/overlay_memo.md",
+            "purpose": "Documented overlay cap and severe overlay posture used in the overlay-governance challenge.",
+            "content": _extract_block(
+                case_dir / "input_package" / "docs" / "overlay_memo.md",
+                "## Summary of overlay posture",
+                "## Rationale by segment",
+            ),
+        },
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "scenarios/adverse.csv + scenarios/severe.csv",
+            "purpose": "Numeric adverse and severe scenario paths that Codex compared for directional severity and segment reasonableness.",
+            "content": "\n".join(
+                [
+                    "[adverse.csv]",
+                    (case_dir / "input_package" / "scenarios" / "adverse.csv").read_text(encoding="utf-8").strip(),
+                    "",
+                    "[severe.csv]",
+                    (case_dir / "input_package" / "scenarios" / "severe.csv").read_text(encoding="utf-8").strip(),
+                ]
+            ),
+        },
+        {
+            "label": "[CODEX OUTPUT]",
+            "relative_path": "outputs/support/baseline_reproduction.json",
+            "purpose": "Codex-generated reproduction record showing the packaged baseline reserve and the rerun reserve matched exactly.",
+            "content": (case_dir / "outputs" / "support" / "baseline_reproduction.json").read_text(encoding="utf-8"),
+        },
+        {
+            "label": "[CODEX OUTPUT]",
+            "relative_path": "outputs/support/segment_reserve_comparison.csv",
+            "purpose": "Codex-generated segment comparison highlighting the Residential Mortgage severe-versus-adverse anomaly.",
+            "content": (case_dir / "outputs" / "support" / "segment_reserve_comparison.csv").read_text(encoding="utf-8"),
+        },
+        {
+            "label": "[CODEX OUTPUT]",
+            "relative_path": "outputs/support/sensitivity_results.csv",
+            "purpose": "Codex-generated sensitivity results used to challenge forecast horizon, reversion, macro severity, and overlay magnitude assumptions.",
+            "content": (case_dir / "outputs" / "support" / "sensitivity_results.csv").read_text(encoding="utf-8"),
+        },
+    ]
+
+
+def _gap_assessment_evidence_excerpts(case_dir: Path, spec: GapAssessmentSpec) -> list[dict[str, str]]:
+    return [
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "docs/methodology.md",
+            "purpose": "Documented forecast, reversion, segmentation, and missing-runtime boundary used in the gap assessment.",
+            "content": _extract_block(
+                case_dir / "input_package" / "docs" / "methodology.md",
+                "## 3. Key design elements under review (per documentation)",
+                "## 6. Deliverables in this upload package",
+            ),
+        },
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "docs/scenario_assumptions.md",
+            "purpose": "Numeric scenario horizon and narrative-alignment discussion showing the mismatch between documented and provided scenario depth.",
+            "content": _extract_block(
+                case_dir / "input_package" / "docs" / "scenario_assumptions.md",
+                "## 2. Scenario inventory (numeric paths provided)",
+                "## 4. Open items",
+            ),
+        },
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "docs/overlay_memo.md",
+            "purpose": "Overlay cap language and segment overlay values that Codex challenged against the provided reserve bridge.",
+            "content": _extract_block(
+                case_dir / "input_package" / "docs" / "overlay_memo.md",
+                "## 2. Overlay policy position (as documented)",
+                "## 6. Conclusion (documentation-led)",
+            ),
+        },
+        {
+            "label": "[BANK INPUT]",
+            "relative_path": "outputs/provided_overlay_bridge.csv + outputs/provided_segment_reserves.csv",
+            "purpose": "Bank-supplied output snapshots used for the documentation-led reconciliation work.",
+            "content": "\n".join(
+                [
+                    "[provided_overlay_bridge.csv]",
+                    (case_dir / "input_package" / "outputs" / "provided_overlay_bridge.csv").read_text(encoding="utf-8").strip(),
+                    "",
+                    "[provided_segment_reserves.csv]",
+                    (case_dir / "input_package" / "outputs" / "provided_segment_reserves.csv").read_text(encoding="utf-8").strip(),
+                ]
+            ),
+        },
+        {
+            "label": "[CODEX OUTPUT]",
+            "relative_path": "outputs/support/coverage_statement.md",
+            "purpose": "Codex-generated coverage boundary showing which procedures were supported and which were blocked.",
+            "content": (case_dir / "outputs" / "support" / "coverage_statement.md").read_text(encoding="utf-8"),
+        },
+        {
+            "label": "[CODEX OUTPUT]",
+            "relative_path": "outputs/support/findings_register.json",
+            "purpose": "Codex-generated findings register capturing the primary documentation and evidence gaps.",
+            "content": (case_dir / "outputs" / "support" / "findings_register.json").read_text(encoding="utf-8"),
+        },
+    ]
+
+
+def _extract_block(path: Path, start_marker: str, end_marker: str | None = None) -> str:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    start_index = 0
+    for index, line in enumerate(lines):
+        if start_marker in line:
+            start_index = index
+            break
+    end_index = len(lines)
+    if end_marker is not None:
+        for index in range(start_index + 1, len(lines)):
+            if end_marker in lines[index]:
+                end_index = index
+                break
+    return "\n".join(lines[start_index:end_index]).strip()
+
+
+def _extract_window(path: Path, marker: str, *, before: int, after: int) -> str:
+    lines = path.read_text(encoding="utf-8").splitlines()
+    marker_index = 0
+    for index, line in enumerate(lines):
+        if marker in line:
+            marker_index = index
+            break
+    start_index = max(marker_index - before, 0)
+    end_index = min(marker_index + after + 1, len(lines))
+    return "\n".join(lines[start_index:end_index]).strip()
+
+
+def _full_review_procedure_run_log(spec: FullReviewSpec, analysis: dict[str, Any]) -> list[dict[str, Any]]:
+    anomaly = analysis["doc_crosscheck"]["anomaly_segment"]
+    return [
+        {
+            "event_id": "EVT-01",
+            "phase": "discovery",
+            "procedure_id": "FR-01",
+            "title": "Inventory uploaded package",
+            "action": "Enumerated the input package and confirmed presence of reserve engine, loan-level data, scenarios, prior outputs, and CECL methodology documents.",
+            "inputs": ["input_package/model/cecl_engine.py", "input_package/data/loan_level_snapshot.csv", "input_package/scenarios/*.csv", "input_package/docs/*.md"],
+            "outputs": ["outputs/support/discovery_summary.md", "outputs/support/evidence_ledger.json"],
+            "result": "Case classified as execution-capable CECL review with no material runtime blockers.",
+        },
+        {
+            "event_id": "EVT-02",
+            "phase": "planning",
+            "procedure_id": "FR-01",
+            "title": "Select review lanes",
+            "action": "Chose baseline reproduction, scenario reruns, sensitivity testing, reserve bridge, and documentation challenge as the primary review lanes.",
+            "inputs": ["outputs/support/discovery_summary.md", "input_package/docs/methodology.md", "input_package/docs/overlay_memo.md"],
+            "outputs": ["outputs/support/review_plan.md", "outputs/support/review_strategy.md"],
+            "result": "Ten executable procedures selected; none blocked.",
+        },
+        {
+            "event_id": "EVT-03",
+            "phase": "execution",
+            "procedure_id": "FR-02",
+            "title": "Reproduce packaged baseline reserve",
+            "action": "Reran the packaged engine under the baseline scenario and reconciled the reproduced reserve to the supplied baseline reserve file.",
+            "inputs": ["input_package/model/cecl_engine.py", "input_package/data/loan_level_snapshot.csv", "input_package/scenarios/baseline.csv", "input_package/outputs/prior_baseline_reserve.csv"],
+            "outputs": ["outputs/support/baseline_reproduction.json"],
+            "result": f"Packaged reserve {analysis['baseline_reproduction']['packaged_total_reserve']:.2f}; rerun reserve {analysis['baseline_reproduction']['rerun_total_reserve']:.2f}; absolute delta {analysis['baseline_reproduction']['absolute_delta']:.2f}.",
+        },
+        {
+            "event_id": "EVT-04",
+            "phase": "execution",
+            "procedure_id": "FR-03",
+            "title": "Run baseline, adverse, and severe scenarios",
+            "action": "Executed the reserve engine across the three supplied scenario paths and aggregated total reserve results.",
+            "inputs": ["input_package/model/cecl_engine.py", "input_package/data/loan_level_snapshot.csv", "input_package/scenarios/baseline.csv", "input_package/scenarios/adverse.csv", "input_package/scenarios/severe.csv"],
+            "outputs": ["outputs/support/scenario_results.csv"],
+            "result": f"Portfolio reserve moved from {analysis['analysis_summary']['overall_baseline_reserve']:.2f} to {analysis['analysis_summary']['overall_adverse_reserve']:.2f} to {analysis['analysis_summary']['overall_severe_reserve']:.2f}.",
+        },
+        {
+            "event_id": "EVT-05",
+            "phase": "execution",
+            "procedure_id": "FR-04",
+            "title": "Check segment-level scenario ordering",
+            "action": "Compared segment reserve amounts across baseline, adverse, and severe scenarios to test directional reasonableness by segment.",
+            "inputs": ["outputs/support/scenario_results.csv", "input_package/docs/scenario_assumptions.md", "input_package/docs/overlay_memo.md"],
+            "outputs": ["outputs/support/segment_reserve_comparison.csv"],
+            "result": f"{_humanize_label(spec.quantitative_anomaly_segment)} reserve fell from {anomaly['adverse_reserve_amount']:.2f} in adverse to {anomaly['severe_reserve_amount']:.2f} in severe.",
+        },
+        {
+            "event_id": "EVT-06",
+            "phase": "execution",
+            "procedure_id": "FR-05",
+            "title": "Run forecast-horizon sensitivity",
+            "action": "Tested baseline reserve under alternate forecast horizons to challenge the documented 4-quarter assumption versus the 6-quarter implementation.",
+            "inputs": ["input_package/docs/methodology.md", "input_package/model/cecl_engine.py"],
+            "outputs": ["outputs/support/sensitivity_results.csv"],
+            "result": "Changing the baseline forecast horizon from 6 quarters to 4 quarters changed reserve modestly, but confirmed a policy-versus-implementation mismatch.",
+        },
+        {
+            "event_id": "EVT-07",
+            "phase": "execution",
+            "procedure_id": "FR-06",
+            "title": "Run reversion-speed sensitivity",
+            "action": "Re-estimated severe-scenario reserve using longer reversion periods to test sensitivity to the reversion assumption.",
+            "inputs": ["input_package/docs/methodology.md", "input_package/model/cecl_engine.py"],
+            "outputs": ["outputs/support/sensitivity_results.csv"],
+            "result": "Extending severe reversion from 2 to 6 quarters increased reserve from 8287703.47 to 8472904.31.",
+        },
+        {
+            "event_id": "EVT-08",
+            "phase": "execution",
+            "procedure_id": "FR-07",
+            "title": "Run macro-severity scaling sensitivity",
+            "action": "Scaled severe macro stress to test whether reserve responds monotonically to harsher macro conditions.",
+            "inputs": ["input_package/scenarios/severe.csv", "input_package/model/cecl_engine.py"],
+            "outputs": ["outputs/support/sensitivity_results.csv"],
+            "result": "Increasing severe macro scaling from 1.00x to 1.25x increased reserve from 8287703.47 to 9803105.55.",
+        },
+        {
+            "event_id": "EVT-09",
+            "phase": "execution",
+            "procedure_id": "FR-08",
+            "title": "Run overlay-magnitude sensitivity",
+            "action": "Removed and amplified overlays to measure how much of the severe reserve outcome is attributable to overlay posture.",
+            "inputs": ["input_package/data/overlay_schedule.csv", "input_package/docs/overlay_memo.md"],
+            "outputs": ["outputs/support/sensitivity_results.csv"],
+            "result": "Removing severe overlays reduced reserve from 8287703.47 to 7850916.88; amplifying to 1.50x raised reserve to 8506096.88.",
+        },
+        {
+            "event_id": "EVT-10",
+            "phase": "execution",
+            "procedure_id": "FR-09",
+            "title": "Build reserve-driver bridge",
+            "action": "Constructed a simple driver bridge to attribute severe-versus-baseline reserve movement to major macro and overlay factors.",
+            "inputs": ["input_package/scenarios/baseline.csv", "input_package/scenarios/severe.csv", "input_package/model/cecl_engine.py"],
+            "outputs": ["outputs/support/driver_bridge.csv"],
+            "result": "CRE price growth was the largest standalone driver, contributing 1108566.01 of severe-versus-baseline reserve change.",
+        },
+        {
+            "event_id": "EVT-11",
+            "phase": "documentation_challenge",
+            "procedure_id": "FR-10",
+            "title": "Cross-check methodology against implementation",
+            "action": "Compared documented forecast, reversion, scenario, and overlay assumptions to the implemented engine constants and quantitative outputs.",
+            "inputs": ["input_package/docs/methodology.md", "input_package/docs/model_overview.md", "input_package/docs/overlay_memo.md", "input_package/model/cecl_engine.py", "outputs/support/segment_reserve_comparison.csv"],
+            "outputs": ["outputs/support/documentation_crosscheck.md", "outputs/support/findings_register.json"],
+            "result": "Recorded horizon/reversion mismatch, overlay-cap mismatch, and severe Residential Mortgage anomaly as formal findings.",
+        },
+        {
+            "event_id": "EVT-12",
+            "phase": "synthesis",
+            "procedure_id": "FR-10",
+            "title": "Assemble internal review pack",
+            "action": "Combined discovery, planning, quantitative outputs, documentation challenge, and evidence mapping into the final internal-review report pack.",
+            "inputs": ["outputs/support/review_strategy.md", "outputs/support/procedure_run_log.md", "outputs/support/findings_register.json", "outputs/support/evidence_map.md"],
+            "outputs": ["outputs/stakeholder/cecl_review_memo.tex", "outputs/stakeholder/cecl_review_memo.pdf"],
+            "result": "Produced a comprehensive internal CECL review memo with explicit provenance, raw evidence excerpts, and procedure-level detail.",
+        },
+    ]
+
+
+def _gap_assessment_procedure_run_log(spec: GapAssessmentSpec, analysis: dict[str, Any]) -> list[dict[str, Any]]:
+    mismatch_quarters = ", ".join(str(item["quarter"]) for item in analysis["scenario_mismatch_quarters"])
+    return [
+        {
+            "event_id": "EVT-01",
+            "phase": "discovery",
+            "procedure_id": "GA-01",
+            "title": "Inventory uploaded package",
+            "action": "Enumerated the documentation package and checked whether a reserve engine, reproducibility notebook, and execution lineage were present.",
+            "inputs": ["input_package/docs/*.md", "input_package/scenarios/*.csv", "input_package/outputs/*.csv"],
+            "outputs": ["outputs/support/discovery_summary.md", "outputs/support/evidence_ledger.json"],
+            "result": "Case classified as documentation-led CECL gap assessment because runtime artifacts were not supplied.",
+        },
+        {
+            "event_id": "EVT-02",
+            "phase": "planning",
+            "procedure_id": "GA-01",
+            "title": "Define supported and blocked review lanes",
+            "action": "Separated executable documentation-led checks from blocked runtime procedures before deeper review work.",
+            "inputs": ["outputs/support/discovery_summary.md", "input_package/docs/evidence_request_log.md", "input_package/docs/gap_tracker.md"],
+            "outputs": ["outputs/support/review_plan.md", "outputs/support/review_strategy.md", "outputs/support/coverage_statement.md"],
+            "result": "Evidence sufficiency, scenario consistency, output reconciliation, and overlay review retained; baseline reproduction and sensitivities blocked.",
+        },
+        {
+            "event_id": "EVT-03",
+            "phase": "documentation_challenge",
+            "procedure_id": "GA-02",
+            "title": "Assess execution readiness and lineage",
+            "action": "Reviewed governance and evidence-request materials to determine whether the package could support model execution or reproduction.",
+            "inputs": ["input_package/docs/evidence_request_log.md", "input_package/docs/gap_tracker.md", "input_package/docs/governance_minutes.md"],
+            "outputs": ["outputs/support/coverage_statement.md", "outputs/support/documentation_crosscheck.md"],
+            "result": "Confirmed that no reserve engine, reproducibility notebook, or lineaged runbook was available.",
+        },
+        {
+            "event_id": "EVT-04",
+            "phase": "documentation_challenge",
+            "procedure_id": "GA-03",
+            "title": "Compare scenario narrative to numeric scenario files",
+            "action": "Compared the severe scenario narrative to quarter-by-quarter severe and adverse scenario tables.",
+            "inputs": ["input_package/docs/scenario_assumptions.md", "input_package/scenarios/adverse.csv", "input_package/scenarios/severe.csv"],
+            "outputs": ["outputs/support/documentation_crosscheck.md", "outputs/support/findings_register.json"],
+            "result": f"Found severe house-price growth less severe than adverse in {len(analysis['scenario_mismatch_quarters'])} quarter(s): {mismatch_quarters}.",
+        },
+        {
+            "event_id": "EVT-05",
+            "phase": "documentation_challenge",
+            "procedure_id": "GA-04",
+            "title": "Reconcile horizon and reversion descriptions",
+            "action": "Compared methodology, model overview, and scenario package to determine whether one consistent forecast and reversion structure was evidenced.",
+            "inputs": ["input_package/docs/methodology.md", "input_package/docs/model_overview.md", "input_package/docs/scenario_assumptions.md"],
+            "outputs": ["outputs/support/documentation_crosscheck.md", "outputs/support/findings_register.json"],
+            "result": "Identified inconsistent 8Q/4Q and 6Q/2Q horizon descriptions with only six numeric quarters provided.",
+        },
+        {
+            "event_id": "EVT-06",
+            "phase": "documentation_challenge",
+            "procedure_id": "GA-05",
+            "title": "Reconcile documented segments to output segments",
+            "action": "Compared documented segment taxonomy to the segments used in the provided reserve output files.",
+            "inputs": ["input_package/docs/methodology.md", "input_package/docs/model_overview.md", "input_package/outputs/provided_segment_reserves.csv"],
+            "outputs": ["outputs/support/findings_register.json"],
+            "result": f"Documentation lists {len(spec.documented_segments)} segments while provided outputs reconcile to {len(spec.output_segments)} segments.",
+        },
+        {
+            "event_id": "EVT-07",
+            "phase": "documentation_challenge",
+            "procedure_id": "GA-06",
+            "title": "Reconcile documented overlay cap to provided overlay bridge",
+            "action": "Compared the documented overlay cap and governance description to the segment overlay values in the provided bridge.",
+            "inputs": ["input_package/docs/overlay_memo.md", "input_package/outputs/provided_overlay_bridge.csv"],
+            "outputs": ["outputs/support/findings_register.json"],
+            "result": f"Documented overlay cap of {spec.documented_overlay_cap_bps:.1f} bps did not reconcile to provided overlay values reaching {max(spec.provided_overlay_bps_by_segment.values()):.1f} bps.",
+        },
+        {
+            "event_id": "EVT-08",
+            "phase": "blocked_work",
+            "procedure_id": "GA-07",
+            "title": "Record blocked baseline reproduction",
+            "action": "Evaluated whether baseline reproduction could be performed and formally logged why it was not executed.",
+            "inputs": ["input_package/outputs/provided_reserve_summary.csv", "input_package/docs/evidence_request_log.md"],
+            "outputs": ["outputs/support/coverage_statement.md", "outputs/support/evidence_request_list.md"],
+            "result": "Baseline reproduction blocked because no reserve engine or reproducibility notebook was supplied.",
+        },
+        {
+            "event_id": "EVT-09",
+            "phase": "blocked_work",
+            "procedure_id": "GA-08",
+            "title": "Record blocked scenario reruns and sensitivity testing",
+            "action": "Evaluated whether scenario reruns and sensitivity tests could be performed and formally logged why they were not executed.",
+            "inputs": ["input_package/scenarios/*.csv", "input_package/docs/gap_tracker.md"],
+            "outputs": ["outputs/support/coverage_statement.md", "outputs/support/evidence_request_list.md"],
+            "result": "Sensitivity testing blocked because no model implementation, controllable parameters, or runbook support was supplied.",
+        },
+        {
+            "event_id": "EVT-10",
+            "phase": "synthesis",
+            "procedure_id": "GA-09",
+            "title": "Assemble internal gap-assessment pack",
+            "action": "Combined discovery, coverage boundary, documentation findings, and evidence requests into the final internal gap-assessment report pack.",
+            "inputs": ["outputs/support/review_strategy.md", "outputs/support/procedure_run_log.md", "outputs/support/findings_register.json", "outputs/support/evidence_request_list.md"],
+            "outputs": ["outputs/stakeholder/cecl_gap_assessment.tex", "outputs/stakeholder/cecl_gap_assessment.pdf"],
+            "result": "Produced a comprehensive CECL gap assessment showing both executed documentation-led work and blocked runtime work.",
+        },
     ]
 
 

@@ -4,6 +4,7 @@
 \usepackage{array}
 \usepackage{tabularx}
 \usepackage{enumitem}
+\usepackage{fancyvrb}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -24,22 +25,122 @@ This work assessed whether the supplied CECL package is sufficient to support a 
 \item Blocked work: reserve-engine execution, baseline reproduction, implementation sensitivity testing, and model-code review.
 \item Coverage note: all conclusions are bounded to the documents, scenario tables, and output snapshots provided in the package.
 \end{itemize}
-\section*{Artifacts Reviewed}
+\section*{Bank-Uploaded Input Package}
 \begin{itemize}
-\item docs/methodology.md (document)
-\item docs/model\_overview.md (document)
-\item docs/scenario\_assumptions.md (document)
-\item docs/overlay\_memo.md (document)
-\item docs/prior\_review\_note.md (document)
+\item data/data\_dictionary.csv (dataset)
+\item data/sample\_rollforward.csv (dataset)
 \item docs/evidence\_request\_log.md (document)
 \item docs/gap\_tracker.md (document)
-\item data/data\_dictionary.csv (document)
-\item scenarios/baseline.csv (scenario)
-\item scenarios/adverse.csv (scenario)
-\item scenarios/severe.csv (scenario)
-\item outputs/provided\_reserve\_summary.csv (metrics)
-\item outputs/provided\_segment\_reserves.csv (metrics)
+\item docs/governance\_minutes.md (document)
+\item docs/methodology.md (document)
+\item docs/model\_overview.md (document)
+\item docs/overlay\_memo.md (document)
+\item docs/prior\_review\_note.md (document)
+\item docs/scenario\_assumptions.md (document)
+\item outputs/provided\_overlay\_bridge.csv (packaged output table)
+\item outputs/provided\_reserve\_summary.csv (packaged output table)
+\item outputs/provided\_segment\_reserves.csv (packaged output table)
+\item scenarios/adverse.csv (scenario table)
+\item scenarios/baseline.csv (scenario table)
+\item scenarios/severe.csv (scenario table)
 \end{itemize}
+\section*{Artifact Provenance and Review Record}
+This report uses explicit provenance markers so a reviewer can distinguish what the bank supplied from what Codex produced during the review. [BANK INPUT] indicates a file contained in the uploaded package under input\_package/. [CODEX OUTPUT] indicates a review artifact created during discovery, planning, gap assessment, or report rendering.
+\subsection*{Bank-Uploaded Artifacts}
+\begin{itemize}
+\item \textbf{E001 [BANK INPUT]} \texttt{data/data\_dictionary.csv} -- dataset; CSV artifact with 13 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E002 [BANK INPUT]} \texttt{data/sample\_rollforward.csv} -- dataset; CSV artifact with 4 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E003 [BANK INPUT]} \texttt{docs/evidence\_request\_log.md} -- document; Text artifact with 6 line(s); Package inventory and coverage classification: Determine whether the upload supports execution-based review or only a documentation-led assessment.; Execution readiness and lineage assessment: Establish whether the package includes the artifacts required for baseline reproduction and scenario reruns.; Baseline reproduction: Reproduce the baseline reserve from the implementation and baseline scenario.; Evidence request and remediation planning: Translate identified blockers and inconsistencies into a prioritized request list for a future execution-based review.
+\item \textbf{E004 [BANK INPUT]} \texttt{docs/gap\_tracker.md} -- document; Text artifact with 7 line(s); Package inventory and coverage classification: Determine whether the upload supports execution-based review or only a documentation-led assessment.; Execution readiness and lineage assessment: Establish whether the package includes the artifacts required for baseline reproduction and scenario reruns.; Scenario reruns and sensitivity testing: Rerun scenarios and challenge reserve sensitivity to key assumptions.
+\item \textbf{E005 [BANK INPUT]} \texttt{docs/governance\_minutes.md} -- document; Text artifact with 3 line(s); Execution readiness and lineage assessment: Establish whether the package includes the artifacts required for baseline reproduction and scenario reruns.
+\item \textbf{E006 [BANK INPUT]} \texttt{docs/methodology.md} -- document; Text artifact with 9 line(s); Horizon and reversion consistency review: Test whether documented forecast and reversion descriptions reconcile across methodology, model overview, and supplied scenario files.; Segment taxonomy reconciliation: Compare documented segment definitions to the segment structure in the provided reserve outputs.
+\item \textbf{E007 [BANK INPUT]} \texttt{docs/model\_overview.md} -- document; Text artifact with 3 line(s); Horizon and reversion consistency review: Test whether documented forecast and reversion descriptions reconcile across methodology, model overview, and supplied scenario files.; Segment taxonomy reconciliation: Compare documented segment definitions to the segment structure in the provided reserve outputs.
+\item \textbf{E008 [BANK INPUT]} \texttt{docs/overlay\_memo.md} -- document; Text artifact with 3 line(s); Overlay magnitude reconciliation: Compare documented overlay posture to the reserve bridge included in the package.
+\item \textbf{E009 [BANK INPUT]} \texttt{docs/prior\_review\_note.md} -- document; Text artifact with 3 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E010 [BANK INPUT]} \texttt{docs/scenario\_assumptions.md} -- document; Text artifact with 3 line(s); Scenario narrative versus table comparison: Test whether the severe scenario narrative matches the supplied numeric scenario path.; Horizon and reversion consistency review: Test whether documented forecast and reversion descriptions reconcile across methodology, model overview, and supplied scenario files.
+\item \textbf{E011 [BANK INPUT]} \texttt{outputs/provided\_overlay\_bridge.csv} -- packaged output table; CSV artifact with 4 data row(s); Overlay magnitude reconciliation: Compare documented overlay posture to the reserve bridge included in the package.
+\item \textbf{E012 [BANK INPUT]} \texttt{outputs/provided\_reserve\_summary.csv} -- packaged output table; CSV artifact with 3 data row(s); Package inventory and coverage classification: Determine whether the upload supports execution-based review or only a documentation-led assessment.; Baseline reproduction: Reproduce the baseline reserve from the implementation and baseline scenario.
+\item \textbf{E013 [BANK INPUT]} \texttt{outputs/provided\_segment\_reserves.csv} -- packaged output table; CSV artifact with 12 data row(s); Segment taxonomy reconciliation: Compare documented segment definitions to the segment structure in the provided reserve outputs.
+\item \textbf{E014 [BANK INPUT]} \texttt{scenarios/adverse.csv} -- scenario table; CSV artifact with 6 data row(s); Scenario narrative versus table comparison: Test whether the severe scenario narrative matches the supplied numeric scenario path.; Scenario reruns and sensitivity testing: Rerun scenarios and challenge reserve sensitivity to key assumptions.
+\item \textbf{E015 [BANK INPUT]} \texttt{scenarios/baseline.csv} -- scenario table; CSV artifact with 6 data row(s); Scenario reruns and sensitivity testing: Rerun scenarios and challenge reserve sensitivity to key assumptions.
+\item \textbf{E016 [BANK INPUT]} \texttt{scenarios/severe.csv} -- scenario table; CSV artifact with 6 data row(s); Scenario narrative versus table comparison: Test whether the severe scenario narrative matches the supplied numeric scenario path.; Scenario reruns and sensitivity testing: Rerun scenarios and challenge reserve sensitivity to key assumptions.
+\end{itemize}
+\subsection*{Codex-Generated Review Artifacts}
+\begin{itemize}
+\item \textbf{E017 [CODEX OUTPUT]} \texttt{outputs/support/discovery\_summary.json} -- json artifact; Text artifact with 80 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E018 [CODEX OUTPUT]} \texttt{outputs/support/discovery\_summary.md} -- document; Text artifact with 31 line(s); Summarizes what Codex identified in the uploaded package during discovery.
+\item \textbf{E019 [CODEX OUTPUT]} \texttt{outputs/support/case\_understanding.md} -- document; Text artifact with 27 line(s); Records Codex's synthesized view of the CECL process, assumptions, and constraints.
+\item \textbf{E020 [CODEX OUTPUT]} \texttt{outputs/support/review\_plan.md} -- document; Text artifact with 21 line(s); Captures the planned review procedures before detailed execution.
+\item \textbf{E021 [CODEX OUTPUT]} \texttt{outputs/support/review\_strategy.md} -- document; Text artifact with 75 line(s); Explains why specific procedures were selected from the discovered evidence.
+\item \textbf{E022 [CODEX OUTPUT]} \texttt{outputs/support/executed\_test\_matrix.md} -- document; Text artifact with 13 line(s); Registers which procedures were executed, blocked, and what each procedure concluded.
+\item \textbf{E023 [CODEX OUTPUT]} \texttt{outputs/support/executed\_test\_matrix.csv} -- generated review table; CSV artifact with 9 data row(s); Machine-readable form of the executed procedure register.
+\item \textbf{E024 [CODEX OUTPUT]} \texttt{outputs/support/evidence\_map.md} -- document; Text artifact with 78 line(s); Maps uploaded and derived artifacts to the procedures they supported.
+\item \textbf{E025 [CODEX OUTPUT]} \texttt{outputs/support/agentic\_review\_log.md} -- document; Text artifact with 43 line(s); Readable stage-level summary of the intended Codex review flow.
+\item \textbf{E026 [CODEX OUTPUT]} \texttt{outputs/support/procedure\_run\_log.md} -- document; Text artifact with 83 line(s); Chronological log of granular review actions and outputs.
+\item \textbf{E027 [CODEX OUTPUT]} \texttt{outputs/support/procedure\_run\_log.csv} -- generated review table; CSV artifact with 10 data row(s); Machine-readable chronology of granular review actions.
+\item \textbf{E028 [CODEX OUTPUT]} \texttt{outputs/support/evidence\_excerpts.md} -- document; Text artifact with 133 line(s); Collects raw excerpts from uploaded materials and review outputs used in the writeup.
+\item \textbf{E029 [CODEX OUTPUT]} \texttt{outputs/support/documentation\_crosscheck.md} -- document; Text artifact with 23 line(s); Stores documentation-versus-implementation and output cross-check observations.
+\item \textbf{E030 [CODEX OUTPUT]} \texttt{outputs/support/findings\_register.json} -- json artifact; Text artifact with 43 line(s); Registers findings, severity, and supporting evidence references.
+\item \textbf{E031 [CODEX OUTPUT]} \texttt{outputs/support/analysis\_summary.json} -- json artifact; Text artifact with 5 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E032 [CODEX OUTPUT]} \texttt{outputs/support/evidence\_ledger.json} -- json artifact; Text artifact with 346 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E033 [CODEX OUTPUT]} \texttt{outputs/support/coverage\_statement.md} -- document; Text artifact with 15 line(s); States supported versus blocked review coverage.
+\item \textbf{E034 [CODEX OUTPUT]} \texttt{outputs/support/evidence\_request\_list.md} -- document; Text artifact with 6 line(s); Generated as part of the Codex review record for this case.
+\item \textbf{E035 [CODEX OUTPUT]} \texttt{outputs/support/provided\_reserve\_summary.csv} -- generated review table; CSV artifact with 3 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E036 [CODEX OUTPUT]} \texttt{outputs/support/provided\_segment\_reserves.csv} -- generated review table; CSV artifact with 12 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E037 [CODEX OUTPUT]} \texttt{outputs/support/provided\_overlay\_bridge.csv} -- generated review table; CSV artifact with 4 data row(s); Generated as part of the Codex review record for this case.
+\item \textbf{E038 [CODEX OUTPUT]} \texttt{outputs/support/codex\_trace.md} -- document; Text artifact with 27 line(s); Readable execution trace of discovery, planning, execution, and synthesis.
+\end{itemize}
+\subsection*{Uploaded Package Tree}
+\begin{Verbatim}[fontsize=\small]
+input_package/
+  data/
+    data_dictionary.csv
+    sample_rollforward.csv
+  docs/
+    evidence_request_log.md
+    gap_tracker.md
+    governance_minutes.md
+    methodology.md
+    model_overview.md
+    overlay_memo.md
+    prior_review_note.md
+    scenario_assumptions.md
+  outputs/
+    provided_overlay_bridge.csv
+    provided_reserve_summary.csv
+    provided_segment_reserves.csv
+  scenarios/
+    adverse.csv
+    baseline.csv
+    severe.csv
+\end{Verbatim}
+\subsection*{Codex Output Tree}
+\begin{Verbatim}[fontsize=\small]
+outputs/
+  support/
+    agentic_review_log.md
+    analysis_summary.json
+    case_understanding.md
+    codex_trace.md
+    coverage_statement.md
+    discovery_summary.json
+    discovery_summary.md
+    documentation_crosscheck.md
+    evidence_excerpts.md
+    evidence_ledger.json
+    evidence_map.md
+    evidence_request_list.md
+    executed_test_matrix.csv
+    executed_test_matrix.md
+    findings_register.json
+    procedure_run_log.csv
+    procedure_run_log.md
+    provided_overlay_bridge.csv
+    provided_reserve_summary.csv
+    provided_segment_reserves.csv
+    review_plan.md
+    review_strategy.md
+\end{Verbatim}
 \section*{Package Discovery and Case Understanding}
 The discovered package is best understood as a documentation-led CECL gap assessment for Harborlight Savings's Q1 2026 CECL Readiness Gap Assessment. It contains narrative methodology, scenario definitions, prior output snapshots, and governance artifacts, but it does not contain the implementation artifacts required for execution-based validation.
 \begin{itemize}
@@ -101,96 +202,231 @@ GA-09 & Evidence request and remediation planning & Executed & The package still
 \end{tabularx}
 \normalsize
 \end{center}
+\section*{Selected Raw Evidence Excerpts}
+The excerpts below are short verbatim snippets from bank-uploaded materials and Codex-generated outputs that support the current gap assessment and coverage boundary.
+\subsection*{[BANK INPUT] docs/methodology.md}
+Documented forecast, reversion, segmentation, and missing-runtime boundary used in the gap assessment.
+\begin{Verbatim}[fontsize=\small]
+# CECL Methodology
+
+The documented CECL process for Harborlight Savings describes a 8-quarter reasonable-and-supportable period with 4 reversion quarters. Documentation states the reserve process covers the following segments:
+
+- Residential Mortgage
+- HELOC
+- CRE Investor
+- CRE Owner Occupied
+- Commercial and Industrial
+\end{Verbatim}
+\subsection*{[BANK INPUT] docs/scenario\_assumptions.md}
+Numeric scenario horizon and narrative-alignment discussion showing the mismatch between documented and provided scenario depth.
+\begin{Verbatim}[fontsize=\small]
+# Scenario Assumptions
+
+Severe is described as a uniformly harsher path than adverse across the full review horizon. Management expects house prices and unemployment to remain materially worse under severe in every quarter reviewed by governance.
+\end{Verbatim}
+\subsection*{[BANK INPUT] docs/overlay\_memo.md}
+Overlay cap language and segment overlay values that Codex challenged against the provided reserve bridge.
+\begin{Verbatim}[fontsize=\small]
+# Overlay Memo
+
+Qualitative overlay is described as modest and capped at 6.0 bps, pending additional governance evidence.
+\end{Verbatim}
+\subsection*{[BANK INPUT] outputs/provided\_overlay\_bridge.csv + outputs/provided\_segment\_reserves.csv}
+Bank-supplied output snapshots used for the documentation-led reconciliation work.
+\begin{Verbatim}[fontsize=\small]
+[provided_overlay_bridge.csv]
+segment_id,documented_cap_bps,provided_overlay_bps
+residential_mortgage,6.0,12.0
+heloc,6.0,16.0
+cre_investor,6.0,18.0
+commercial_and_industrial,6.0,14.0
+
+[provided_segment_reserves.csv]
+segment_id,scenario_name,reserve_amount
+residential_mortgage,baseline,8420000.0
+residential_mortgage,adverse,11300000.0
+residential_mortgage,severe,10980000.0
+heloc,baseline,5180000.0
+heloc,adverse,6450000.0
+heloc,severe,6430000.0
+cre_investor,baseline,11900000.0
+cre_investor,adverse,17120000.0
+cre_investor,severe,17880000.0
+commercial_and_industrial,baseline,12920000.0
+commercial_and_industrial,adverse,17310000.0
+commercial_and_industrial,severe,17720000.0
+\end{Verbatim}
+\subsection*{[CODEX OUTPUT] outputs/support/coverage\_statement.md}
+Codex-generated coverage boundary showing which procedures were supported and which were blocked.
+\begin{Verbatim}[fontsize=\small]
+# Coverage Statement
+
+The package contains useful CECL documentation and output snapshots, but it does not contain the implementation artifacts needed for execution-based validation.
+
+## Supported Work
+- Discovery and evidence sufficiency review
+- Scenario-definition consistency review
+- Provided-output reconciliation
+- Overlay documentation review
+
+## Blocked Work
+- Baseline reproduction
+- Scenario reruns against a reserve engine
+- Sensitivity testing on implementation assumptions
+- Model-code review
+\end{Verbatim}
+\subsection*{[CODEX OUTPUT] outputs/support/findings\_register.json}
+Codex-generated findings register capturing the primary documentation and evidence gaps.
+\begin{Verbatim}[fontsize=\small]
+{
+  "findings": [
+    {
+      "severity": "high",
+      "title": "Execution-based review is blocked by missing reserve engine and lineage evidence",
+      "summary": "The package includes prior outputs and narrative materials, but no reserve engine, reproducibility script, or lineaged runbook sufficient for execution-based review.",
+      "evidence": [
+        "docs/evidence_request_log.md",
+        "docs/gap_tracker.md",
+        "outputs/provided_reserve_summary.csv"
+      ]
+    },
+    {
+      "severity": "high",
+      "title": "Scenario narrative is not fully aligned to the supplied scenario tables",
+      "summary": "The severe scenario narrative describes a uniformly harsher path, but the supplied numeric scenarios show 4 quarter(s) where severe house-price growth is less severe than adverse.",
+      "evidence": [
+        "docs/scenario_assumptions.md",
+        "scenarios/adverse.csv",
+        "scenarios/severe.csv"
+      ]
+    },
+    {
+      "severity": "medium",
+      "title": "Documented segment structure does not reconcile to the provided reserve outputs",
+      "summary": "Documentation describes 5 segments, while the provided reserve outputs reconcile to 4 output segments.",
+      "evidence": [
+        "docs/methodology.md",
+        "docs/model_overview.md",
+        "outputs/provided_segment_reserves.csv"
+      ]
+    },
+    {
+      "severity": "medium",
+      "title": "Overlay documentation understates the magnitude implied by the provided reserve bridge",
+      "summary": "The overlay memo frames qualitative adjustment as capped at 6.0 bps, but the provided bridge shows up to 18.0 bps.",
+      "evidence": [
+        "docs/overlay_memo.md",
+        "outputs/provided_overlay_bridge.csv"
+      ]
+    }
+  ]
+}
+\end{Verbatim}
 \section*{Procedures Performed}
 \subsection*{GA-01 - Package inventory and coverage classification}
 Determine whether the upload supports execution-based review or only a documentation-led assessment.
 \begin{itemize}
-\item Status: executed
-\item Why selected: The package contained scenario files, output snapshots, and governance documents but no reserve engine or runtime lineage.
-\item Evidence relied upon: docs/evidence\_request\_log.md, docs/gap\_tracker.md, outputs/provided\_reserve\_summary.csv
-\item Outputs produced: discovery\_summary.md, coverage\_statement.md
-\item Assessment criteria: Execution-based procedures should be blocked unless code, runbook, and reproducibility evidence are present.
-\item Key result: Case classified as documentation-led CECL gap assessment; execution-based review blocked.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} The package contained scenario files, output snapshots, and governance documents but no reserve engine or runtime lineage.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/evidence\_request\_log.md}, \texttt{docs/gap\_tracker.md}, \texttt{outputs/provided\_reserve\_summary.csv}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{discovery\_summary.md}, \texttt{coverage\_statement.md}
+\item \textbf{Assessment criteria:} Execution-based procedures should be blocked unless code, runbook, and reproducibility evidence are present.
+\item \textbf{Key result:} Case classified as documentation-led CECL gap assessment; execution-based review blocked.
 \end{itemize}
 \subsection*{GA-02 - Execution readiness and lineage assessment}
 Establish whether the package includes the artifacts required for baseline reproduction and scenario reruns.
 \begin{itemize}
-\item Status: executed
-\item Why selected: A clear coverage boundary is necessary before any deeper opinion can be formed.
-\item Evidence relied upon: docs/evidence\_request\_log.md, docs/gap\_tracker.md, docs/governance\_minutes.md
-\item Outputs produced: coverage\_statement.md, documentation\_crosscheck.md
-\item Assessment criteria: Reserve engine, reproducibility materials, and run lineage must be available before execution work can proceed.
-\item Key result: Runtime validation remained blocked because no reserve engine, reproducibility notebook, or lineaged runbook was supplied.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} A clear coverage boundary is necessary before any deeper opinion can be formed.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/evidence\_request\_log.md}, \texttt{docs/gap\_tracker.md}, \texttt{docs/governance\_minutes.md}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{coverage\_statement.md}, \texttt{documentation\_crosscheck.md}
+\item \textbf{Assessment criteria:} Reserve engine, reproducibility materials, and run lineage must be available before execution work can proceed.
+\item \textbf{Key result:} Runtime validation remained blocked because no reserve engine, reproducibility notebook, or lineaged runbook was supplied.
 \end{itemize}
 \subsection*{GA-03 - Scenario narrative versus table comparison}
 Test whether the severe scenario narrative matches the supplied numeric scenario path.
 \begin{itemize}
-\item Status: executed
-\item Why selected: Scenario definition quality is reviewable even without runnable code.
-\item Evidence relied upon: docs/scenario\_assumptions.md, scenarios/adverse.csv, scenarios/severe.csv
-\item Outputs produced: documentation\_crosscheck.md, findings\_register.json
-\item Assessment criteria: A narrative described as uniformly harsher should be reflected in the quarter-by-quarter numeric path or explicitly qualified.
-\item Key result: Severe house-price growth was less severe than adverse in 4 quarters: 2026Q3, 2026Q4, 2027Q1, 2027Q2.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} Scenario definition quality is reviewable even without runnable code.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/scenario\_assumptions.md}, \texttt{scenarios/adverse.csv}, \texttt{scenarios/severe.csv}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{documentation\_crosscheck.md}, \texttt{findings\_register.json}
+\item \textbf{Assessment criteria:} A narrative described as uniformly harsher should be reflected in the quarter-by-quarter numeric path or explicitly qualified.
+\item \textbf{Key result:} Severe house-price growth was less severe than adverse in 4 quarters: 2026Q3, 2026Q4, 2027Q1, 2027Q2.
 \end{itemize}
 \subsection*{GA-04 - Horizon and reversion consistency review}
 Test whether documented forecast and reversion descriptions reconcile across methodology, model overview, and supplied scenario files.
 \begin{itemize}
-\item Status: executed
-\item Why selected: Horizon and reversion are governance-critical CECL assumptions even when the implementation is absent.
-\item Evidence relied upon: docs/methodology.md, docs/model\_overview.md, docs/scenario\_assumptions.md
-\item Outputs produced: documentation\_crosscheck.md, findings\_register.json
-\item Assessment criteria: Documents should describe a consistent forecast and reversion framework that is evidenced in supplied files.
-\item Key result: Methodology, model overview, and scenario files do not describe one consistent horizon/reversion structure.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} Horizon and reversion are governance-critical CECL assumptions even when the implementation is absent.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/methodology.md}, \texttt{docs/model\_overview.md}, \texttt{docs/scenario\_assumptions.md}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{documentation\_crosscheck.md}, \texttt{findings\_register.json}
+\item \textbf{Assessment criteria:} Documents should describe a consistent forecast and reversion framework that is evidenced in supplied files.
+\item \textbf{Key result:} Methodology, model overview, and scenario files do not describe one consistent horizon/reversion structure.
 \end{itemize}
 \subsection*{GA-05 - Segment taxonomy reconciliation}
 Compare documented segment definitions to the segment structure in the provided reserve outputs.
 \begin{itemize}
-\item Status: executed
-\item Why selected: Output reconciliation is one of the few quantitative checks available without the model.
-\item Evidence relied upon: docs/methodology.md, docs/model\_overview.md, outputs/provided\_segment\_reserves.csv
-\item Outputs produced: provided\_segment\_reserves.csv, findings\_register.json
-\item Assessment criteria: Documented segment structure should match the segmentation of provided output files or be explicitly bridged.
-\item Key result: Documentation references 5 segments, while outputs reconcile to 4 segments.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} Output reconciliation is one of the few quantitative checks available without the model.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/methodology.md}, \texttt{docs/model\_overview.md}, \texttt{outputs/provided\_segment\_reserves.csv}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{provided\_segment\_reserves.csv}, \texttt{findings\_register.json}
+\item \textbf{Assessment criteria:} Documented segment structure should match the segmentation of provided output files or be explicitly bridged.
+\item \textbf{Key result:} Documentation references 5 segments, while outputs reconcile to 4 segments.
 \end{itemize}
 \subsection*{GA-06 - Overlay magnitude reconciliation}
 Compare documented overlay posture to the reserve bridge included in the package.
 \begin{itemize}
-\item Status: executed
-\item Why selected: Overlay support is reviewable from documentation and provided output snapshots even without code.
-\item Evidence relied upon: docs/overlay\_memo.md, outputs/provided\_overlay\_bridge.csv
-\item Outputs produced: provided\_overlay\_bridge.csv, findings\_register.json
-\item Assessment criteria: Documented overlay cap and rationale should reconcile to the magnitude shown in the reserve bridge.
-\item Key result: Overlay memo cites a 6.0 bps cap while the provided bridge reaches 18.0 bps.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} Overlay support is reviewable from documentation and provided output snapshots even without code.
+\item \textbf{Bank-input evidence relied upon:} \texttt{docs/overlay\_memo.md}, \texttt{outputs/provided\_overlay\_bridge.csv}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{provided\_overlay\_bridge.csv}, \texttt{findings\_register.json}
+\item \textbf{Assessment criteria:} Documented overlay cap and rationale should reconcile to the magnitude shown in the reserve bridge.
+\item \textbf{Key result:} Overlay memo cites a 6.0 bps cap while the provided bridge reaches 18.0 bps.
 \end{itemize}
 \subsection*{GA-07 - Baseline reproduction}
 Reproduce the baseline reserve from the implementation and baseline scenario.
 \begin{itemize}
-\item Status: blocked
-\item Why selected: This would normally be a core CECL procedure if the package contained runnable implementation artifacts.
-\item Evidence relied upon: outputs/provided\_reserve\_summary.csv, docs/evidence\_request\_log.md
-\item Outputs produced: coverage\_statement.md, evidence\_request\_list.md
-\item Assessment criteria: Cannot proceed without reserve engine, reproducibility materials, and execution lineage.
-\item Key result: Not executed because the package contains no reserve engine or reproducibility notebook.
+\item \textbf{Status:} blocked
+\item \textbf{Why selected:} This would normally be a core CECL procedure if the package contained runnable implementation artifacts.
+\item \textbf{Bank-input evidence relied upon:} \texttt{outputs/provided\_reserve\_summary.csv}, \texttt{docs/evidence\_request\_log.md}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{coverage\_statement.md}, \texttt{evidence\_request\_list.md}
+\item \textbf{Assessment criteria:} Cannot proceed without reserve engine, reproducibility materials, and execution lineage.
+\item \textbf{Key result:} Not executed because the package contains no reserve engine or reproducibility notebook.
+\end{itemize}
+\begin{itemize}
+\item \textbf{Blocking factor:} Missing reserve engine and execution lineage.
 \end{itemize}
 \subsection*{GA-08 - Scenario reruns and sensitivity testing}
 Rerun scenarios and challenge reserve sensitivity to key assumptions.
 \begin{itemize}
-\item Status: blocked
-\item Why selected: These procedures were considered because they would normally follow scenario and methodology review.
-\item Evidence relied upon: scenarios/baseline.csv, scenarios/adverse.csv, scenarios/severe.csv, docs/gap\_tracker.md
-\item Outputs produced: coverage\_statement.md, evidence\_request\_list.md
-\item Assessment criteria: Cannot proceed without executable reserve logic, controllable parameters, and runbook support.
-\item Key result: Not executed because no model implementation or controllable parameter set was supplied.
+\item \textbf{Status:} blocked
+\item \textbf{Why selected:} These procedures were considered because they would normally follow scenario and methodology review.
+\item \textbf{Bank-input evidence relied upon:} \texttt{scenarios/baseline.csv}, \texttt{scenarios/adverse.csv}, \texttt{scenarios/severe.csv}, \texttt{docs/gap\_tracker.md}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{coverage\_statement.md}, \texttt{evidence\_request\_list.md}
+\item \textbf{Assessment criteria:} Cannot proceed without executable reserve logic, controllable parameters, and runbook support.
+\item \textbf{Key result:} Not executed because no model implementation or controllable parameter set was supplied.
+\end{itemize}
+\begin{itemize}
+\item \textbf{Blocking factor:} Missing runtime artifacts and parameter lineage.
 \end{itemize}
 \subsection*{GA-09 - Evidence request and remediation planning}
 Translate identified blockers and inconsistencies into a prioritized request list for a future execution-based review.
 \begin{itemize}
-\item Status: executed
-\item Why selected: The package still supports useful next-step guidance even without runnable code.
-\item Evidence relied upon: findings\_register.json, coverage\_statement.md, docs/evidence\_request\_log.md
-\item Outputs produced: evidence\_request\_list.md
-\item Assessment criteria: Evidence requests should map directly to blocked procedures and identified gaps.
-\item Key result: Produced a focused evidence request list to unlock baseline reproduction, scenario reruns, and deeper model challenge.
+\item \textbf{Status:} executed
+\item \textbf{Why selected:} The package still supports useful next-step guidance even without runnable code.
+\item \textbf{Bank-input evidence relied upon:} \texttt{findings\_register.json}, \texttt{coverage\_statement.md}, \texttt{docs/evidence\_request\_log.md}
+\item \textbf{Codex-generated evidence relied upon:} \textit{None}
+\item \textbf{Codex-generated outputs produced:} \texttt{evidence\_request\_list.md}
+\item \textbf{Assessment criteria:} Evidence requests should map directly to blocked procedures and identified gaps.
+\item \textbf{Key result:} Produced a focused evidence request list to unlock baseline reproduction, scenario reruns, and deeper model challenge.
 \end{itemize}
 \section*{Agentic Execution Workflow}
 \subsection*{Discovery}
@@ -232,6 +468,98 @@ The final stage combined discovery, planning, blocked-work logic, and documentat
 \item Decision or rationale: Issue a documentation-led gap assessment with explicit blockers, findings, and next-step evidence requests rather than overclaiming execution coverage.
 \item Inputs reviewed: findings\_register.json, coverage\_statement.md, evidence\_request\_list.md, agentic\_review\_log.md
 \item Outputs produced: cecl\_gap\_assessment.tex, cecl\_gap\_assessment.pdf
+\end{itemize}
+\section*{Chronological Procedure and Output Log}
+This section records the more granular action sequence for the gap assessment, including both executed documentation-led checks and explicitly blocked runtime procedures.
+\subsection*{EVT-01 - Inventory uploaded package}
+\begin{itemize}
+\item \textbf{Phase:} discovery
+\item \textbf{Related procedure:} GA-01
+\item \textbf{Action:} Enumerated the documentation package and checked whether a reserve engine, reproducibility notebook, and execution lineage were present.
+\item \textbf{Inputs:} \texttt{input\_package/docs/*.md}, \texttt{input\_package/scenarios/*.csv}, \texttt{input\_package/outputs/*.csv}
+\item \textbf{Outputs:} \texttt{outputs/support/discovery\_summary.md}, \texttt{outputs/support/evidence\_ledger.json}
+\item \textbf{Result:} Case classified as documentation-led CECL gap assessment because runtime artifacts were not supplied.
+\end{itemize}
+\subsection*{EVT-02 - Define supported and blocked review lanes}
+\begin{itemize}
+\item \textbf{Phase:} planning
+\item \textbf{Related procedure:} GA-01
+\item \textbf{Action:} Separated executable documentation-led checks from blocked runtime procedures before deeper review work.
+\item \textbf{Inputs:} \texttt{outputs/support/discovery\_summary.md}, \texttt{input\_package/docs/evidence\_request\_log.md}, \texttt{input\_package/docs/gap\_tracker.md}
+\item \textbf{Outputs:} \texttt{outputs/support/review\_plan.md}, \texttt{outputs/support/review\_strategy.md}, \texttt{outputs/support/coverage\_statement.md}
+\item \textbf{Result:} Evidence sufficiency, scenario consistency, output reconciliation, and overlay review retained; baseline reproduction and sensitivities blocked.
+\end{itemize}
+\subsection*{EVT-03 - Assess execution readiness and lineage}
+\begin{itemize}
+\item \textbf{Phase:} documentation\_challenge
+\item \textbf{Related procedure:} GA-02
+\item \textbf{Action:} Reviewed governance and evidence-request materials to determine whether the package could support model execution or reproduction.
+\item \textbf{Inputs:} \texttt{input\_package/docs/evidence\_request\_log.md}, \texttt{input\_package/docs/gap\_tracker.md}, \texttt{input\_package/docs/governance\_minutes.md}
+\item \textbf{Outputs:} \texttt{outputs/support/coverage\_statement.md}, \texttt{outputs/support/documentation\_crosscheck.md}
+\item \textbf{Result:} Confirmed that no reserve engine, reproducibility notebook, or lineaged runbook was available.
+\end{itemize}
+\subsection*{EVT-04 - Compare scenario narrative to numeric scenario files}
+\begin{itemize}
+\item \textbf{Phase:} documentation\_challenge
+\item \textbf{Related procedure:} GA-03
+\item \textbf{Action:} Compared the severe scenario narrative to quarter-by-quarter severe and adverse scenario tables.
+\item \textbf{Inputs:} \texttt{input\_package/docs/scenario\_assumptions.md}, \texttt{input\_package/scenarios/adverse.csv}, \texttt{input\_package/scenarios/severe.csv}
+\item \textbf{Outputs:} \texttt{outputs/support/documentation\_crosscheck.md}, \texttt{outputs/support/findings\_register.json}
+\item \textbf{Result:} Found severe house-price growth less severe than adverse in 4 quarter(s): 2026Q3, 2026Q4, 2027Q1, 2027Q2.
+\end{itemize}
+\subsection*{EVT-05 - Reconcile horizon and reversion descriptions}
+\begin{itemize}
+\item \textbf{Phase:} documentation\_challenge
+\item \textbf{Related procedure:} GA-04
+\item \textbf{Action:} Compared methodology, model overview, and scenario package to determine whether one consistent forecast and reversion structure was evidenced.
+\item \textbf{Inputs:} \texttt{input\_package/docs/methodology.md}, \texttt{input\_package/docs/model\_overview.md}, \texttt{input\_package/docs/scenario\_assumptions.md}
+\item \textbf{Outputs:} \texttt{outputs/support/documentation\_crosscheck.md}, \texttt{outputs/support/findings\_register.json}
+\item \textbf{Result:} Identified inconsistent 8Q/4Q and 6Q/2Q horizon descriptions with only six numeric quarters provided.
+\end{itemize}
+\subsection*{EVT-06 - Reconcile documented segments to output segments}
+\begin{itemize}
+\item \textbf{Phase:} documentation\_challenge
+\item \textbf{Related procedure:} GA-05
+\item \textbf{Action:} Compared documented segment taxonomy to the segments used in the provided reserve output files.
+\item \textbf{Inputs:} \texttt{input\_package/docs/methodology.md}, \texttt{input\_package/docs/model\_overview.md}, \texttt{input\_package/outputs/provided\_segment\_reserves.csv}
+\item \textbf{Outputs:} \texttt{outputs/support/findings\_register.json}
+\item \textbf{Result:} Documentation lists 5 segments while provided outputs reconcile to 4 segments.
+\end{itemize}
+\subsection*{EVT-07 - Reconcile documented overlay cap to provided overlay bridge}
+\begin{itemize}
+\item \textbf{Phase:} documentation\_challenge
+\item \textbf{Related procedure:} GA-06
+\item \textbf{Action:} Compared the documented overlay cap and governance description to the segment overlay values in the provided bridge.
+\item \textbf{Inputs:} \texttt{input\_package/docs/overlay\_memo.md}, \texttt{input\_package/outputs/provided\_overlay\_bridge.csv}
+\item \textbf{Outputs:} \texttt{outputs/support/findings\_register.json}
+\item \textbf{Result:} Documented overlay cap of 6.0 bps did not reconcile to provided overlay values reaching 18.0 bps.
+\end{itemize}
+\subsection*{EVT-08 - Record blocked baseline reproduction}
+\begin{itemize}
+\item \textbf{Phase:} blocked\_work
+\item \textbf{Related procedure:} GA-07
+\item \textbf{Action:} Evaluated whether baseline reproduction could be performed and formally logged why it was not executed.
+\item \textbf{Inputs:} \texttt{input\_package/outputs/provided\_reserve\_summary.csv}, \texttt{input\_package/docs/evidence\_request\_log.md}
+\item \textbf{Outputs:} \texttt{outputs/support/coverage\_statement.md}, \texttt{outputs/support/evidence\_request\_list.md}
+\item \textbf{Result:} Baseline reproduction blocked because no reserve engine or reproducibility notebook was supplied.
+\end{itemize}
+\subsection*{EVT-09 - Record blocked scenario reruns and sensitivity testing}
+\begin{itemize}
+\item \textbf{Phase:} blocked\_work
+\item \textbf{Related procedure:} GA-08
+\item \textbf{Action:} Evaluated whether scenario reruns and sensitivity tests could be performed and formally logged why they were not executed.
+\item \textbf{Inputs:} \texttt{input\_package/scenarios/*.csv}, \texttt{input\_package/docs/gap\_tracker.md}
+\item \textbf{Outputs:} \texttt{outputs/support/coverage\_statement.md}, \texttt{outputs/support/evidence\_request\_list.md}
+\item \textbf{Result:} Sensitivity testing blocked because no model implementation, controllable parameters, or runbook support was supplied.
+\end{itemize}
+\subsection*{EVT-10 - Assemble internal gap-assessment pack}
+\begin{itemize}
+\item \textbf{Phase:} synthesis
+\item \textbf{Related procedure:} GA-09
+\item \textbf{Action:} Combined discovery, coverage boundary, documentation findings, and evidence requests into the final internal gap-assessment report pack.
+\item \textbf{Inputs:} \texttt{outputs/support/review\_strategy.md}, \texttt{outputs/support/procedure\_run\_log.md}, \texttt{outputs/support/findings\_register.json}, \texttt{outputs/support/evidence\_request\_list.md}
+\item \textbf{Outputs:} \texttt{outputs/stakeholder/cecl\_gap\_assessment.tex}, \texttt{outputs/stakeholder/cecl\_gap\_assessment.pdf}
+\item \textbf{Result:} Produced a comprehensive CECL gap assessment showing both executed documentation-led work and blocked runtime work.
 \end{itemize}
 \section*{Provided Output Snapshot}
 Although no executable reserve engine was supplied, the package included prior reserve summaries and segment output snapshots that could be reconciled at a high level.

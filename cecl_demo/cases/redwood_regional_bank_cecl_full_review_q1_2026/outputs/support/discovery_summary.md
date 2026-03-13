@@ -4,18 +4,23 @@
 - Context: regional bank commercial and retail loan portfolio
 
 ## Package Inventory
-- `model/cecl_engine.py` (code)
+- `data/data_dictionary.csv` (dataset)
 - `data/loan_level_snapshot.csv` (dataset)
-- `data/data_dictionary.csv` (document)
-- `data/overlay_schedule.csv` (config)
-- `scenarios/baseline.csv` (scenario)
-- `scenarios/adverse.csv` (scenario)
-- `scenarios/severe.csv` (scenario)
+- `data/overlay_schedule.csv` (dataset)
+- `docs/control_process_note.md` (document)
+- `docs/governance_minutes.md` (document)
 - `docs/methodology.md` (document)
 - `docs/model_overview.md` (document)
-- `docs/scenario_assumptions.md` (document)
 - `docs/overlay_memo.md` (document)
-- `outputs/prior_baseline_reserve.csv` (metrics)
+- `docs/prior_review_note.md` (document)
+- `docs/scenario_assumptions.md` (document)
+- `model/cecl_engine.py` (code)
+- `outputs/prior_baseline_reserve.csv` (packaged output table)
+- `outputs/prior_scenario_summary.csv` (packaged output table)
+- `outputs/prior_segment_reserves.csv` (packaged output table)
+- `scenarios/adverse.csv` (scenario table)
+- `scenarios/baseline.csv` (scenario table)
+- `scenarios/severe.csv` (scenario table)
 
 ## Key Observations
 - Reserve engine, scenario tables, prior outputs, and supporting methodology documents were all present.

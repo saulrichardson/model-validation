@@ -856,12 +856,25 @@ def build_data_dictionary() -> pd.DataFrame:
 def build_evidence_ledger(paths: list[str]) -> list[dict[str, Any]]:
     ledger = []
     for index, relative_path in enumerate(paths, start=1):
+        if relative_path.startswith("outputs/support/"):
+            origin = "codex_generated_review_artifact"
+            provenance_label = "[CODEX OUTPUT]"
+        elif relative_path.startswith("outputs/stakeholder/"):
+            origin = "codex_generated_final_deliverable"
+            provenance_label = "[CODEX OUTPUT]"
+        else:
+            origin = "bank_uploaded_input"
+            provenance_label = "[BANK INPUT]"
+        area = Path(relative_path).parts[0] if Path(relative_path).parts else "unknown"
         ledger.append(
             {
                 "evidence_id": f"E{index:03d}",
                 "relative_path": relative_path,
                 "title": Path(relative_path).name,
-                "summary": f"Evidence from {relative_path}",
+                "summary": f"{provenance_label} Evidence from {relative_path}",
+                "origin": origin,
+                "provenance_label": provenance_label,
+                "area": area,
             }
         )
     return ledger

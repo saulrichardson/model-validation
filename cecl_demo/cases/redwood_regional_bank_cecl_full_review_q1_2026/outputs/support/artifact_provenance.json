@@ -1,0 +1,328 @@
+{
+  "uploaded_artifacts": [
+    {
+      "artifact_id": "E001",
+      "label": "E001 [BANK INPUT]",
+      "relative_path": "data/data_dictionary.csv",
+      "kind_label": "dataset",
+      "detail": "CSV artifact with 13 data row(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E002",
+      "label": "E002 [BANK INPUT]",
+      "relative_path": "data/loan_level_snapshot.csv",
+      "kind_label": "dataset",
+      "detail": "CSV artifact with 1200 data row(s)",
+      "use_summary": "Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Baseline reproduction: Confirm that the packaged baseline reserve can be reproduced from the supplied engine and portfolio inputs."
+    },
+    {
+      "artifact_id": "E003",
+      "label": "E003 [BANK INPUT]",
+      "relative_path": "data/overlay_schedule.csv",
+      "kind_label": "dataset",
+      "detail": "CSV artifact with 12 data row(s)",
+      "use_summary": "Overlay magnitude sensitivity: Assess the reserve effect of removing or amplifying qualitative overlays."
+    },
+    {
+      "artifact_id": "E004",
+      "label": "E004 [BANK INPUT]",
+      "relative_path": "docs/control_process_note.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 3 line(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E005",
+      "label": "E005 [BANK INPUT]",
+      "relative_path": "docs/governance_minutes.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 3 line(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E006",
+      "label": "E006 [BANK INPUT]",
+      "relative_path": "docs/methodology.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 20 line(s)",
+      "use_summary": "Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Forecast horizon sensitivity: Assess reserve sensitivity to changing the reasonable-and-supportable forecast horizon.; Reversion speed sensitivity: Assess how severe-scenario reserve responds to longer reversion periods.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs."
+    },
+    {
+      "artifact_id": "E007",
+      "label": "E007 [BANK INPUT]",
+      "relative_path": "docs/model_overview.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 7 line(s)",
+      "use_summary": "Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs."
+    },
+    {
+      "artifact_id": "E008",
+      "label": "E008 [BANK INPUT]",
+      "relative_path": "docs/overlay_memo.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 3 line(s)",
+      "use_summary": "Segment-level reasonableness review: Test whether scenario ordering remains directionally sensible at the segment level.; Overlay magnitude sensitivity: Assess the reserve effect of removing or amplifying qualitative overlays.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs."
+    },
+    {
+      "artifact_id": "E009",
+      "label": "E009 [BANK INPUT]",
+      "relative_path": "docs/prior_review_note.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 3 line(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E010",
+      "label": "E010 [BANK INPUT]",
+      "relative_path": "docs/scenario_assumptions.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 5 line(s)",
+      "use_summary": "Segment-level reasonableness review: Test whether scenario ordering remains directionally sensible at the segment level.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs."
+    },
+    {
+      "artifact_id": "E011",
+      "label": "E011 [BANK INPUT]",
+      "relative_path": "model/cecl_engine.py",
+      "kind_label": "code",
+      "detail": "Text artifact with 177 line(s)",
+      "use_summary": "Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Baseline reproduction: Confirm that the packaged baseline reserve can be reproduced from the supplied engine and portfolio inputs.; Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.; Methodology and documentation alignment review: Test whether written methodology, model overview, and overlay documentation match implemented behavior and observed outputs."
+    },
+    {
+      "artifact_id": "E012",
+      "label": "E012 [BANK INPUT]",
+      "relative_path": "outputs/prior_baseline_reserve.csv",
+      "kind_label": "packaged output table",
+      "detail": "CSV artifact with 1200 data row(s)",
+      "use_summary": "Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Baseline reproduction: Confirm that the packaged baseline reserve can be reproduced from the supplied engine and portfolio inputs."
+    },
+    {
+      "artifact_id": "E013",
+      "label": "E013 [BANK INPUT]",
+      "relative_path": "outputs/prior_scenario_summary.csv",
+      "kind_label": "packaged output table",
+      "detail": "CSV artifact with 3 data row(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E014",
+      "label": "E014 [BANK INPUT]",
+      "relative_path": "outputs/prior_segment_reserves.csv",
+      "kind_label": "packaged output table",
+      "detail": "CSV artifact with 12 data row(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E015",
+      "label": "E015 [BANK INPUT]",
+      "relative_path": "scenarios/adverse.csv",
+      "kind_label": "scenario table",
+      "detail": "CSV artifact with 8 data row(s)",
+      "use_summary": "Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering."
+    },
+    {
+      "artifact_id": "E016",
+      "label": "E016 [BANK INPUT]",
+      "relative_path": "scenarios/baseline.csv",
+      "kind_label": "scenario table",
+      "detail": "CSV artifact with 8 data row(s)",
+      "use_summary": "Package inventory and case classification: Determine whether the upload supports a model-driven CECL review and identify the core evidence types available.; Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.; Reserve driver bridge: Identify which macro and overlay drivers explain the majority of severe-versus-baseline reserve movement."
+    },
+    {
+      "artifact_id": "E017",
+      "label": "E017 [BANK INPUT]",
+      "relative_path": "scenarios/severe.csv",
+      "kind_label": "scenario table",
+      "detail": "CSV artifact with 8 data row(s)",
+      "use_summary": "Portfolio-level scenario reruns: Run Baseline, Adverse, and Severe scenarios and assess directional reserve ordering.; Macro severity sensitivity: Test whether reserve responds proportionally to macro severity scaling.; Reserve driver bridge: Identify which macro and overlay drivers explain the majority of severe-versus-baseline reserve movement."
+    }
+  ],
+  "generated_artifacts": [
+    {
+      "artifact_id": "E018",
+      "label": "E018 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/discovery_summary.json",
+      "kind_label": "json artifact",
+      "detail": "Text artifact with 81 line(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E019",
+      "label": "E019 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/discovery_summary.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 31 line(s)",
+      "use_summary": "Summarizes what Codex identified in the uploaded package during discovery."
+    },
+    {
+      "artifact_id": "E020",
+      "label": "E020 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/case_understanding.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 25 line(s)",
+      "use_summary": "Records Codex's synthesized view of the CECL process, assumptions, and constraints."
+    },
+    {
+      "artifact_id": "E021",
+      "label": "E021 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/review_plan.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 27 line(s)",
+      "use_summary": "Captures the planned review procedures before detailed execution."
+    },
+    {
+      "artifact_id": "E022",
+      "label": "E022 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/review_strategy.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 81 line(s)",
+      "use_summary": "Explains why specific procedures were selected from the discovered evidence."
+    },
+    {
+      "artifact_id": "E023",
+      "label": "E023 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/executed_test_matrix.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 14 line(s)",
+      "use_summary": "Registers which procedures were executed, blocked, and what each procedure concluded."
+    },
+    {
+      "artifact_id": "E024",
+      "label": "E024 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/executed_test_matrix.csv",
+      "kind_label": "generated review table",
+      "detail": "CSV artifact with 10 data row(s)",
+      "use_summary": "Machine-readable form of the executed procedure register."
+    },
+    {
+      "artifact_id": "E025",
+      "label": "E025 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/evidence_map.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 73 line(s)",
+      "use_summary": "Maps uploaded and derived artifacts to the procedures they supported."
+    },
+    {
+      "artifact_id": "E026",
+      "label": "E026 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/agentic_review_log.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 43 line(s)",
+      "use_summary": "Readable stage-level summary of the intended Codex review flow."
+    },
+    {
+      "artifact_id": "E027",
+      "label": "E027 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/procedure_run_log.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 99 line(s)",
+      "use_summary": "Chronological log of granular review actions and outputs."
+    },
+    {
+      "artifact_id": "E028",
+      "label": "E028 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/procedure_run_log.csv",
+      "kind_label": "generated review table",
+      "detail": "CSV artifact with 12 data row(s)",
+      "use_summary": "Machine-readable chronology of granular review actions."
+    },
+    {
+      "artifact_id": "E029",
+      "label": "E029 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/evidence_excerpts.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 190 line(s)",
+      "use_summary": "Collects raw excerpts from uploaded materials and review outputs used in the writeup."
+    },
+    {
+      "artifact_id": "E030",
+      "label": "E030 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/baseline_reproduction.json",
+      "kind_label": "json artifact",
+      "detail": "Text artifact with 37 line(s)",
+      "use_summary": "Stores baseline reproduction metrics used in the full-review conclusion."
+    },
+    {
+      "artifact_id": "E031",
+      "label": "E031 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/scenario_results.csv",
+      "kind_label": "generated review table",
+      "detail": "CSV artifact with 3 data row(s)",
+      "use_summary": "Stores Codex-produced portfolio scenario rerun results."
+    },
+    {
+      "artifact_id": "E032",
+      "label": "E032 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/segment_reserve_comparison.csv",
+      "kind_label": "generated review table",
+      "detail": "CSV artifact with 4 data row(s)",
+      "use_summary": "Segment-level reasonableness review: Test whether scenario ordering remains directionally sensible at the segment level."
+    },
+    {
+      "artifact_id": "E033",
+      "label": "E033 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/sensitivity_results.csv",
+      "kind_label": "generated review table",
+      "detail": "CSV artifact with 12 data row(s)",
+      "use_summary": "Forecast horizon sensitivity: Assess reserve sensitivity to changing the reasonable-and-supportable forecast horizon.; Reversion speed sensitivity: Assess how severe-scenario reserve responds to longer reversion periods.; Macro severity sensitivity: Test whether reserve responds proportionally to macro severity scaling.; Overlay magnitude sensitivity: Assess the reserve effect of removing or amplifying qualitative overlays."
+    },
+    {
+      "artifact_id": "E034",
+      "label": "E034 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/driver_bridge.csv",
+      "kind_label": "generated review table",
+      "detail": "CSV artifact with 6 data row(s)",
+      "use_summary": "Reserve driver bridge: Identify which macro and overlay drivers explain the majority of severe-versus-baseline reserve movement."
+    },
+    {
+      "artifact_id": "E035",
+      "label": "E035 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/documentation_crosscheck.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 25 line(s)",
+      "use_summary": "Stores documentation-versus-implementation and output cross-check observations."
+    },
+    {
+      "artifact_id": "E036",
+      "label": "E036 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/findings_register.json",
+      "kind_label": "json artifact",
+      "detail": "Text artifact with 44 line(s)",
+      "use_summary": "Registers findings, severity, and supporting evidence references."
+    },
+    {
+      "artifact_id": "E037",
+      "label": "E037 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/analysis_summary.json",
+      "kind_label": "json artifact",
+      "detail": "Text artifact with 7 line(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E038",
+      "label": "E038 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/evidence_ledger.json",
+      "kind_label": "json artifact",
+      "detail": "Text artifact with 364 line(s)",
+      "use_summary": "Generated as part of the Codex review record for this case."
+    },
+    {
+      "artifact_id": "E039",
+      "label": "E039 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/coverage_statement.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 13 line(s)",
+      "use_summary": "States supported versus blocked review coverage."
+    },
+    {
+      "artifact_id": "E040",
+      "label": "E040 [CODEX OUTPUT]",
+      "relative_path": "outputs/support/codex_trace.md",
+      "kind_label": "document",
+      "detail": "Text artifact with 33 line(s)",
+      "use_summary": "Readable execution trace of discovery, planning, execution, and synthesis."
+    }
+  ],
+  "input_tree": "input_package/\n  data/\n    data_dictionary.csv\n    loan_level_snapshot.csv\n    overlay_schedule.csv\n  docs/\n    control_process_note.md\n    governance_minutes.md\n    methodology.md\n    model_overview.md\n    overlay_memo.md\n    prior_review_note.md\n    scenario_assumptions.md\n  model/\n    cecl_engine.py\n  outputs/\n    prior_baseline_reserve.csv\n    prior_scenario_summary.csv\n    prior_segment_reserves.csv\n  scenarios/\n    adverse.csv\n    baseline.csv\n    severe.csv",
+  "generated_tree": "outputs/\n  support/\n    agentic_review_log.md\n    analysis_summary.json\n    baseline_reproduction.json\n    case_understanding.md\n    codex_trace.md\n    coverage_statement.md\n    discovery_summary.json\n    discovery_summary.md\n    documentation_crosscheck.md\n    driver_bridge.csv\n    evidence_excerpts.md\n    evidence_ledger.json\n    evidence_map.md\n    executed_test_matrix.csv\n    executed_test_matrix.md\n    findings_register.json\n    procedure_run_log.csv\n    procedure_run_log.md\n    review_plan.md\n    review_strategy.md\n    scenario_results.csv\n    segment_reserve_comparison.csv\n    sensitivity_results.csv"
+}
