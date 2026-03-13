@@ -1,0 +1,9 @@
+reason_code,consumer_statement
+LOW_BUREAU_SCORE,Credit bureau score below policy expectation.
+HIGH_DTI,Debt obligations are high relative to income.
+HIGH_UTILIZATION,Revolving credit utilization is elevated.
+RECENT_DELINQUENCY,Recent delinquency history increased observed risk.
+RECENT_CREDIT_SEEKING,Recent credit inquiries indicate higher credit seeking.
+THIN_CREDIT_FILE,Limited credit history reduced score confidence.
+SHORT_EMPLOYMENT_TENURE,Short employment tenure reduced resilience assessment.
+LOW_CASH_BUFFER,Available cash reserves were lower than policy expectations.

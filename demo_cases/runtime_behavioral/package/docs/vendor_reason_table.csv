@@ -1,0 +1,5 @@
+reason_code,label
+RC101,External credit score below minimum expectation.
+RC104,Debt burden exceeds policy tolerance.
+RC112,Revolving utilization is elevated.
+RC207,Thin file reduced confidence in repayment estimate.

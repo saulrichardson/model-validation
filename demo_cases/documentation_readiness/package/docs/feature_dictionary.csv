@@ -1,0 +1,9 @@
+feature_name,business_definition,documented
+fico_band,External bureau risk band,1
+ltv_ratio,Current combined loan-to-value ratio,1
+dti_ratio,Debt burden at application,1
+payment_shock_index,Estimated payment shock under stress,1
+verified_income_stability,Stability score based on verified income trends,1
+manual_override_flag,Indicator that manual override channel was used,1
+override_propensity_score,Estimated probability of manual override,1
+zip_risk_band,Internal ZIP concentration risk band,1

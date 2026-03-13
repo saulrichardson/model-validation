@@ -1,0 +1,15 @@
+{
+  "demo_id": "runtime_behavioral",
+  "title": "Vendor Black-Box Behavioral Review",
+  "description": "Opaque vendor scoring package with executable runtime, smoke inputs, and limited supporting documentation.",
+  "expected_case_type": "vendor_black_box_review",
+  "package_dir": "runtime_behavioral/package",
+  "highlights": [
+    "Runtime harness is executable but conceptual design evidence is absent.",
+    "Reason code table omits the generic RC900 output actually produced by the harness.",
+    "Package includes a production score distribution for behavioral comparison."
+  ],
+  "expected_workflow": "black_box_behavioral_review",
+  "expected_report_type": "partial_validation_report",
+  "minimum_coverage_ratio": 0.75
+}

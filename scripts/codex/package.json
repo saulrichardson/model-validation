@@ -1,0 +1,30 @@
+{
+  "name": "workbench-codex-runner",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TypeScript Codex SDK orchestrator for the local bank model validation workbench",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "discover": "tsx src/discover.ts",
+    "resolve": "tsx src/resolve.ts",
+    "execute": "tsx src/execute.ts",
+    "report": "tsx src/report.ts",
+    "run-case": "tsx src/run-case.ts",
+    "preflight": "tsx src/preflight.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "@openai/codex-sdk": "^0.114.0",
+    "dotenv": "^16.6.1",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2"
+  }
+}

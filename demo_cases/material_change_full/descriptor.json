@@ -1,0 +1,15 @@
+{
+  "demo_id": "material_change_full",
+  "title": "Material Change Revalidation",
+  "description": "Comprehensive lending model package with baseline and candidate versions, runnable code, metrics, and documentation.",
+  "expected_case_type": "material_change_revalidation",
+  "package_dir": "material_change_full/package",
+  "highlights": [
+    "Rerunnable baseline and candidate models.",
+    "Methodology, change request, and adverse-action mapping are aligned to the candidate liquidity feature.",
+    "Package is designed to support a full material-change revalidation memo and sensitivity appendix."
+  ],
+  "expected_workflow": "full_revalidation",
+  "expected_report_type": "full_revalidation_memo",
+  "minimum_coverage_ratio": 0.7
+}

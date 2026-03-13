@@ -1,0 +1,6 @@
+feature_name,reason_code,consumer_statement
+fico_band,HE001,Credit profile did not meet minimum expectation.
+ltv_ratio,HE014,Combined loan-to-value was higher than policy allows.
+dti_ratio,HE019,Debt obligations were high relative to income.
+manual_override_flag,HE099,Overall application profile required manual review.
+zip_risk_band,HE099,Overall application profile required manual review.

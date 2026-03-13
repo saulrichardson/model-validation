@@ -1,0 +1,16 @@
+{
+  "demo_id": "documentation_readiness",
+  "title": "Documentation-Led Conceptual Review",
+  "description": "Documentation-heavy package with sample data, feature dictionary, and adverse-action mapping but no runnable implementation.",
+  "expected_case_type": "conceptual_documentation_review",
+  "package_dir": "documentation_readiness/package",
+  "highlights": [
+    "Feature counts conflict across methodology and model card artifacts.",
+    "Reason-code mapping omits payment_shock_index and verified_income_stability.",
+    "Sample extract includes elevated missingness in verified income stability.",
+    "Documentation pack is designed for rubric-based readiness benchmarking plus Codex synthesis."
+  ],
+  "expected_workflow": "conceptual_readiness_review",
+  "expected_report_type": "conceptual_readiness_memo",
+  "minimum_coverage_ratio": 0.5
+}

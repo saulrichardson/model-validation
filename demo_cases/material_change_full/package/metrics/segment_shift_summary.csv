@@ -1,0 +1,5 @@
+segment,baseline_approval_rate,candidate_approval_rate,approval_delta,baseline_avg_pd,candidate_avg_pd
+thin_file,0.1787,0.0266,-0.1521,0.5192,0.6213
+thick_file,0.7064,0.5204,-0.186,0.312,0.3573
+broker,0.5399,0.3636,-0.1763,0.3782,0.4431
+direct,0.5683,0.3878,-0.1805,0.3731,0.4315

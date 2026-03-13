@@ -1,0 +1,60 @@
+{
+  "modules": [
+    {
+      "module_id": "runtime_reproduction",
+      "title": "Runtime Reproduction",
+      "executable_when_all": ["sample_data"],
+      "executable_when_any": ["runnable_model", "runtime_harness"],
+      "partial_when_any": ["container_spec"],
+      "blocked_message": "No runnable model source, runtime harness, or containerized execution path was found."
+    },
+    {
+      "module_id": "baseline_comparison",
+      "title": "Baseline Comparison",
+      "executable_when_all": ["baseline_candidate_pair", "sample_data"],
+      "executable_when_any": ["runnable_model"],
+      "partial_when_any": ["comparable_metrics"],
+      "blocked_message": "Baseline and candidate versions cannot both be compared from the available evidence."
+    },
+    {
+      "module_id": "behavioral_review",
+      "title": "Behavioral Review",
+      "executable_when_all": ["sample_data"],
+      "executable_when_any": ["runnable_model", "runtime_harness", "production_distribution"],
+      "partial_when_any": ["production_distribution"],
+      "blocked_message": "There is not enough executable or comparable output evidence to perform a behavioral review."
+    },
+    {
+      "module_id": "documentation_consistency",
+      "title": "Documentation Consistency",
+      "executable_when_all": ["methodology_doc"],
+      "executable_when_any": ["documentation_pack"],
+      "partial_when_any": ["prior_validation", "change_request"],
+      "blocked_message": "Methodology or related documentation was not supplied."
+    },
+    {
+      "module_id": "reason_code_review",
+      "title": "Reason-Code Review",
+      "executable_when_all": ["reason_code_mapping"],
+      "executable_when_any": ["runnable_model", "runtime_harness", "feature_dictionary"],
+      "partial_when_any": ["reason_code_mapping"],
+      "blocked_message": "No reason-code mapping or comparable adverse-action evidence was found."
+    },
+    {
+      "module_id": "data_profile_review",
+      "title": "Data-Profile Review",
+      "executable_when_all": ["sample_data"],
+      "executable_when_any": [],
+      "partial_when_any": [],
+      "blocked_message": "No sample data or extracts were supplied."
+    },
+    {
+      "module_id": "conceptual_soundness_review",
+      "title": "Conceptual Soundness Review",
+      "executable_when_all": ["methodology_doc", "prior_validation"],
+      "executable_when_any": [],
+      "partial_when_any": ["methodology_doc"],
+      "blocked_message": "Conceptual review is not supportable without methodology evidence."
+    }
+  ]
+}
