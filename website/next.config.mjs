@@ -1,10 +1,12 @@
+import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-const rootDirectory = fileURLToPath(new URL("./", import.meta.url));
+const rootDirectory = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  outputFileTracingRoot: rootDirectory,
   turbopack: {
     root: rootDirectory,
   },

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 
-const fraunces = Fraunces({
+const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
+  weight: ["500", "700"],
 });
 
 const plex = IBM_Plex_Sans({
@@ -14,10 +15,16 @@ const plex = IBM_Plex_Sans({
   variable: "--font-body",
 });
 
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+});
+
 export const metadata: Metadata = {
-  title: "Model Validation Workbench",
+  title: "Agentic Model Validation",
   description:
-    "Artifact-first bank model validation with explicit coverage boundaries, staged analyst workflows, and bank-facing reports.",
+    "Banks upload code, containers, docs, data, or vendor artifacts. The platform discovers what is there, runs the applicable validation workflow, and produces a defensible review.",
 };
 
 export default function RootLayout({
@@ -27,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${fraunces.variable} ${plex.variable}`}>{children}</body>
+      <body className={`${display.variable} ${plex.variable} ${mono.variable}`}>{children}</body>
     </html>
   );
 }

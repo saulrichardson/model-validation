@@ -1,308 +1,408 @@
-const workflowStages = [
+type ModuleState = "active" | "partial" | "inactive";
+
+type WorkflowModule = {
+  name: string;
+  state: ModuleState;
+};
+
+type ReviewOutput = {
+  title: string;
+  coverage: string;
+  findings: string;
+  notes: string[];
+};
+
+type ReviewCase = {
+  id: string;
+  label: string;
+  thesis: string;
+  artifacts: string[];
+  modules: WorkflowModule[];
+  output: ReviewOutput;
+};
+
+const heroArtifacts = [
+  "Source code",
+  "Runtime asset",
+  "Methodology docs",
+  "Sample data",
+  "Prior memo",
+  "Reason-code mapping",
+];
+
+const heroModules: WorkflowModule[] = [
+  { name: "Discovery", state: "active" },
+  { name: "Runtime review", state: "active" },
+  { name: "Evidence resolution", state: "active" },
+  { name: "Benchmarking", state: "partial" },
+  { name: "Final memo", state: "active" },
+];
+
+const heroOutput: ReviewOutput = {
+  title: "Validation opinion",
+  coverage: "74% supported scope",
+  findings: "05 findings",
+  notes: [
+    "Applicable review path selected from the evidence supplied.",
+    "Coverage stays explicit where the package is incomplete.",
+  ],
+};
+
+const stages = [
   {
-    phase: "Stage 01",
-    title: "Discovery",
-    body:
-      "Inventory the package as it exists: code, documents, datasets, metrics, model artifacts, notebooks, configs, and runtime evidence.",
+    title: "Upload",
+    sentence: "Accepts mixed model artifacts from bank teams and vendors.",
   },
   {
-    phase: "Stage 02",
-    title: "Playbook Resolution",
-    body:
-      "Resolve which validation modules are executable, partial, or blocked based on the evidence that is actually present.",
+    title: "Discover",
+    sentence: "Identifies code, runtime assets, data, docs, baselines, and gaps.",
   },
   {
-    phase: "Stage 03",
-    title: "Tool Execution",
-    body:
-      "Run the supported subset through local evidence tools and bounded sidecar calls instead of pretending unsupported checks happened.",
+    title: "Resolve",
+    sentence: "Selects the validation modules the evidence actually supports.",
   },
   {
-    phase: "Stage 04",
-    title: "Bank-Facing Report",
-    body:
-      "Draft a memo with findings, recommended actions, coverage rationale, evidence requests, and a clear boundary around unsupported scope.",
+    title: "Execute",
+    sentence: "Runs the review and produces findings, coverage, and a memo.",
   },
 ];
 
-const reviewTracks = [
+const reviewCases: ReviewCase[] = [
   {
-    title: "Material Change Revalidation",
-    summary:
-      "For packages that include baseline and candidate versions, runnable code, metrics, and supporting documentation.",
-    notes: [
-      "Supports a full material-change revalidation memo.",
-      "Designed around baseline-versus-candidate comparison.",
-      "Includes sensitivity and stress-ready artifacts in the seeded path.",
+    id: "full-revalidation",
+    label: "Full revalidation",
+    thesis:
+      "A comprehensive package resolves into a nearly complete revalidation workflow.",
+    artifacts: [
+      "src/model/",
+      "runtime/model-image.tar",
+      "test_sample.parquet",
+      "baseline_metrics.json",
+      "methodology.pdf",
     ],
+    modules: [
+      { name: "Change review", state: "active" },
+      { name: "Runtime reproduction", state: "active" },
+      { name: "Baseline comparison", state: "active" },
+      { name: "Benchmark checks", state: "active" },
+      { name: "Documentation alignment", state: "active" },
+      { name: "Final memo generation", state: "active" },
+    ],
+    output: {
+      title: "Full revalidation memo",
+      coverage: "92% supported scope",
+      findings: "07 findings",
+      notes: [
+        "Runtime and baseline evidence support a full memo.",
+        "Coverage is nearly complete, with limited residual gaps.",
+      ],
+    },
   },
   {
-    title: "Documentation-Led Conceptual Review",
-    summary:
-      "For documentation-heavy submissions where the implementation is missing, incomplete, or not runnable.",
-    notes: [
-      "Focuses on conceptual readiness and documentation consistency.",
-      "Surfaces evidence gaps instead of manufacturing coverage.",
-      "Benchmarks rubric-style readiness before final synthesis.",
+    id: "black-box-review",
+    label: "Black-box behavioral review",
+    thesis:
+      "An opaque runtime package narrows into behavioral review with explicit limits.",
+    artifacts: [
+      "runtime/scorer.tar",
+      "run_harness.sh",
+      "sample_inputs.csv",
+      "output_schema.json",
+      "method_note.pdf",
     ],
+    modules: [
+      { name: "Runtime replay", state: "active" },
+      { name: "Output profiling", state: "active" },
+      { name: "Segment analysis", state: "active" },
+      { name: "Documentation review", state: "partial" },
+      { name: "Baseline comparison", state: "inactive" },
+      { name: "Final memo generation", state: "active" },
+    ],
+    output: {
+      title: "Partial validation report",
+      coverage: "58% supported scope",
+      findings: "04 findings",
+      notes: [
+        "Runtime behavior can be profiled and segmented.",
+        "Internal model evidence was not supplied.",
+      ],
+    },
   },
   {
-    title: "Vendor Black-Box Behavioral Review",
-    summary:
-      "For opaque vendor packages where a runtime harness exists but conceptual internals remain unavailable.",
-    notes: [
-      "Supports partial validation rather than false completeness.",
-      "Uses executable runtime behavior as the primary review surface.",
-      "Highlights missing design evidence and reason-code issues explicitly.",
+    id: "conceptual-review",
+    label: "Conceptual review",
+    thesis:
+      "A documentation-heavy package produces a conceptual review and a gap report.",
+    artifacts: [
+      "methodology.pdf",
+      "model_card.pdf",
+      "prior_validation.docx",
+      "feature_dictionary.xlsx",
+      "sample_data.parquet",
+      "reason_codes.csv",
     ],
+    modules: [
+      { name: "Methodology review", state: "active" },
+      { name: "Document consistency checks", state: "active" },
+      { name: "Data profiling", state: "active" },
+      { name: "Reason-code assessment", state: "active" },
+      { name: "Runtime review", state: "inactive" },
+      { name: "Gap report", state: "active" },
+    ],
+    output: {
+      title: "Conceptual review memo",
+      coverage: "63% supported scope",
+      findings: "05 findings",
+      notes: [
+        "Documents, mappings, and sample data can be reconciled.",
+        "Execution-based review remains blocked pending runnable artifacts.",
+      ],
+    },
   },
 ];
 
-const outputSurfaces = [
-  "Normalized case record",
-  "Playbook decisions by module",
-  "Agent stage summaries",
-  "Tool-call ledger",
-  "Evidence ledger",
-  "Key findings",
-  "Coverage boundary and memo",
+const outputCards = [
+  {
+    title: "Validation memo",
+    copy: "The review document itself: scope, coverage, findings, and actions.",
+  },
+  {
+    title: "Coverage summary",
+    copy: "What ran, what stayed partial, and why.",
+  },
+  {
+    title: "Findings log",
+    copy: "Named observations tied to modules and evidence.",
+  },
+  {
+    title: "Gap report",
+    copy: "The missing artifacts required for deeper review.",
+  },
 ];
 
-const evidenceTypes = [
-  "Code",
-  "Documents",
-  "Datasets",
-  "Metrics",
-  "Models",
-  "Notebooks",
-  "Configs",
-  "Containers",
+const comparisons = [
+  {
+    left: "Most systems help teams track model reviews.",
+    right: "This platform helps them run them.",
+  },
+  {
+    left: "Most systems expect clean inputs.",
+    right: "This platform starts with messy real-world packages.",
+  },
+  {
+    left: "Most systems standardize workflows.",
+    right: "This platform adapts the workflow to the evidence available.",
+  },
 ];
+
+function StatePill({ state }: { state: ModuleState }) {
+  return <span className={`state-pill state-pill--${state}`}>{state}</span>;
+}
+
+function FlowVisual({
+  artifacts,
+  modules,
+  output,
+}: {
+  artifacts: string[];
+  modules: WorkflowModule[];
+  output: ReviewOutput;
+}) {
+  return (
+    <div className="flow-visual">
+      <article className="flow-panel">
+        <p className="flow-panel__label">What goes in</p>
+        <h3>Mixed model package</h3>
+        <ul className="flow-list">
+          {artifacts.map((artifact) => (
+            <li key={artifact} className="flow-row">
+              {artifact}
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <article className="flow-panel">
+        <p className="flow-panel__label">What runs</p>
+        <h3>Applicable workflow</h3>
+        <div className="module-list">
+          {modules.map((module) => (
+            <div key={module.name} className="module-row">
+              <span>{module.name}</span>
+              <StatePill state={module.state} />
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article className="flow-panel flow-panel--output">
+        <p className="flow-panel__label">What comes out</p>
+        <h3>{output.title}</h3>
+        <div className="output-stats">
+          <div>
+            <span>Coverage</span>
+            <strong>{output.coverage}</strong>
+          </div>
+          <div>
+            <span>Findings</span>
+            <strong>{output.findings}</strong>
+          </div>
+        </div>
+        <ul className="output-notes">
+          {output.notes.map((note) => (
+            <li key={note}>{note}</li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <main className="site-shell">
-      <header className="site-header">
-        <a className="brand-mark" href="#top">
-          <span className="brand-mark__chip">MV</span>
-          <span className="brand-mark__text">
-            <strong>Model Validation</strong>
-            <span>Artifact-first workbench</span>
+    <main className="page-shell">
+      <header className="topbar">
+        <a className="brand" href="#top">
+          <span className="brand__mark">AMV</span>
+          <span className="brand__copy">
+            <strong>Agentic Model Validation</strong>
+            <span>Bank model review software</span>
           </span>
         </a>
-        <nav className="site-nav" aria-label="Primary">
-          <a href="#workflow">Workflow</a>
-          <a href="#tracks">Review Modes</a>
-          <a href="#deliverables">Deliverables</a>
+
+        <nav className="topbar__nav" aria-label="Primary">
+          <a href="#workflow">How it works</a>
+          <a href="#proof">Proof</a>
+          <a href="#outputs">Outputs</a>
         </nav>
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow">Bank Model Validation</p>
-          <h1>Validation for the package you actually received.</h1>
-          <p className="hero-body">
-            Upload the messy mix of artifacts that landed on your desk. The workbench discovers
-            what is present, resolves which checks are defensibly supported, executes the supported
-            subset, and drafts a bank-facing memo with explicit coverage boundaries.
+        <div className="hero__copy">
+          <p className="eyebrow">Model review software</p>
+          <h1>From model package to validation opinion</h1>
+          <p className="hero__subhead">
+            Banks upload code, containers, docs, data, or vendor artifacts. The platform
+            discovers what&apos;s there, runs the applicable validation workflow, and produces a
+            defensible review.
           </p>
-          <div className="hero-actions">
-            <a className="button button--primary" href="#workflow">
-              See the workflow
+
+          <div className="hero__actions">
+            <a className="button button--primary" href="#proof">
+              See three review paths
             </a>
-            <a className="button button--ghost" href="#tracks">
-              Review supported paths
+            <a className="button button--secondary" href="#outputs">
+              View example outputs
             </a>
           </div>
-          <dl className="hero-metrics" aria-label="Platform highlights">
-            <div>
-              <dt>04</dt>
-              <dd>staged phases from discovery to report</dd>
-            </div>
-            <div>
-              <dt>03</dt>
-              <dd>implemented review paths in the seeded demos</dd>
-            </div>
-            <div>
-              <dt>01</dt>
-              <dd>bank-facing memo with a stated coverage boundary</dd>
-            </div>
-          </dl>
+
+          <p className="hero__summary">One engine decides what review the package supports.</p>
         </div>
 
-        <div className="hero-board" aria-label="Operator board">
-          <div className="board-note board-note--signal">
-            <span className="board-note__label">Intake</span>
-            <h2>Messy evidence in</h2>
-            <p>
-              Model packages arrive incomplete, inconsistent, and mixed across code, documents,
-              metrics, and runtime artifacts.
-            </p>
-          </div>
-
-          <div className="board-stack">
-            <article className="board-card">
-              <span className="board-card__kicker">Supported evidence</span>
-              <div className="token-row">
-                {evidenceTypes.map((item) => (
-                  <span key={item} className="token">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </article>
-
-            <article className="board-card">
-              <span className="board-card__kicker">Output discipline</span>
-              <ul className="compact-list">
-                <li>Executable modules are separated from partial and blocked scope.</li>
-                <li>Coverage ratio and rationale are surfaced, not hidden.</li>
-                <li>Evidence requests stay attached to the final memo.</li>
-              </ul>
-            </article>
-
-            <article className="board-card board-card--memo">
-              <span className="board-card__kicker">Final deliverable</span>
-              <h3>Coverage Boundary</h3>
-              <p>
-                The report states what was reviewed, what was executed, what was blocked, and what
-                still needs evidence.
-              </p>
-            </article>
-          </div>
-        </div>
+        <FlowVisual artifacts={heroArtifacts} modules={heroModules} output={heroOutput} />
       </section>
 
-      <section className="signal-strip" aria-label="Proof points">
-        <p>Artifact-first intake</p>
-        <p>Executable, partial, or blocked modules</p>
-        <p>Evidence ledger and tool trace</p>
-        <p>Bank-facing memo with recommended actions</p>
-      </section>
+      <div className="trust-line">
+        Code. Containers. Docs. Data. Vendor packages. One review engine.
+      </div>
 
-      <section className="statement-grid">
-        <article className="statement-card">
-          <p className="eyebrow">Why This Surface Exists</p>
-          <h2>Not a generic chatbot. A staged analyst workflow.</h2>
+      <section className="section" id="workflow">
+        <div className="section__intro">
+          <p className="eyebrow">How it works</p>
+          <h2>A review engine, not a workflow form</h2>
           <p>
-            The underlying platform already models discovery, playbook resolution, execution, and
-            reporting as separate stages. The homepage should therefore sell disciplined workflow,
-            evidence handling, and explicit limits instead of vague AI automation.
-          </p>
-        </article>
-
-        <article className="statement-card statement-card--accent">
-          <p className="eyebrow">Current Positioning</p>
-          <h2>Built for bank operators working through evidence gaps.</h2>
-          <p>
-            The current repo artifacts support three concrete review paths: full material-change
-            revalidation, documentation-led conceptual review, and vendor black-box behavioral
-            review.
-          </p>
-        </article>
-      </section>
-
-      <section className="section-shell" id="workflow">
-        <div className="section-heading">
-          <p className="eyebrow">Workflow</p>
-          <h2>Four stages, each with a narrower claim than the last.</h2>
-          <p>
-            The workbench earns confidence by reducing ambiguity at each step instead of skipping
-            directly to a polished conclusion.
+            It reads the package, determines what the evidence supports, and runs the review that
+            can actually be defended.
           </p>
         </div>
 
-        <div className="workflow-grid">
-          {workflowStages.map((stage) => (
-            <article className="workflow-card" key={stage.title}>
-              <p className="workflow-card__phase">{stage.phase}</p>
+        <div className="stage-grid">
+          {stages.map((stage) => (
+            <article className="stage-card" key={stage.title}>
               <h3>{stage.title}</h3>
-              <p>{stage.body}</p>
+              <p>{stage.sentence}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section-shell section-shell--dense" id="tracks">
-        <div className="section-heading">
-          <p className="eyebrow">Review Modes</p>
-          <h2>Three public-facing use cases already grounded in demo artifacts.</h2>
+      <section className="section" id="proof">
+        <div className="section__intro">
+          <p className="eyebrow">Proof</p>
+          <h2>Same platform. Different reviews.</h2>
           <p>
-            These modes map directly to the seeded packages currently represented in the project,
-            which makes them safer homepage claims than hypothetical future features.
+            The workflow changes with the evidence. Same engine, different review paths.
           </p>
         </div>
 
-        <div className="tracks-grid">
-          {reviewTracks.map((track) => (
-            <article className="track-card" key={track.title}>
-              <h3>{track.title}</h3>
-              <p>{track.summary}</p>
-              <ul className="track-list">
-                {track.notes.map((note) => (
-                  <li key={note}>{note}</li>
-                ))}
-              </ul>
+        <div className="case-stack">
+          {reviewCases.map((reviewCase, index) => (
+            <section className="case-block" key={reviewCase.id}>
+              <div className="case-block__intro">
+                <span className="case-block__index">0{index + 1}</span>
+                <div>
+                  <h3>{reviewCase.label}</h3>
+                  <p>{reviewCase.thesis}</p>
+                </div>
+              </div>
+
+              <FlowVisual
+                artifacts={reviewCase.artifacts}
+                modules={reviewCase.modules}
+                output={reviewCase.output}
+              />
+            </section>
+          ))}
+        </div>
+      </section>
+
+      <section className="section" id="outputs">
+        <div className="section__intro">
+          <p className="eyebrow">Outputs</p>
+          <h2>The output is a review, not a transcript</h2>
+          <p>The system produces work product a validation team can use.</p>
+        </div>
+
+        <div className="output-grid">
+          {outputCards.map((card) => (
+            <article className="output-summary" key={card.title}>
+              <h3>{card.title}</h3>
+              <p>{card.copy}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="deliverables" id="deliverables">
-        <div className="deliverables-copy">
-          <p className="eyebrow">Deliverables</p>
-          <h2>Operator surfaces stay close to the evidence.</h2>
-          <p>
-            The current workbench UI and report schema already expose the outputs below. A public
-            front page should frame these as evidence products, not decorative dashboards.
-          </p>
-          <ul className="deliverables-list">
-            {outputSurfaces.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+      <section className="section">
+        <div className="section__intro">
+          <p className="eyebrow">Positioning</p>
+          <h2>Execution, not just oversight</h2>
         </div>
 
-        <article className="memo-preview" aria-label="Memo preview">
-          <div className="memo-preview__topline">
-            <span>Validation Memo</span>
-            <span>Coverage stated explicitly</span>
-          </div>
-          <h3>Partial validation is still useful when the boundary is honest.</h3>
-          <p>
-            The reporting layer already carries scope, modules executed, modules blocked, findings,
-            evidence requests, key metrics, and recommended actions into a single bank-facing memo.
-          </p>
-          <div className="memo-preview__grid">
-            <div>
-              <strong>Scope</strong>
-              <p>Only supported checks are executed.</p>
-            </div>
-            <div>
-              <strong>Findings</strong>
-              <p>Each finding keeps evidence references attached.</p>
-            </div>
-            <div>
-              <strong>Boundary</strong>
-              <p>Unsupported modules remain visible and named.</p>
-            </div>
-            <div>
-              <strong>Next Actions</strong>
-              <p>Evidence requests and follow-ups stay in the report.</p>
-            </div>
-          </div>
-        </article>
+        <div className="comparison-list">
+          {comparisons.map((comparison) => (
+            <article className="comparison-row" key={comparison.left}>
+              <p>{comparison.left}</p>
+              <strong>{comparison.right}</strong>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className="boundary-banner">
-        <div>
-          <p className="eyebrow">Coverage Discipline</p>
-          <h2>When the evidence is thin, the system should narrow scope, not bluff.</h2>
+      <section className="cta">
+        <div className="cta__copy">
+          <p className="eyebrow">Explore the product</p>
+          <h2>See the platform on three model packages</h2>
+          <p>Software that turns messy bank model packages into validation opinions.</p>
         </div>
-        <div className="boundary-banner__badges">
-          <span>Executable</span>
-          <span>Partial</span>
-          <span>Blocked</span>
+
+        <div className="cta__actions">
+          <a className="button button--primary" href="#proof">
+            See the platform on three model packages
+          </a>
+          <a className="button button--secondary" href="#outputs">
+            View example outputs
+          </a>
         </div>
       </section>
     </main>
